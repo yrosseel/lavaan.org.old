@@ -10,8 +10,6 @@ submenu: lavaan
 - **26 April 2013**: the lavaan.org website has been redesigned
 - **8 March 2013**: version 0.5-12 has been released on CRAN.
   This is a maintenance release, fixing some small issues only.
-- **8 Feb 2013**: the lavaan paper in the Journal of Statistical
-Software has been downloaded more than 5000 times!
 
 ####  What is lavaan? ####
 The lavaan package is developed to provide useRs, researchers and teachers a
