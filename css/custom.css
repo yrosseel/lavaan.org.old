@@ -1,0 +1,94 @@
+/* page top */
+#header {
+    margin-top: 40px;
+}
+
+/* list style general */
+li {
+  list-style: square;
+  margin-left: 30px;
+}
+
+a, a:visited {
+   color: #489352;
+   text-decoration: none;
+}
+
+a:hover, a:focus { 
+   color: #000; 
+}
+
+
+/* list style for topmenu */
+#topnav ul li {
+    /* list-style: none; */
+    display: inline;
+    margin: 0 20px 0 0;
+}
+
+#topnav a {
+    color: #555;
+    text-decoration: none;
+}
+
+#topnav a:hover {
+    color: #222;
+}
+
+
+/* list style for sidemenu */ 
+#nav ul li {
+    list-style: none;
+    margin-bottom: 10px;
+    margin-left: 0px;
+}
+ 
+#nav a {
+    color: #555;
+    text-decoration: none;
+}
+ 
+#nav a:hover {
+    color: #222;
+}
+
+/* source code blocks */
+pre {
+  margin-bottom: 20px;
+  color: rgb(10, 10, 10);
+  font-family: Consolas,"Liberation Mono",Courier,monospace;
+  background-color: rgb(250, 250, 250);
+  border: 1px solid rgb(214, 214, 214);
+  /*
+  font-size: 13px;
+  */
+  /*
+  line-height: 19px;
+  */
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+pre code, pre tt {
+  margin: 0px;
+  padding: 0px;
+  background-color: transparent;
+  border: medium none;
+}
+
+/* horizontal line */
+hr { 
+  border: solid #ddd; 
+  border-width: 1px 0 0; 
+  clear: both; 
+  margin: 10px 0 10px; 
+  height: 0; 
+}
+
+hr.large {
+  border: none;
+  height: 8px;
+  background: #ebebeb;
+  margin: 50px 0; 
+}

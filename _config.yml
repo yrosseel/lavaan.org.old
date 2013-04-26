@@ -1,0 +1,14 @@
+# VARIABLES
+# ---------
+title: latent variable analysis
+copyright: "Copyright 2010-2013, Yves Rosseel."
+
+# YEKYLL
+# ------
+pygments: true
+paginate: 4
+exclude: ['Makefile']
+auto: false
+markdown: rdiscount
+rdiscount extensions: [smart]
+permalink: /:year/:month/:day/:title
