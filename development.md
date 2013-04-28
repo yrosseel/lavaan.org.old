@@ -34,20 +34,6 @@ If you click on the
 [commits](https://github.com/yrosseel/lavaan/commits/master) tab, you can see
 all the recent changes that have been committed.
 
-#### Reporting bugs ####
-
-If you have found a bug, please report it. You can either:
-
-1. email me directly (<Yves.Rosseel@UGent.be>)
-2. report it on the [lavaan discussion group](https://groups.google.com/d/forum/lavaan)
-3. create an issue on [GitHub](https://github.com/yrosseel/lavaan/issues)
-
-whatever you find most convenient. But please, include a reproducable example
-containing an R script, and a snippet of your data (just enough to reproduce
-the issue)
-
-All bugs found in lavaan are reported in the [version history](/version.html).
-
 #### Future plans ####
 
 Version 0.5 is already fairly complete, but new features (mostly related to categorical data) are still added. In particular, we are working on implementing

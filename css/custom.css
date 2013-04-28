@@ -21,6 +21,7 @@ a:hover, a:focus {
 
 /* list style for topmenu */
 #topnav ul li {
+    /* font-family: "Georgia","Times New Roman",serif; */
     /* list-style: none; */
     display: inline;
     margin: 0 20px 0 0;
@@ -38,6 +39,7 @@ a:hover, a:focus {
 
 /* list style for sidemenu */ 
 #nav ul li {
+    /* font-family: "Georgia","Times New Roman",serif; */
     list-style: none;
     margin-bottom: 10px;
     margin-left: 0px;
