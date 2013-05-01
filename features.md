@@ -9,7 +9,7 @@ submenu: lavaan
 - by default, lavaan implements the textbook/paper formulas, so there are no
 surprises.
 - lavaan can mimic the results of several commercial packages (including Mplus
-and Eqs using the <code>mimic="Mplus"</code> or <code>mimic="EQS"</code>
+and Eqs using the `mimic="Mplus"` or `mimic="EQS"`
 arguments)
 - lavaan is not a black box: you can browse the source code on [GitHub](https://github.com/yrosseel/lavaan/)
 - lavaan can be extended: see the [Related Projects](/resources/related.html)
@@ -20,20 +20,22 @@ page for extensions and add-ons.
 elegant and useR-friendly way; for example, a typical CFA analysis looks
 as follows:
 
-      library(lavaan)
-      myData <- read.cv("/path/to/mydata/myData.csv")
-      myModel <- ' 
-          f1 =~ item1 + item2 + item3
-          f2 =~ item4 + item5 + item6
-          f3 =~ item7 + item8 + item9
-      '
-      fit <- cfa(model=myModel, data=myData)
-      summary(fit, fit.measures=TRUE)
+    ```r
+    library(lavaan)
+    myData <- read.cv("/path/to/mydata/myData.csv")
+    myModel <- ' 
+        f1 =~ item1 + item2 + item3
+        f2 =~ item4 + item5 + item6
+        f3 =~ item7 + item8 + item9
+    '
+    fit <- cfa(model=myModel, data=myData)
+    summary(fit, fit.measures=TRUE)
+    ```
 
 - you can choose between a user-friendly interface (in combination with the
-fitting functions cfa(), sem(), growth()) or a low-level interface (using the
-fitting function lavaan() where 'defaults' do not get in the way)
-- convenient arguments (eg. group.equal="loadings") simplify many common tasks
+fitting functions `cfa()`, `sem()`, `growth()`) or a low-level interface (using
+the fitting function `lavaan()` where 'defaults' do not get in the way)
+- convenient arguments (eg. `group.equal="loadings"`) simplify many common tasks
 (eg. measurement invariance testing)
 - lavaan outputs all the information you need: a huge number of fit measures,
 modification indices, R-squared values, standardized solutions, and much much

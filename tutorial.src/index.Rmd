@@ -1,0 +1,37 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+#### Overview ####
+
+A pdf version of this tutorial is available here: [PDF](/tutorial/tutorial.pdf)
+
+If you are new to lavaan, this is the place to start. In this tutorial, we
+introduce the basic components of lavaan: the model syntax, the fitting
+functions (cfa, sem and growth), and the main extractor functions (summary,
+coef, fitted, inspect). After we have provided two simple
+examples, we briefly discuss some important topics: meanstructures, multiple
+groups, growth curve models, mediation analysis, and categorical
+data. Along the way, we hope to give you just enough information 
+to get you started (but no more).
+
+Contents:
+
+- [Before you start](/tutorial/before.html)
+- [Installation](/tutorial/install.html)
+- [Model syntax part 1](/tutorial/syntax1.html)
+- [A first example: CFA](/tutorial/cfa.html)
+- [A second example: SEM](/tutorial/sem.html)
+- [Model syntax part 2](/tutorial/syntax2.html)
+- [Bringing in the means](/tutorial/means.html)
+- [Multiple groups](/tutorial/groups.html)
+- [Growth curve models](/tutorial/growth.html)
+- [Categorical data](/tutorial/cat.html)
+- [Using a covariance matrix as input](/tutorial/cov.html)
+- [Estimators, missing values, standard errors and bootstrapping](/tutorial/est.html)
+- [Indirect effects and mediation analysis](/tutorial/mediation.html)
+- [Modification indices](/tutorial/modindices.html)
+- [Extracting information from a fitted lavaan object](/inspect.html)

@@ -1,0 +1,4 @@
+FIX:
+
+change 'python' to 'python2' first line of:
+/home/yves/.gem/ruby/2.0.0/gems/pygments.rb-0.3.7/lib/pygments/mentos.py

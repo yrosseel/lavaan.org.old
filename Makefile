@@ -1,4 +1,5 @@
 build: clean
+	make -C tutorial.src build
 	jekyll
 
 .PHONY: clean

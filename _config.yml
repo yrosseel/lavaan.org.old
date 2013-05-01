@@ -7,8 +7,13 @@ copyright: "Copyright 2010-2013, Yves Rosseel."
 # ------
 pygments: true
 paginate: 4
+exclude: ['README.YR']
 exclude: ['Makefile']
+exclude: ['tutorial.src']
 auto: false
-markdown: rdiscount
-rdiscount extensions: [smart]
+
+# must be redcarpet, for github style fenced code blocks (```r)
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
 permalink: /:year/:month/:day/:title

@@ -1,0 +1,29 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+HS.model <- ' visual =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+```
+
+Modification indices can be requested by adding the argument in the call, or by
+calling the function directly. The function returns a data frame. For example,
+to see only the modification indices for the factor loadings, you can use
+something like this:
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
+mi <- modindices(fit)
+mi[mi$op == "=~",]
+```
+
+Modification indices are printed out for each nonfree (or nonredundant)
+parameter. The modification indices are supplemented by the expected parameter
+change values (column ). The last two columns contain the standardized, and
+completely standardized EPC values, respectively.

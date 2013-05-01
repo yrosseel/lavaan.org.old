@@ -1,0 +1,147 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+In our second example, we will use the built-in dataset. This is a
+dataset that has been used by Bollen in his 1989 book on structural
+equation modeling (and elsewhere). To learn more about the dataset, see
+the help page and the references therein.
+
+The figure below contains a graphical representation
+of the model that we want to fit. 
+
+```{r sem, echo=FALSE, message=FALSE, dev=c("png","pdf"), dpi=c(140,100), fig.cap="Political Democracy SEM example"}
+library(lavaan) # only needed once per session
+library(semPlot)
+model <- '
+  # measurement model
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+fit <- sem(model, data=PoliticalDemocracy)
+semPaths(fit, layout="tree2", curve=1, rotation=4, 
+nCharNodes=0, mar=c(3,3,3,3),
+border.width=1.0, esize=1.0, edge.color="black",
+label.scale=FALSE,
+label.cex=1.0,
+residuals=FALSE,
+fixedStyle=1,
+freeStyle=1,
+curvePivot=FALSE,
+sizeMan=7, sizeLat=10)
+```
+The corresponding lavaan syntax for specifying this model
+is as follows:
+
+```{r eval=FALSE, tidy=FALSE}
+model <- '
+  # measurement model
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+```
+
+In this example, we use three different formula types: latent variabele
+definitions, regression formulas, and (co)variance formulas. The regression
+formulas are similar to ordinary formulas in R. The (co)variance formulas
+typically have the following form:
+
+    variable ~~ variable
+
+The variables can be either observed or latent variables. If the two variable
+names are the same, the expression refers to the variance (or residual
+variance) of that variable. If the two variable names are different, the
+expression refers to the (residual) covariance among these two variables. The
+lavaan package automatically makes the distinction between variances and
+residual variances.
+
+In our example, the expression `y1 ~~ y5` allows the residual variances of the
+two observed variables to be correlated. This is sometimes done if it is
+believed that the two variables have something in common that is not captured
+by the latent variables. In this case, the two variables refer to identical
+scores, but measured in two different years (1960 and 1965, respectively). Note
+that the two expressions `y2 ~~ y4` and `y2 ~~ y6`, can be combined into the
+expression `y2 ~~ y4 + y6`. This is just a shorthand notation.
+
+We enter the model syntax as follows:
+
+```{r eval=FALSE, tidy=FALSE}
+model <- '
+  # measurement model
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+```
+
+To fit the model and see the results we can type:
+
+```{r, comment=""}
+fit <- sem(model, data=PoliticalDemocracy)
+summary(fit, standardized=TRUE)
+```
+
+The function is very similar to the function. In fact, the two functions
+are currently almost identical, but this may change in the future. In
+the method, we omitted the argument. Therefore, you only get the basic
+chi-square statistic. The argument augments the output with standardized
+parameter values. Two extra columns of standardized parameter values are
+printed. In the first column (labeled ), only the latent variables are
+standardized. In the second column (labeled ), both latent and observed
+variables are standardized. The latter is often called the 'completely
+standardized solution'.
+
+The complete code to specify and fit this model is printed again below:
+
+```{r eval=FALSE, tidy=FALSE}
+library(lavaan) # only needed once per session
+model <- '
+  # measurement model
+    ind60 =~ x1 + x2 + x3
+    dem60 =~ y1 + y2 + y3 + y4
+    dem65 =~ y5 + y6 + y7 + y8
+  # regressions
+    dem60 ~ ind60
+    dem65 ~ ind60 + dem60
+  # residual correlations
+    y1 ~~ y5
+    y2 ~~ y4 + y6
+    y3 ~~ y7
+    y4 ~~ y8
+    y6 ~~ y8
+'
+fit <- sem(model, data=PoliticalDemocracy)
+summary(fit, standardized=TRUE)
+```

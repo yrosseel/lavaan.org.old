@@ -1,0 +1,80 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+HS.model <- ' visual =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+```
+#### Estimators ####
+The default estimator in the lavaan package is maximum likelihood 
+(`estimator = "ML"`). Alternative estimators currently available in lavaan are:
+
+- `"GLS"`: for generalized least squares. For complete data only.
+- `"WLS"`: for weighted least squares (sometimes called ADF estimation). For
+    complete data only.
+- `"MLM"`: for maximum likelihood estimation with robust standard errors and a
+    Satorra-Bentler scaled test statistic. For complete data only.
+- `"MLF"`: for maximum likelihood estimation with standard errors based on the
+    first-order derivatives, and a conventional test statistic. For both
+    complete and incomplete data.
+- `"MLR"`: maximum likelihood estimation with robust (Huber-White) standard
+    errors and a scaled test statistic that is (asymptotically) equal to
+    the Yuan-Bentler test statistic. For both complete and incomplete
+    data.
+
+If maximum likelihood estimation is used (`"ML"`, `"MLM"` , `"MLF"` or
+`"MLR"`), the default behavior
+of lavaan is to base the analysis on the so-called *biased* sample
+covariance matrix, where the elements are divided by $n$ instead of
+$n-1$. This is done internally, and should not be done by the user. In
+addition, the chi-square statistic is computed by multiplying the
+minimum function value with a factor $n$ (instead of $n-1$). This is
+similar to the Mplus program. If you prefer to use an unbiased
+covariance, and $n-1$ as the multiplier to compute the chi-square
+statistic, you need to specify the `likelihood = "wishard"` 
+argument when calling the fitting functions. For example:
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939, likelihood="wishart")
+fit
+```
+
+The value of the test statistic will be closer to the value reported by
+programs like EQS, LISREL or AMOS, since they all use the 'Wishart'
+approach when using the maximum likelihood estimator. The program Mplus,
+on the other hand, uses the 'normal' approach to maximum likelihood
+estimation.
+
+#### Missing values ####
+If the data contain missing values, the default behavior is listwise deletion.
+If the missing mechanism is MCAR (missing completely at random) or MAR (missing
+at random), the lavaan package provides case-wise (or 'full information')
+maximum likelihood estimation. You can turn this feature on, by using the
+argument `missing = "ML"` when calling the fitting function. An unrestricted
+(h1) model will automatically be estimated, so that all common fit indices are
+available.
+
+#### Standard errors ####
+Standard errors are (by default) based on the expected information matrix. The
+only exception is when data are missing and full information ML is used (via
+`missing = "ML"`). In this case, the observed information matrix is used to
+compute the standard errors. The user can change this behavior by using the
+`information` argument, which can be set to `"expected"` or `"observed"`. If
+the estimator is simply `"ML"`, you request robust standard errors by using the
+`se` argument, which can be set to `"robust.sem"`, `"robust.huber.white"` or
+`"first.order"`.  Or simply to `"none"` if you don't need them. This will not
+affect the test statistic. In fact, you can choose the test statistic
+independently by using the `test` argument, which can be set to `"standard"`,
+`"Satorra-Bentler"` or `"Yuan-Bentler"`.
+
+#### Bootstrapping ####
+There are two ways for using the bootstrap in lavaan. Either you can set `se =
+"boot"` or `test = "boot"` when fitting the model (and you will get bootstrap
+standard errors, and/or a bootstrap based p-value respectively), or you can you
+the `boostrapLavaan()` function, which needs an already fitted lavaan object.

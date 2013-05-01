@@ -1,0 +1,80 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+HS.model <- ' visual =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+```
+
+By and large, structural equation models are used to model the covariance
+matrix of the observed variables in a dataset. But in some applications, it is
+useful to bring in the means of the observed variables too. One way to do this
+is to explicitly refer to intercepts in the lavaan syntax. This can be done by
+including 'intercept formulas' in the model syntax. An intercept formula has
+the following form:
+
+    variable ~ 1
+
+The left part of the expression contains the name of the observed or latent
+variable. The right part contains the number 1, representing the intercept. For
+example, in the three-factor H&S CFA model, we can add the intercepts of the
+observed variables as follows:
+
+    # three-factor model
+       visual =~ x1 + x2 + x3
+      textual =~ x4 + x5 + x6
+      speed   =~ x7 + x8 + x9
+    # intercepts
+      x1 ~ 1
+      x2 ~ 1
+      x3 ~ 1
+      x4 ~ 1
+      x5 ~ 1
+      x6 ~ 1
+      x7 ~ 1
+      x8 ~ 1
+      x9 ~ 1
+
+However, it is more convenient to omit the intercept formulas in the model
+syntax (unless you want to fix their values), and to add the argument in the
+and function calls. For example, we can refit the three-factor H&S CFA model as
+follows:
+
+```{r tidy=FALSE, comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939, meanstructure=TRUE)
+summary(fit)
+```
+
+As you can see in the output, the model includes intercept parameters for both
+the observed and latent variables. By default, the and functions fix the latent
+variable intercepts (which in this case correspond to the latent *means*) to
+zero. Otherwise, the model would not be estimable. Note that the chi-square
+statistic and the number of degrees of freedom is the same as in the original
+model (without a mean structure). The reason is that we brought in some new
+data (a mean value for each of the 9 observed variables), but we also added 9
+additional parameters to the model (an intercept for each of the 9 observed
+variables). The end result is an identical fit. In practice, the only reason
+why a user would add intercept-formulas in the model syntax, is because some
+constraints must be specified on them. For example, suppose that we wish to fix
+the intercepts of the variables `x1`, `x2`, `x3` and `x4` to, say, 0.5. We
+would write the model syntax as follows:
+
+    # three-factor model
+       visual =~ x1 + x2 + x3
+      textual =~ x4 + x5 + x6
+      speed   =~ x7 + x8 + x9
+    # intercepts with fixed values
+      x1 + x2 + x3 + x4 ~ 0.5*1
+
+where we have used the left-hand side of the formula to 'repeat' the
+right-hand side for each element of the left-hand side.
+
+
+
+

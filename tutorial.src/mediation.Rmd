@@ -1,0 +1,44 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+```
+Consider a classical mediation setup with three variables: Y is the
+dependent variable, X is the predictor, and M is a mediator. For
+illustration, we create a toy dataset containing these three variables,
+and fit a path analysis model that includes the direct effect of X on Y
+and the indirect effect of X on Y via M.
+
+```{r tidy=FALSE, comment=""}
+set.seed(1234)
+X <- rnorm(100)
+M <- 0.5*X + rnorm(100)
+Y <- 0.7*M + rnorm(100)
+Data <- data.frame(X = X, Y = Y, M = M)
+model <- ' # direct effect
+             Y ~ c*X
+           # mediator
+             M ~ a*X
+             Y ~ b*M
+           # indirect effect (a*b)
+             ab := a*b
+           # total effect
+             total := c + (a*b)
+         '
+fit <- sem(model, data=Data)
+summary(fit)
+```
+
+The example illustrates the use of the `":="` operator in the lavaan model
+syntax. This operator 'defines' new parameters which take on values that are an
+arbitrary function of the original model parameters. The function, however,
+must be specified in terms of the parameter *labels* that are explicitly
+mentioned in the model syntax. By default, the standard errors for these
+defined parameters are computed using the Delta method. As with other models,
+bootstrap standard errors can be requested simply by specifying `se =
+"bootstrap"` in the fitting function.

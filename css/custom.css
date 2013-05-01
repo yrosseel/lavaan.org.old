@@ -1,12 +1,39 @@
+/* auto-scale ALL images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /* page top */
 #header {
     margin-top: 40px;
 }
 
 /* list style general */
+/*
+ul {
+    margin-bottom: 15px;
+    margin-left: 15px;
+    margin-right: 0px;
+    margin-top: 15px;
+}
+*/
+
+
 li {
-  list-style: square;
+  list-style: disc;
   margin-left: 30px;
+}
+
+li li {
+  margin-left: 0px;   
+}
+
+ol {
+    margin-left: 0px;
+}
+ol li {
+    list-style: decimal;
 }
 
 a, a:visited {
@@ -20,11 +47,15 @@ a:hover, a:focus {
 
 
 /* list style for topmenu */
-#topnav ul li {
+#topnav ul {
+    margin: 0 0 0 0;
+}
+
+#topnav li {
     /* font-family: "Georgia","Times New Roman",serif; */
-    /* list-style: none; */
+    list-style: none; 
     display: inline;
-    margin: 0 20px 0 0;
+    margin: 0 15px 0 0;
 }
 
 #topnav a {
@@ -38,7 +69,11 @@ a:hover, a:focus {
 
 
 /* list style for sidemenu */ 
-#nav ul li {
+#nav ul {
+    margin-left: 0px;
+}
+
+#nav li {
     /* font-family: "Georgia","Times New Roman",serif; */
     list-style: none;
     margin-bottom: 10px;
@@ -72,6 +107,15 @@ pre {
   border-radius: 3px 3px 3px 3px;
 }
 
+body code, li code {
+  font-family: Consolas,"Liberation Mono",Courier,monospace;
+  margin: 0px 2px;
+  padding: 0px 5px;
+  border: 1px solid rgb(234, 234, 234);
+  background-color: rgb(248, 248, 248);
+  border-radius: 3px 3px 3px 3px;
+}
+
 pre code, pre tt {
   margin: 0px;
   padding: 0px;
@@ -93,4 +137,64 @@ hr.large {
   height: 8px;
   background: #ebebeb;
   margin: 50px 0; 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 10px 10px 9px;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: left;
+}
+
+table td {
+    vertical-align: top;
+    border-top: solid 1px #ddd;
+}
+
+table th {
+    padding-top: 9px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+table.condensed th, table.condensed td {
+    padding: 5px 5px 4px;
+}
+
+table.bordered {
+    border-collapse: separate;
+    border: solid 1px #ddd;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+table.bordered th + th,
+table.bordered th + td,
+table.bordered td + td {
+    border-left: solid 1px #ddd;
+}
+
+.zebra-striped tbody tr:nth-child(odd) td,
+.zebra-striped tbody tr:nth-child(odd) th {
+    background: #f5f5f5;
+}
+
+/* blockquote */
+blockquote {
+    padding-top: 0;
+    padding-left: 30px;
+    border-left: none;
+}
+blockquote p {
+    line-height: 21px;
+    font-size: 14px;
+    font-style: normal;
+    color: #444;
 }

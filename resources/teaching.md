@@ -46,4 +46,3 @@ prepared by [A. Alexander Beaujean](http://www.baylor.edu/mediacommunications/in
 - A short introduction to lavaan in German, prepared by [Christina Werner](http://www.psychologie.uzh.ch/fachrichtungen/methoden/team/christinawerner.html)
 (University of Zurich), can be found [here](http://www.psychologie.uzh.ch/fachrichtungen/methoden/team/christinawerner/sem/einfuehrung_lavaan_cswerner.pdf).
 
-

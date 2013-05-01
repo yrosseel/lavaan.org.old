@@ -1,0 +1,108 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+HS.model <- ' visual =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+```
+The `summary()` function gives a nice overview of a fitted model, but is for
+display only. If you need the actual numbers for further processing, you may
+prefer to use one of several 'extractor' functions. We have already seen the
+`coef()` function which extracts the estimated parameters of a fitted model.
+Other extractor functions are discussed below.
+
+#### parameterEstimates ####
+
+The function extracts not only the values of the estimated parameters,
+but also the standard errors, the z-values, the standardized parameter
+values, as a convenient data frame. For example:
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
+parameterEstimates(fit)
+```
+
+#### standardizedSolution ####
+
+The `standardizedSolution()` function is similar to the `parameterEstimates()`
+function, but only shows the unstandardized and standardized parameter
+estimates.
+
+#### fitted.values ####
+
+The `fitted()` and `fitted.values()` functions return the 
+implied (fitted) covariance matrix (and mean vector) of a fitted model:
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
+fitted(fit)
+```
+
+#### residuals ####
+
+The `resid()` or `residuals()` functions return (unstandardized) residuals of a
+fitted model.  This is simply the difference between the observed and implied
+covariance matrix and mean vector. If the estimator is maximum likelihood, it
+is also possible to obtain the normalized and the standardized residuals.
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
+resid(fit, type="standardized")
+```
+
+#### vcov ####
+
+The function `vcov()` returns the estimated covariance matrix of the parameter
+estimates.
+
+#### AIC and BIC ####
+
+The `AIC()` and `BIC()` functions return the AIC and BIC values of a fitted
+model.
+
+#### fitMeasures ####
+
+The `fitMeasures()` function returns all the fit measures computed by lavaan as
+a named numeric vector. If you only want the value of a single fit measure,
+say, the CFI, you give the name (in lower case) as the second argument:
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
+fitMeasures(fit, "cfi")
+```
+
+#### inspect ####
+
+If you want to peek inside a fitted lavaan object (the object that is returned
+by a call to `cfa()`, `sem()`or `growth()`), you can use the `inspect()`
+function, with a variety of options. By default, calling `inspect()` on a
+fitted lavaan object returns a list of the model matrices that are used
+internally to represent the model.  The free parameters are nonzero integers.
+
+```{r comment=""}
+inspect(fit)
+```
+
+To see the starting values of parameters in each model matrix, type
+
+```{r comment=""}
+inspect(fit, what="start")
+```
+To see how lavaan internally represents a model, you can type
+
+```{r comment=""}
+inspect(fit, what="list")
+```
+
+For more inspect options, see the help page for the lavaan class which
+you can find by typing the following:
+
+```{r eval=FALSE, tidy=FALSE}
+class?lavaan
+```

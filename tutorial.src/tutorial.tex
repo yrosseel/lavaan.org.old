@@ -1,0 +1,80 @@
+% /* vim: set filetype=tex: */
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{240,240,240}
+\input{pandoc}
+\setlength{\parindent}{0cm}
+\usepackage[a4paper]{geometry}
+\geometry{scale={0.80,0.85}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\setkeys{Gin}{width=.75\csname Gin@nat@width\endcsname,keepaspectratio}
+\let\oldincludegraphics\includegraphics
+\renewcommand\includegraphics[2][]{%
+\begin{center}\oldincludegraphics[]{#2}\end{center}
+}
+\DeclareGraphicsExtensions{%
+    .pdf,.PDF,%
+    .png,.PNG,%
+    .jpg,.mps,.jpeg,.jbig2,.jb2,.JPG,.JPEG,.JBIG2,.JB2}
+\usepackage{floatrow}    
+\renewcommand{\arraystretch}{1.2}
+\usepackage{framed}
+
+\usepackage[colorlinks=true,
+linkcolor=blue]{hyperref}
+
+
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\let\proglang=\textsf
+\let\code=\texttt
+
+\title{The \textsf{lavaan} tutorial} 
+\author{Yves Rosseel\\Department of Data Analysis\\%
+  Ghent University (Belgium)}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+In this document, we illustrate the
+use of \pkg{lavaan} by providing several examples. If you are new to
+\pkg{lavaan}, this is the first document to read.
+\end{abstract}
+
+\tableofcontents
+
+\section{Before you start}
+\input{before}
+\section{Installation of the package}
+\input{install}
+\section{The model syntax}
+\input{syntax1}
+\section{A first example: confirmatory factor analysis (CFA)}
+\input{cfa}
+\section{A second example: a structural equation model (SEM)}
+\input{sem}
+\section{More about the syntax}
+\input{syntax2}
+\section{Bringing in the means}
+\input{means}
+\section{Multiple groups}
+\input{groups}
+\section{Growth curve models}
+\input{growth}
+\section{Using categorical variables}
+\input{cat}
+\section{Using a covariance matrix as input}
+\input{cov}
+\section{Estimators, standard errors and missing values}
+\input{est}
+\section{Indirect effects and mediation analysis}
+\input{mediation}
+\section{Modication Indices}
+\input{modindices}
+\section{Extracting information from a fitted model}
+\input{inspect}
+\end{document}
