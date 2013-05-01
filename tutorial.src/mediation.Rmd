@@ -30,7 +30,7 @@ model <- ' # direct effect
            # total effect
              total := c + (a*b)
          '
-fit <- sem(model, data=Data)
+fit <- sem(model, data = Data)
 summary(fit)
 ```
 
@@ -39,6 +39,6 @@ syntax. This operator 'defines' new parameters which take on values that are an
 arbitrary function of the original model parameters. The function, however,
 must be specified in terms of the parameter *labels* that are explicitly
 mentioned in the model syntax. By default, the standard errors for these
-defined parameters are computed using the Delta method. As with other models,
-bootstrap standard errors can be requested simply by specifying `se =
-"bootstrap"` in the fitting function.
+defined parameters are computed by using the so-called Delta method. As with
+other models, bootstrap standard errors can be requested simply by specifying
+`se = "bootstrap"` in the fitting function.

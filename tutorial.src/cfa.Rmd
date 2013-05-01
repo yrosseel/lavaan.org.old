@@ -6,9 +6,9 @@ submenu: tutorial
 ---
 
 We start with a simple example of confirmatory factor analysis, using the
-function, which is a user-friendly function for fitting CFA models.  The lavaan
-package contains a built-in dataset called . See the help page for this dataset
-by typing
+`cfa()` function, which is a user-friendly function for fitting CFA models.
+The lavaan package contains a built-in dataset called `HolzingerSwineford1939`.
+See the help page for this dataset by typing
 
     ?HolzingerSwineford1939
 
@@ -25,7 +25,7 @@ factors), each with three indicators:
 -   a *textual* factor measured by 3 variables: `x4`, `x5` and `x6`
 -   a *speed* factor measured by 3 variables: `x7`, `x8` and `x9`
 
-The figure below contains a simplified graphical representation of the
+The figure below contains a graphical representation of the
 three-factor model.
 
 ```{r echo=FALSE, message=FALSE}
@@ -98,15 +98,15 @@ summary(fit, fit.measures=TRUE)
 ```
 
 The output should look familiar to users of other SEM software. If you find it
-confusing or esthetically unpleasing, again, please let us know, and we will
+confusing or esthetically unpleasing, please let us know, and we will
 try to improve it. 
 
 ```{r, echo=FALSE, comment=""}
 summary(fit, fit.measures=TRUE)
 ```
 
-The output consists of three parts. The first six lines is called *the
-header*, and contains the following information:
+The output consists of three parts. The first six lines are called *the
+header*. The header contains the following information:
 
 - the lavaan version number
 - did lavaan converge normally or not, and how many iterations were needed
@@ -118,16 +118,17 @@ The next section contains additional fit measures, and is only shown because we
 use the optional argument `fit.measures = TRUE`. It starts with the line `Model
 test baseline model` and ends with the value for the `SRMR`.  The last section
 contains the parameter estimates. It starts with information about the standard
-errors (if they are `Standard` or `Robust`, and which information matrix was
-used to compute them), and then tabulates all free (and fixed) parameters that
-were included in the model. Typically, first the latent variables are shown,
-followed by covariances and (residual) variances. The first column (`Estimate`)
-contains the (estimated or fixed) parameter value for each model parameter; the
-second column (`Std.err`) contains the standard error for each estimated
-parameter; the third column (`Z-value`) contains the Wald statistic (which is
-simply obtained by dividing the parameter value by its standard error), and the
-last column (`P(>|z|)`) contains the $p$-value for testing the null hypothesis
-that the parameter equals zero in the population.
+errors (if the information matrix is expected or observed, and if the standard
+errors are standard, robust, or based on the bootstrap).  Then, it tabulates
+all free (and fixed) parameters that were included in the model. Typically,
+first the latent variables are shown, followed by covariances and (residual)
+variances. The first column (`Estimate`) contains the (estimated or fixed)
+parameter value for each model parameter; the second column (`Std.err`)
+contains the standard error for each estimated parameter; the third column
+(`Z-value`) contains the Wald statistic (which is simply obtained by dividing
+the parameter value by its standard error), and the last column (`P(>|z|)`)
+contains the p-value for testing the null hypothesis that the parameter
+equals zero in the population.
 
 To wrap up this first example, we summarize the complete code that
 was needed to fit this three-factor model:
@@ -151,24 +152,23 @@ summary(fit, fit.measures=TRUE)
 Simply copying this code and pasting it in R should work. The syntax
 illustrates the typical workflow in the lavaan package:
 
-1.  Specify your model using the lavaan model syntax. In this example,
-    only *latent variable definitions* have been used. In the following
-    examples, other formula types will be used.
+1.  Specify your model using the lavaan model syntax. In this example, only
+*latent variable definitions* have been used. In the following examples, other
+formula types will be used.
 
-2.  Fit the model. This requires a dataset containing the observed
-    variables (or alternatively the sample covariance matrix and the
-    number of observations). In this example,
-    we have used the function. Other funcions in the lavaan package are
-    and for fitting full structural equation models and growth curve
-    models respectively. All three functions are so-called user-friendly
-    functions, in the sense that they take care of many details
-    automatically, so we can keep the model syntax simple and concise.
-    If you wish to fit non-standard models or if you don't like the idea
-    that things are done for you automatically, you can use the
-    lower-level function lavaan, where you have full control.
+2.  Fit the model. This requires a dataset containing the observed variables
+(or alternatively the sample covariance matrix and the number of observations).
+In this example, we have used the `cfa()` function. Other funcions in the
+lavaan package are `sem()` and `growth()` for fitting full structural equation
+models and growth curve models respectively. All three functions are so-called
+user-friendly functions, in the sense that they take care of many details
+automatically, so we can keep the model syntax simple and concise.  If you wish
+to fit non-standard models or if you don't like the idea that things are done
+for you automatically, you can use the lower-level function `lavaan()` instead, 
+where you have full control.
 
-3.  Extract information from the fitted model. This can be a long
-    verbose summary, or it can be a single number only (say, the RMSEA
-    value). In the spirit of R, you only get what you asked for. We do
-    not print out unnecessary information that you would ignore anyway.
+3.  Extract information from the fitted model. This can be a long verbose
+summary, or it can be a single number only (say, the RMSEA value). In the
+spirit of R, you only get what you asked for. We try to not print out
+unnecessary information that you would ignore anyway.
 

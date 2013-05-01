@@ -5,10 +5,10 @@ published: true
 submenu: tutorial
 ---
 
-In our second example, we will use the built-in dataset. This is a
-dataset that has been used by Bollen in his 1989 book on structural
-equation modeling (and elsewhere). To learn more about the dataset, see
-the help page and the references therein.
+In our second example, we will use the built-in `PoliticalDemocracy` dataset.
+This is a dataset that has been used by Bollen in his 1989 book on structural
+equation modeling (and elsewhere). To learn more about the dataset, see its
+help page and the references therein.
 
 The figure below contains a graphical representation
 of the model that we want to fit. 
@@ -65,7 +65,8 @@ model <- '
 ```
 
 In this example, we use three different formula types: latent variabele
-definitions, regression formulas, and (co)variance formulas. The regression
+definitions (using the `=~` operator), regression formulas (using the `~`
+operator), and (co)variance formulas (using the `~~` operator). The regression
 formulas are similar to ordinary formulas in R. The (co)variance formulas
 typically have the following form:
 
@@ -113,15 +114,16 @@ fit <- sem(model, data=PoliticalDemocracy)
 summary(fit, standardized=TRUE)
 ```
 
-The function is very similar to the function. In fact, the two functions
-are currently almost identical, but this may change in the future. In
-the method, we omitted the argument. Therefore, you only get the basic
-chi-square statistic. The argument augments the output with standardized
-parameter values. Two extra columns of standardized parameter values are
-printed. In the first column (labeled ), only the latent variables are
-standardized. In the second column (labeled ), both latent and observed
-variables are standardized. The latter is often called the 'completely
-standardized solution'.
+The function `sem()` is very similar to the function `cfa()`.  In fact, the two
+functions are currently almost identical, but this may change in the future. In
+the `summary()` function, we omitted the `fit.measures=TRUE` argument.
+Therefore, you only get the basic chi-square test statistic. The argument
+`standardized=TRUE` augments the output with standardized parameter values. Two
+extra columns of standardized parameter values are printed. In the first column
+(labeled `Std.lv`), only the latent variables are standardized. In the second
+column (labeled `Std.all`), both latent and observed variables are
+standardized. The latter is often called the 'completely standardized
+solution'.
 
 The complete code to specify and fit this model is printed again below:
 

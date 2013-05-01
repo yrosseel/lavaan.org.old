@@ -12,14 +12,29 @@ HS.model <- ' visual =~ x1 + x2 + x3
               speed   =~ x7 + x8 + x9 '
 ```
 #### Estimators ####
-The default estimator in the lavaan package is maximum likelihood 
-(`estimator = "ML"`). Alternative estimators currently available in lavaan are:
+If all data is continuous, the default estimator in the lavaan package is
+maximum likelihood (`estimator = "ML"`). Alternative estimators available in
+lavaan are:
 
-- `"GLS"`: for generalized least squares. For complete data only.
-- `"WLS"`: for weighted least squares (sometimes called ADF estimation). For
+- `"GLS"`: generalized least squares. For complete data only.
+- `"WLS"`: weighted least squares (sometimes called ADF estimation). For
     complete data only.
-- `"MLM"`: for maximum likelihood estimation with robust standard errors and a
+- `"DWLS"`: diagonally weighted least squares
+- `"ULS"`: unweighted least squares
+
+Many estimators have 'robust' variants, meaning that they provide
+robust standard errors and a scaled test statistic. For example,
+for the maximum likelihood estimator, lavaan provides the following
+robust variants:
+
+- `"MLM"`: maximum likelihood estimation with robust standard errors and a
     Satorra-Bentler scaled test statistic. For complete data only.
+- `"MLMVS"`: maximum likelihood estimation with robust standard errors and a
+    mean- and variance adjusted test statistic (aka the Satterthwaite 
+    approach). For complete data only.
+- `"MLMV"`: maximum likelihood estimation with robust standard errors and a
+    mean- and variance adjusted test statistic (using a scale-shifted
+    approach). For complete data only.
 - `"MLF"`: for maximum likelihood estimation with standard errors based on the
     first-order derivatives, and a conventional test statistic. For both
     complete and incomplete data.
@@ -28,8 +43,15 @@ The default estimator in the lavaan package is maximum likelihood
     the Yuan-Bentler test statistic. For both complete and incomplete
     data.
 
-If maximum likelihood estimation is used (`"ML"`, `"MLM"` , `"MLF"` or
-`"MLR"`), the default behavior
+For the `DWLS` and `ULS` estimators, lavaan also provides 'robust'
+variants: `WLSM`, `WLSMVS`, `WLSMV`, `ULSM`, `ULSMVS`, `ULSMV`. Note
+that for the robust `WLS` variants, we use the diagonal of the weight matrix
+for estimation, but we use the full weight matrix to correct the standard
+errors and to compute the test statistic.
+
+#### ML estimation: Wishart versus Normal ####
+If maximum likelihood estimation is used (`"ML"` or any of its
+robusts variants), the default behavior
 of lavaan is to base the analysis on the so-called *biased* sample
 covariance matrix, where the elements are divided by $n$ instead of
 $n-1$. This is done internally, and should not be done by the user. In
@@ -37,11 +59,13 @@ addition, the chi-square statistic is computed by multiplying the
 minimum function value with a factor $n$ (instead of $n-1$). This is
 similar to the Mplus program. If you prefer to use an unbiased
 covariance, and $n-1$ as the multiplier to compute the chi-square
-statistic, you need to specify the `likelihood = "wishard"` 
+statistic, you need to specify the `likelihood = "wishart"` 
 argument when calling the fitting functions. For example:
 
-```{r comment=""}
-fit <- cfa(HS.model, data=HolzingerSwineford1939, likelihood="wishart")
+```{r comment="", tidy=FALSE}
+fit <- cfa(HS.model, 
+           data = HolzingerSwineford1939, 
+           likelihood = "wishart")
 fit
 ```
 
@@ -65,16 +89,20 @@ Standard errors are (by default) based on the expected information matrix. The
 only exception is when data are missing and full information ML is used (via
 `missing = "ML"`). In this case, the observed information matrix is used to
 compute the standard errors. The user can change this behavior by using the
-`information` argument, which can be set to `"expected"` or `"observed"`. If
-the estimator is simply `"ML"`, you request robust standard errors by using the
-`se` argument, which can be set to `"robust.sem"`, `"robust.huber.white"` or
-`"first.order"`.  Or simply to `"none"` if you don't need them. This will not
-affect the test statistic. In fact, you can choose the test statistic
-independently by using the `test` argument, which can be set to `"standard"`,
-`"Satorra-Bentler"` or `"Yuan-Bentler"`.
+`information` argument, which can be set to `"expected"` or `"observed"`. 
+
+If the estimator is simply `"ML"`, you can request robust standard errors by
+using the `se` argument, which can be set to `"robust.sem"`,
+`"robust.huber.white"` , `"first.order"` or `"bootstrap"`.  
+Or simply to `"none"` if you don't
+need them. This will not affect the test statistic. In fact, you can choose the
+test statistic independently by using the `test` argument, which can be set to
+`"standard"`, `"Satorra-Bentler"`, `"Yuan-Bentler"` or `"bootstrap"`.
 
 #### Bootstrapping ####
 There are two ways for using the bootstrap in lavaan. Either you can set `se =
-"boot"` or `test = "boot"` when fitting the model (and you will get bootstrap
-standard errors, and/or a bootstrap based p-value respectively), or you can you
-the `boostrapLavaan()` function, which needs an already fitted lavaan object.
+"bootstrap"` or `test = "bootstrap"` when fitting the model (and you will get
+bootstrap standard errors, and/or a bootstrap based p-value respectively), or
+you can you the `boostrapLavaan()` function, which needs an already fitted
+lavaan object. The latter function can be used to 'bootstrap' any statistic
+(or vector of statistics) that you can extract from a fitted lavaan object.

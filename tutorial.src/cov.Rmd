@@ -14,19 +14,37 @@ can still fit your model. If you wish to add a mean structure, you need to
 provide a mean vector too. Importantly, if only sample statistics are provided,
 you must specify the number of observations that were used to compute the
 sample moments. The following example illustrates the use of a sample
-covariance matrix as input:
+covariance matrix as input. First, we read in the lower half of the
+covariance matrix (including the diagonal):
 
-```{r tidy=FALSE, comment=""}
+```{r tidy=FALSE}
 lower <- '
  11.834
-  6.947      9.364
-  6.819      5.091    12.532
-  4.783      5.028     7.495      9.986
- -3.839     -3.889    -3.841     -3.625     9.610
--21.899    -18.831   -21.748    -18.775    35.522   450.288 '
+  6.947   9.364
+  6.819   5.091  12.532
+  4.783   5.028   7.495   9.986
+ -3.839  -3.889  -3.841  -3.625  9.610
+-21.899 -18.831 -21.748 -18.775 35.522 450.288 '
+
+wheaton.cov <- 
+    getCov(lower, names = c("anomia67", "powerless67", 
+                            "anomia71", "powerless71",
+                            "education", "sei"))
+```
+
+The `getCov()` function makes it easy to create a full covariance matrix
+(including variable names) if you only have the lower-half elements (perhaps
+pasted from a textbook or a paper). Note that the lower-half elements are
+written between two single quotes. Therefore, you have some additional
+flexibility. You can add comments, and blank lines. If the numbers are
+separated by a comma, or a semi-colon, that is fine too. For more information
+about `getCov()`, see the online manual page.
+
+Next, we can specify our model, estimate it, and request a summary
+of the results:
+
+```{r tidy=FALSE, comment=""}
 # classic wheaton et al model
-wheaton.cov <- getCov(lower, names=c("anomia67","powerless67", "anomia71",
-                                     "powerless71","education","sei"))
 wheaton.model <- '
   # latent variables
     ses     =~ education + sei
@@ -39,23 +57,16 @@ wheaton.model <- '
     anomia67 ~~ anomia71
     powerless67 ~~ powerless71
 '
-fit <- sem(wheaton.model, sample.cov=wheaton.cov, sample.nobs=932)
-summary(fit, standardized=TRUE)
+fit <- sem(wheaton.model, 
+           sample.cov = wheaton.cov, 
+           sample.nobs = 932)
+summary(fit, standardized = TRUE)
 ```
-
-The `getCov` function makes it easy to create a full covariance matrix
-(including variable names) if you only have the lower-half elements (perhaps
-pasted from a textbook or a paper). Note that the lower-half elements are
-written between two single quotes. Therefore, you have some additional
-flexibility. You can add comments, and blank lines. If the numbers are
-separated by a comma, or a semi-colon, that is fine too. For more information
-about `getCov()`, see the online manual page.
 
 If you have multiple groups, the `sample.cov` argument must be a list
 containing the sample variance-covariance matrix of each group as a separate
 element in the list. If a mean structure is needed, the `sample.mean` argument
 must be a list containing the sample means of each group. Finally, the
-`sample.nobs` argument can be either a list or a integer vector containing the
-number of observations
-for each group.
+`sample.nobs` argument can be either a list or an integer vector containing the
+number of observations for each group.
 

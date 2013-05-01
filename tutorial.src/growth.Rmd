@@ -29,7 +29,7 @@ random intercept, and a random slope:
 
 In this model, we have fixed all the coefficients of the growth
 functions. To fit this model, the lavaan package provides a special
-function:
+`growth()` function:
 
 ```{r tidy=FALSE, comment=""}
 model <- ' i =~ 1*t1 + 1*t2 + 1*t3 + 1*t4
@@ -38,13 +38,14 @@ fit <- growth(model, data=Demo.growth)
 summary(fit)
 ```
 
-Technically, the `growth` function is almost identical to the `sem` function.
-But a mean structure is automatically assumed, and the observed intercepts are
-fixed to zero by default, while the latent variable intercepts/means are freely
-estimated. A slightly more complex model adds two regressors (`x1` and `x2`)
-that influence the latent growth factors. In addition, a time-varying covariate
-that influences the outcome measure at the four time points has been added to
-the model. A graphical representation of this model is presented below.
+Technically, the `growth()` function is almost identical to the `sem()`
+function.  But a mean structure is automatically assumed, and the observed
+intercepts are fixed to zero by default, while the latent variable
+intercepts/means are freely estimated. A slightly more complex model adds two
+regressors (`x1` and `x2`) that influence the latent growth factors. In
+addition, a time-varying covariate `c` that influences the outcome measure at
+the four time points has been added to the model.  A graphical representation
+of this model is presented below.
 
 ```{r growth, echo=FALSE, message=FALSE, dev=c("png","pdf"), dpi=c(140,100), fig.cap="A growth curve examples"}
 library(semPlot)
@@ -111,7 +112,7 @@ model <- '
     t3 ~ c3
     t4 ~ c4
 '
-fit <- growth(model, data=Demo.growth)
+fit <- growth(model, data = Demo.growth)
 summary(fit)
 ```
 

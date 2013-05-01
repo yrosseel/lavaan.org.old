@@ -1,0 +1,39 @@
+\contentsline {section}{\numberline {1}Before you start}{1}{section.1}
+\contentsline {section}{\numberline {2}Installation of the package}{2}{section.2}
+\contentsline {section}{\numberline {3}The model syntax}{2}{section.3}
+\contentsline {section}{\numberline {4}A first example: confirmatory factor analysis (CFA)}{4}{section.4}
+\contentsline {section}{\numberline {5}A second example: a structural equation model (SEM)}{8}{section.5}
+\contentsline {section}{\numberline {6}More about the syntax}{12}{section.6}
+\contentsline {paragraph}{Fixing parameters}{12}{section*.2}
+\contentsline {paragraph}{Starting Values}{13}{section*.3}
+\contentsline {paragraph}{Parameter labels}{13}{section*.4}
+\contentsline {paragraph}{Modifiers}{14}{section*.5}
+\contentsline {paragraph}{Simple equality constraints}{14}{section*.6}
+\contentsline {paragraph}{Nonlinear equality and inequality constraints}{14}{section*.7}
+\contentsline {section}{\numberline {7}Bringing in the means}{15}{section.7}
+\contentsline {section}{\numberline {8}Multiple groups}{17}{section.8}
+\contentsline {paragraph}{Constraining a single parameter to be equal across groups}{22}{section*.8}
+\contentsline {paragraph}{Constraining groups of parameters to be equal across groups}{22}{section*.9}
+\contentsline {paragraph}{Measurement Invariance}{25}{section*.10}
+\contentsline {section}{\numberline {9}Growth curve models}{26}{section.9}
+\contentsline {section}{\numberline {10}Using categorical variables}{29}{section.10}
+\contentsline {paragraph}{Exogenous categorical variables}{29}{section*.11}
+\contentsline {paragraph}{Endogenous categorical variables}{29}{section*.12}
+\contentsline {section}{\numberline {11}Using a covariance matrix as input}{29}{section.11}
+\contentsline {section}{\numberline {12}Estimators, standard errors and missing values}{31}{section.12}
+\contentsline {paragraph}{Estimators}{31}{section*.13}
+\contentsline {paragraph}{ML estimation: Wishart versus Normal}{32}{section*.14}
+\contentsline {paragraph}{Missing values}{32}{section*.15}
+\contentsline {paragraph}{Standard errors}{32}{section*.16}
+\contentsline {paragraph}{Bootstrapping}{32}{section*.17}
+\contentsline {section}{\numberline {13}Indirect effects and mediation analysis}{32}{section.13}
+\contentsline {section}{\numberline {14}Modication Indices}{33}{section.14}
+\contentsline {section}{\numberline {15}Extracting information from a fitted model}{34}{section.15}
+\contentsline {paragraph}{parameterEstimates}{34}{section*.18}
+\contentsline {paragraph}{standardizedSolution}{35}{section*.19}
+\contentsline {paragraph}{fitted.values}{35}{section*.20}
+\contentsline {paragraph}{residuals}{35}{section*.21}
+\contentsline {paragraph}{vcov}{36}{section*.22}
+\contentsline {paragraph}{AIC and BIC}{36}{section*.23}
+\contentsline {paragraph}{fitMeasures}{36}{section*.24}
+\contentsline {paragraph}{inspect}{37}{section*.25}

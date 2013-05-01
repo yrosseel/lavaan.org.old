@@ -1,0 +1,15 @@
+\BOOKMARK [1][-]{section.1}{Before you start}{}% 1
+\BOOKMARK [1][-]{section.2}{Installation of the package}{}% 2
+\BOOKMARK [1][-]{section.3}{The model syntax}{}% 3
+\BOOKMARK [1][-]{section.4}{A first example: confirmatory factor analysis \(CFA\)}{}% 4
+\BOOKMARK [1][-]{section.5}{A second example: a structural equation model \(SEM\)}{}% 5
+\BOOKMARK [1][-]{section.6}{More about the syntax}{}% 6
+\BOOKMARK [1][-]{section.7}{Bringing in the means}{}% 7
+\BOOKMARK [1][-]{section.8}{Multiple groups}{}% 8
+\BOOKMARK [1][-]{section.9}{Growth curve models}{}% 9
+\BOOKMARK [1][-]{section.10}{Using categorical variables}{}% 10
+\BOOKMARK [1][-]{section.11}{Using a covariance matrix as input}{}% 11
+\BOOKMARK [1][-]{section.12}{Estimators, standard errors and missing values}{}% 12
+\BOOKMARK [1][-]{section.13}{Indirect effects and mediation analysis}{}% 13
+\BOOKMARK [1][-]{section.14}{Modication Indices}{}% 14
+\BOOKMARK [1][-]{section.15}{Extracting information from a fitted model}{}% 15

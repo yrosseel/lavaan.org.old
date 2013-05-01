@@ -1,0 +1,135 @@
+\paragraph{Estimators}
+
+If all data is continuous, the default estimator in the lavaan package
+is maximum likelihood (\texttt{estimator = "ML"}). Alternative
+estimators available in lavaan are:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \texttt{"GLS"}: generalized least squares. For complete data only.
+\item
+  \texttt{"WLS"}: weighted least squares (sometimes called ADF
+  estimation). For complete data only.
+\item
+  \texttt{"DWLS"}: diagonally weighted least squares
+\item
+  \texttt{"ULS"}: unweighted least squares
+\end{itemize}
+
+Many estimators have `robust' variants, meaning that they provide robust
+standard errors and a scaled test statistic. For example, for the
+maximum likelihood estimator, lavaan provides the following robust
+variants:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \texttt{"MLM"}: maximum likelihood estimation with robust standard
+  errors and a Satorra-Bentler scaled test statistic. For complete data
+  only.
+\item
+  \texttt{"MLMVS"}: maximum likelihood estimation with robust standard
+  errors and a mean- and variance adjusted test statistic (aka the
+  Satterthwaite approach). For complete data only.
+\item
+  \texttt{"MLMV"}: maximum likelihood estimation with robust standard
+  errors and a mean- and variance adjusted test statistic (using a
+  scale-shifted approach). For complete data only.
+\item
+  \texttt{"MLF"}: for maximum likelihood estimation with standard errors
+  based on the first-order derivatives, and a conventional test
+  statistic. For both complete and incomplete data.
+\item
+  \texttt{"MLR"}: maximum likelihood estimation with robust
+  (Huber-White) standard errors and a scaled test statistic that is
+  (asymptotically) equal to the Yuan-Bentler test statistic. For both
+  complete and incomplete data.
+\end{itemize}
+
+For the \texttt{DWLS} and \texttt{ULS} estimators, lavaan also provides
+`robust' variants: \texttt{WLSM}, \texttt{WLSMVS}, \texttt{WLSMV},
+\texttt{ULSM}, \texttt{ULSMVS}, \texttt{ULSMV}. Note that for the robust
+\texttt{WLS} variants, we use the diagonal of the weight matrix for
+estimation, but we use the full weight matrix to correct the standard
+errors and to compute the test statistic.
+
+\paragraph{ML estimation: Wishart versus Normal}
+
+If maximum likelihood estimation is used (\texttt{"ML"} or any of its
+robusts variants), the default behavior of lavaan is to base the
+analysis on the so-called \emph{biased} sample covariance matrix, where
+the elements are divided by $n$ instead of $n-1$. This is done
+internally, and should not be done by the user. In addition, the
+chi-square statistic is computed by multiplying the minimum function
+value with a factor $n$ (instead of $n-1$). This is similar to the Mplus
+program. If you prefer to use an unbiased covariance, and $n-1$ as the
+multiplier to compute the chi-square statistic, you need to specify the
+\texttt{likelihood = "wishart"} argument when calling the fitting
+functions. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{likelihood =} \StringTok{"wishart"}\NormalTok{)}
+\NormalTok{fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan (0.5-13) converged normally after  41 iterations
+
+  Number of observations                           301
+
+  Estimator                                         ML
+  Minimum Function Test Statistic               85.022
+  Degrees of freedom                                24
+  P-value (Chi-square)                           0.000
+\end{verbatim}
+
+The value of the test statistic will be closer to the value reported by
+programs like EQS, LISREL or AMOS, since they all use the `Wishart'
+approach when using the maximum likelihood estimator. The program Mplus,
+on the other hand, uses the `normal' approach to maximum likelihood
+estimation.
+
+\paragraph{Missing values}
+
+If the data contain missing values, the default behavior is listwise
+deletion. If the missing mechanism is MCAR (missing completely at
+random) or MAR (missing at random), the lavaan package provides
+case-wise (or `full information') maximum likelihood estimation. You can
+turn this feature on, by using the argument \texttt{missing = "ML"} when
+calling the fitting function. An unrestricted (h1) model will
+automatically be estimated, so that all common fit indices are
+available.
+
+\paragraph{Standard errors}
+
+Standard errors are (by default) based on the expected information
+matrix. The only exception is when data are missing and full information
+ML is used (via \texttt{missing = "ML"}). In this case, the observed
+information matrix is used to compute the standard errors. The user can
+change this behavior by using the \texttt{information} argument, which
+can be set to \texttt{"expected"} or \texttt{"observed"}.
+
+If the estimator is simply \texttt{"ML"}, you can request robust
+standard errors by using the \texttt{se} argument, which can be set to
+\texttt{"robust.sem"}, \texttt{"robust.huber.white"} ,
+\texttt{"first.order"} or \texttt{"bootstrap"}.\\Or simply to
+\texttt{"none"} if you don't need them. This will not affect the test
+statistic. In fact, you can choose the test statistic independently by
+using the \texttt{test} argument, which can be set to
+\texttt{"standard"}, \texttt{"Satorra-Bentler"}, \texttt{"Yuan-Bentler"}
+or \texttt{"bootstrap"}.
+
+\paragraph{Bootstrapping}
+
+There are two ways for using the bootstrap in lavaan. Either you can set
+\texttt{se = "bootstrap"} or \texttt{test = "bootstrap"} when fitting
+the model (and you will get bootstrap standard errors, and/or a
+bootstrap based p-value respectively), or you can you the
+\texttt{boostrapLavaan()} function, which needs an already fitted lavaan
+object. The latter function can be used to `bootstrap' any statistic (or
+vector of statistics) that you can extract from a fitted lavaan object.

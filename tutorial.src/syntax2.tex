@@ -1,0 +1,303 @@
+\paragraph{Fixing parameters}
+
+Consider a simple one-factor model with 4 indicators. By default, lavaan
+will always fix the factor loading of the first indicator to 1. The
+other three factor loadings are free, and their values are estimated by
+the model. But suppose that you have good reasons the fix all the factor
+loadings to 1. The syntax below illustrates how this can be done:
+
+\begin{verbatim}
+f =~ y1 + 1*y2 + 1*y3 + 1*y4
+\end{verbatim}
+
+In general, to fix a parameter in a lavaan formula, you need to
+pre-multiply the corresponding variable in the formula by a numerical
+value. This is called the pre-multiplication mechanism and will be used
+for many purposes. As another example, consider again the three-factor
+Holzinger and Swineford CFA model. Recall that, by default, all
+exogenous latent variables in a CFA model are correlated. But if you
+wish to fix the correlation (or covariance) between a pair of latent
+variables to zero, you need to explicity add a covariance-formula for
+this pair, and fix the parameter to zero. In the syntax below, we allow
+the covariance between the latent variables \texttt{visual} and
+\texttt{textual} to be free, but the two other covariances are fixed to
+zero. In addition, we fix the variance of the factor \texttt{speed} to
+unity. Therefore, there is no need anymore to set the factor loading of
+its first indicator (\texttt{x7}) equal to one. To force this factor
+loading to be free, we pre-multiply it with \texttt{NA}, as a hint to
+lavaan that the value of this parameter is still unknown.
+
+\begin{verbatim}
+# three-factor model
+   visual =~ x1 + x2 + x3
+  textual =~ x4 + x5 + x6
+  speed   =~ NA*x7 + x8 + x9
+# orthogonal factors
+   visual ~~ 0*speed
+  textual ~~ 0*speed
+# fix variance of speed factor
+    speed ~~ 1*speed
+\end{verbatim}
+
+If you need to constrain all covariances of the latent variables in a
+CFA model to be orthogonal, there is a shortcut. You can omit the
+covariance formulas in the model syntax and simply add an argument
+\texttt{orthogonal=TRUE} to the function call:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + x3}
+\StringTok{              textual =~ x4 + x5 + x6}
+\StringTok{              speed   =~ x7 + x8 + x9 '}
+
+\NormalTok{fit.HS.ortho <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+                    \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+                    \DataTypeTok{orthogonal =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Similarly, if you want to fix the variances of \emph{all} the latent
+variables in a CFA model to unity, there is again a shortcut. Simply add
+the argument \texttt{std.lv=TRUE} to the function call:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HS.model <-}\StringTok{ ' visual  =~ x1 + x2 + x3}
+\StringTok{              textual =~ x4 + x5 + x6}
+\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{std.lv =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+If the argument \texttt{std.lv=TRUE} is used, the factor loadings of the
+first indicator of each latent variable will no longer be fixed to 1.
+
+\paragraph{Starting Values}
+
+The lavaan package automatically generates starting values for all free
+parameters. Normally, this works fine. But if you must provide your own
+starting values, you are free to do so. The way it works is based on the
+pre-multiplication mechanism that we discussed before. But the numeric
+constant is now the argument of a special function \texttt{start()}. An
+example will make this clear:
+
+\begin{verbatim}
+ visual =~ x1 + start(0.8)*x2 + start(1.2)*x3
+textual =~ x4 + start(0.5)*x5 + start(1.0)*x6
+speed   =~ x7 + start(0.7)*x8 + start(1.8)*x9
+\end{verbatim}
+
+\paragraph{Parameter labels}
+
+A nice property of the lavaan package is that all free parameters are
+automatically named according to a simple set of rules. This is
+convenient, for example, if equality constraints are needed (see the
+next subsection). To see how the naming mechanism works, we will use the
+model that we used for the Politcal Democracy data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model <-}\StringTok{ '}
+\StringTok{  # latent variable definitions}
+\StringTok{    ind60 =~ x1 + x2 + x3}
+\StringTok{    dem60 =~ y1 + y2 + y3 + y4}
+\StringTok{    dem65 =~ y5 + y6 + y7 + y8}
+\StringTok{  # regressions}
+\StringTok{    dem60 ~ ind60}
+\StringTok{    dem65 ~ ind60 + dem60}
+\StringTok{  # residual (co)variances}
+\StringTok{    y1 ~~ y5}
+\StringTok{    y2 ~~ y4 + y6}
+\StringTok{    y3 ~~ y7}
+\StringTok{    y4 ~~ y8}
+\StringTok{    y6 ~~ y8}
+\StringTok{'}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }
+           \DataTypeTok{data =} \NormalTok{PoliticalDemocracy)}
+\KeywordTok{coef}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   ind60=~x2    ind60=~x3    dem60=~y2    dem60=~y3    dem60=~y4 
+       2.180        1.819        1.257        1.058        1.265 
+   dem65=~y6    dem65=~y7    dem65=~y8  dem60~ind60  dem65~ind60 
+       1.186        1.280        1.266        1.483        0.572 
+ dem65~dem60       y1~~y5       y2~~y4       y2~~y6       y3~~y7 
+       0.837        0.624        1.313        2.153        0.795 
+      y4~~y8       y6~~y8       x1~~x1       x2~~x2       x3~~x3 
+       0.348        1.356        0.082        0.120        0.467 
+      y1~~y1       y2~~y2       y3~~y3       y4~~y4       y5~~y5 
+       1.891        7.373        5.067        3.148        2.351 
+      y6~~y6       y7~~y7       y8~~y8 ind60~~ind60 dem60~~dem60 
+       4.954        3.431        3.254        0.448        3.956 
+dem65~~dem65 
+       0.172 
+\end{verbatim}
+
+The function \texttt{coef()} extracts the estimated values of the free
+parameters in the model, together with their names. Each name consists
+of three parts and reflects the part of the formula where the parameter
+was involved. The first part is the variable name that appears on the
+left-hand side of the formula. The middle part is the operator type of
+the formula, and the third part is the variable in the right-hand side
+of the formula that corresponds with the parameter.
+
+Often, it is convenient to choose your own labels for specific
+parameters. The way this works is similar to fixing a parameter. But
+instead of pre-multiplying with a numerical constant, we use a character
+string (the label) instead. In the example below, we `label' the factor
+loading of the \texttt{x3} indicator with the label \texttt{myLabel}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model <-}\StringTok{ '}
+\StringTok{  # latent variable definitions}
+\StringTok{    ind60 =~ x1 + x2 + myLabel*x3}
+\StringTok{    dem60 =~ y1 + y2 + y3 + y4}
+\StringTok{    dem65 =~ y5 + y6 + y7 + y8}
+\StringTok{  # regressions}
+\StringTok{    dem60 ~ ind60}
+\StringTok{    dem65 ~ ind60 + dem60}
+\StringTok{  # residual (co)variances}
+\StringTok{    y1 ~~ y5}
+\StringTok{    y2 ~~ y4 + y6}
+\StringTok{    y3 ~~ y7}
+\StringTok{    y4 ~~ y8}
+\StringTok{    y6 ~~ y8}
+\StringTok{'}
+\end{Highlighting}
+\end{Shaded}
+
+It is important that labels start with a letter (a-zA-Z), and certainly
+not with a digit. For example `13bis' is not a valid label, and will
+confuse the lavaan syntax parser. Note: before version 0.4-8, it was
+necessary to use the modifier \texttt{label()} to specify a custom
+label. Although it is still supported, it is not recommended anymore.
+The only reason why it should be used in new syntax is if the label
+contains an operator like ``\texttt{\textasciitilde{}}'' or
+``\texttt{=\textasciitilde{}}''.
+
+\paragraph{Modifiers}
+
+We have seen the use of the pre-multiplication mechanism (using the
+\texttt{*} operator) a number of times: to fix a parameter, to provide a
+starting value, and to label a parameter. We refer to these operations
+as \emph{modifiers}, because they modify some properties of certain
+model parameters. More modifiers will be introduced later.
+
+Each term on the right hand side in a formula can have one modifier
+only. If you must specify more modifiers for the same parameter, you
+need to list the term multiple times in the same formula. For example:
+
+\begin{verbatim}
+f =~ y1 + y2 + myLabel*y3 + start(0.5)*y3 + y4
+\end{verbatim}
+
+The indicator \texttt{y3} was listed twice, each time with a different
+modifier. The parser will accumulate all the different modifiers, but
+still treat \texttt{y3} as a single indicator.
+
+\paragraph{Simple equality constraints}
+
+In some applications, it is useful to impose equality constraints on one
+or more otherwise free parameters. Consider again the three-factor H\&S
+CFA model. Suppose a user has a priori reasons to believe that the
+factor loadings of the \texttt{x2} and \texttt{x3} indicators are equal
+to each other. Instead of estimating two free parameters, lavaan should
+only estimate a single free parameter, and use that value for both
+factor loadings. The main mechanism to specify this type of (simple)
+equality constraints is by using labels: if two parameters have the same
+label, they will be considered to be the same, and only one value will
+be computed for them. This is illustrated in the following syntax:
+
+\begin{verbatim}
+ visual =~ x1 + v2*x2 + v2*x3
+textual =~ x4 + x5 + x6
+speed   =~ x7 + x8 + x9
+\end{verbatim}
+
+Remember: all parameters having the same label will be constrained to be
+equal.
+
+An alternative approach is to use the \texttt{equal()} modifier. This is
+useful if no custom label has been specified, and one needs to refer to
+the automatically generated label. For example:
+
+\begin{verbatim}
+ visual =~ x1 + x2 + equal("visual=~x2")*x3
+textual =~ x4 + x5 + x6
+speed   =~ x7 + x8 + x9
+\end{verbatim}
+
+\paragraph{Nonlinear equality and inequality constraints}
+
+Consider the following regression:
+
+\begin{verbatim}
+y ~ b1*x1 + b2*x2 + b3*x3
+\end{verbatim}
+
+where we have explicitly labeled the regression coefficients as
+\texttt{b1}, \texttt{b2} and \texttt{b3}. We create a toy dataset
+containing these four variables and fit the regression model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{Data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }
+                   \DataTypeTok{x1 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }
+                   \DataTypeTok{x2 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{),}
+                   \DataTypeTok{x3 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{))}
+\NormalTok{model <-}\StringTok{ ' y ~ b1*x1 + b2*x2 + b3*x3 '}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }\DataTypeTok{data=}\NormalTok{Data)}
+\KeywordTok{coef}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    b1     b2     b3   y~~y 
+-0.052  0.084  0.139  0.970 
+\end{verbatim}
+
+Suppose that we need to impose the following two (nonlinear) constraints
+on $b_1$: $b_1 = (b_2+b_3)^2$ and $b_1 \geq \exp(b_2 + b_3)$. The first
+constraint is an equality constraint. The second is an inequality
+constraint. To specify these constraints, you can use the following
+syntax:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model.constr <-}\StringTok{ ' # model with labeled parameters}
+\StringTok{                    y ~ b1*x1 + b2*x2 + b3*x3}
+\StringTok{                  # constraints}
+\StringTok{                    b1 == (b2 + b3)^2}
+\StringTok{                    b1 > exp(b2 + b3) '}
+\end{Highlighting}
+\end{Shaded}
+
+To see the effect of the constraints, we refit the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model.constr <-}\StringTok{ ' # model with labeled parameters}
+\StringTok{                    y ~ b1*x1 + b2*x2 + b3*x3}
+\StringTok{                  # constraints}
+\StringTok{                    b1 == (b2 + b3)^2}
+\StringTok{                    b1 > exp(b2 + b3) '}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model.constr, }\DataTypeTok{data=}\NormalTok{Data)}
+\KeywordTok{coef}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    b1     b2     b3   y~~y 
+ 0.495 -0.405 -0.299  1.610 
+\end{verbatim}
+
+The reader can verify that the constraints are indeed respected. The
+equality constraint holds exactly. The inequality constraint has
+resulted in an equality between the left-hand side ($b_1$) and the
+right-hand side ($\exp(b_2 + b_3)$).

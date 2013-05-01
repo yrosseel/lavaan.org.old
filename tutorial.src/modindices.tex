@@ -1,0 +1,54 @@
+Modification indices can be requested by adding the argument
+\texttt{modindices = TRUE} in the \texttt{summary()} call, or by calling
+the function \texttt{modindices()} directly. The \texttt{modindices()}
+function returns a data frame, which you can sort or filter to extract
+what you want. For example, to see only the modification indices for the
+factor loadings, you can use something like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\NormalTok{mi <-}\StringTok{ }\KeywordTok{modindices}\NormalTok{(fit)}
+\NormalTok{mi[mi$op ==}\StringTok{ "=~"}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       lhs op rhs     mi    epc sepc.lv sepc.all sepc.nox
+1   visual =~  x1     NA     NA      NA       NA       NA
+2   visual =~  x2  0.000  0.000   0.000    0.000    0.000
+3   visual =~  x3  0.000  0.000   0.000    0.000    0.000
+4   visual =~  x4  1.211  0.077   0.069    0.059    0.059
+5   visual =~  x5  7.441 -0.210  -0.189   -0.147   -0.147
+6   visual =~  x6  2.843  0.111   0.100    0.092    0.092
+7   visual =~  x7 18.631 -0.422  -0.380   -0.349   -0.349
+8   visual =~  x8  4.295 -0.210  -0.189   -0.187   -0.187
+9   visual =~  x9 36.411  0.577   0.519    0.515    0.515
+10 textual =~  x1  8.903  0.350   0.347    0.297    0.297
+11 textual =~  x2  0.017 -0.011  -0.011   -0.010   -0.010
+12 textual =~  x3  9.151 -0.272  -0.269   -0.238   -0.238
+13 textual =~  x4     NA     NA      NA       NA       NA
+14 textual =~  x5  0.000  0.000   0.000    0.000    0.000
+15 textual =~  x6  0.000  0.000   0.000    0.000    0.000
+16 textual =~  x7  0.098 -0.021  -0.021   -0.019   -0.019
+17 textual =~  x8  3.359 -0.121  -0.120   -0.118   -0.118
+18 textual =~  x9  4.796  0.138   0.137    0.136    0.136
+19   speed =~  x1  0.014  0.024   0.015    0.013    0.013
+20   speed =~  x2  1.580 -0.198  -0.123   -0.105   -0.105
+21   speed =~  x3  0.716  0.136   0.084    0.075    0.075
+22   speed =~  x4  0.003 -0.005  -0.003   -0.003   -0.003
+23   speed =~  x5  0.201 -0.044  -0.027   -0.021   -0.021
+24   speed =~  x6  0.273  0.044   0.027    0.025    0.025
+25   speed =~  x7     NA     NA      NA       NA       NA
+26   speed =~  x8  0.000  0.000   0.000    0.000    0.000
+27   speed =~  x9  0.000  0.000   0.000    0.000    0.000
+\end{verbatim}
+
+Modification indices are printed out for each nonfree (or nonredundant)
+parameter. The modification indices are supplemented by the expected
+parameter change (EPC) values (column \texttt{epc}). The last three
+columns contain the standardized EPC values (\texttt{sepc.lv}: only
+standardizing the latent variables; \texttt{sepc.all}: standardizing all
+variables; \texttt{sepc.nox}: standardizing all but exogenous observed
+variables)

@@ -19,9 +19,10 @@ Other extractor functions are discussed below.
 
 #### parameterEstimates ####
 
-The function extracts not only the values of the estimated parameters,
-but also the standard errors, the z-values, the standardized parameter
-values, as a convenient data frame. For example:
+The `parameterEstimates` function extracts not only the values of the estimated
+parameters, but also the standard errors, the z-values, the standardized
+parameter values, and returns everything conveniently as a data frame. For
+example:
 
 ```{r comment=""}
 fit <- cfa(HS.model, data=HolzingerSwineford1939)
@@ -37,7 +38,7 @@ estimates.
 #### fitted.values ####
 
 The `fitted()` and `fitted.values()` functions return the 
-implied (fitted) covariance matrix (and mean vector) of a fitted model:
+model-implied (fitted) covariance matrix (and mean vector) of a fitted model:
 
 ```{r comment=""}
 fit <- cfa(HS.model, data=HolzingerSwineford1939)
@@ -49,7 +50,9 @@ fitted(fit)
 The `resid()` or `residuals()` functions return (unstandardized) residuals of a
 fitted model.  This is simply the difference between the observed and implied
 covariance matrix and mean vector. If the estimator is maximum likelihood, it
-is also possible to obtain the normalized and the standardized residuals.
+is also possible to obtain the normalized and the standardized 
+residuals (note: you may observe several `NA` values, but they can be 
+safely ignored)
 
 ```{r comment=""}
 fit <- cfa(HS.model, data=HolzingerSwineford1939)
@@ -69,12 +72,25 @@ model.
 #### fitMeasures ####
 
 The `fitMeasures()` function returns all the fit measures computed by lavaan as
-a named numeric vector. If you only want the value of a single fit measure,
+a named numeric vector. 
+
+```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
+fitMeasures(fit)
+```
+
+If you only want the value of a single fit measure,
 say, the CFI, you give the name (in lower case) as the second argument:
 
 ```{r comment=""}
 fit <- cfa(HS.model, data=HolzingerSwineford1939)
 fitMeasures(fit, "cfi")
+```
+
+Or you can provide a vector of fit measures, as in 
+
+```{r comment=""}
+fitMeasures(fit, c("cfi","rmsea","srmr"))
 ```
 
 #### inspect ####
@@ -86,6 +102,7 @@ fitted lavaan object returns a list of the model matrices that are used
 internally to represent the model.  The free parameters are nonzero integers.
 
 ```{r comment=""}
+fit <- cfa(HS.model, data=HolzingerSwineford1939)
 inspect(fit)
 ```
 
@@ -99,6 +116,9 @@ To see how lavaan internally represents a model, you can type
 ```{r comment=""}
 inspect(fit, what="list")
 ```
+
+This is equivalent to the `parTable(fit)` function. The table that
+is returned here is called the 'parameter table'.
 
 For more inspect options, see the help page for the lavaan class which
 you can find by typing the following:

@@ -61,4 +61,4 @@ Before you start, please read these points carefully:
     open an issue on github (see <https://github.com/yrosseel/lavaan/issues>).
     The latter is useful once we have agreed it is a bug, and it should be
     fixed. If you report a bug, it is always very useful to provide a
-    reproducable example (a short R script and some data).
+    reproducible example (a short R script and some data).

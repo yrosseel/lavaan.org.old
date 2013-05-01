@@ -1,0 +1,330 @@
+The \texttt{summary()} function gives a nice overview of a fitted model,
+but is for display only. If you need the actual numbers for further
+processing, you may prefer to use one of several `extractor' functions.
+We have already seen the \texttt{coef()} function which extracts the
+estimated parameters of a fitted model. Other extractor functions are
+discussed below.
+
+\paragraph{parameterEstimates}
+
+The \texttt{parameterEstimates} function extracts not only the values of
+the estimated parameters, but also the standard errors, the z-values,
+the standardized parameter values, and returns everything conveniently
+as a data frame. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\KeywordTok{parameterEstimates}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       lhs op     rhs   est    se      z pvalue ci.lower ci.upper
+1   visual =~      x1 1.000 0.000     NA     NA    1.000    1.000
+2   visual =~      x2 0.553 0.100  5.554      0    0.358    0.749
+3   visual =~      x3 0.729 0.109  6.685      0    0.516    0.943
+4  textual =~      x4 1.000 0.000     NA     NA    1.000    1.000
+5  textual =~      x5 1.113 0.065 17.014      0    0.985    1.241
+6  textual =~      x6 0.926 0.055 16.703      0    0.817    1.035
+7    speed =~      x7 1.000 0.000     NA     NA    1.000    1.000
+8    speed =~      x8 1.180 0.165  7.152      0    0.857    1.503
+9    speed =~      x9 1.082 0.151  7.155      0    0.785    1.378
+10      x1 ~~      x1 0.549 0.114  4.833      0    0.326    0.772
+11      x2 ~~      x2 1.134 0.102 11.146      0    0.934    1.333
+12      x3 ~~      x3 0.844 0.091  9.317      0    0.667    1.022
+13      x4 ~~      x4 0.371 0.048  7.779      0    0.278    0.465
+14      x5 ~~      x5 0.446 0.058  7.642      0    0.332    0.561
+15      x6 ~~      x6 0.356 0.043  8.277      0    0.272    0.441
+16      x7 ~~      x7 0.799 0.081  9.823      0    0.640    0.959
+17      x8 ~~      x8 0.488 0.074  6.573      0    0.342    0.633
+18      x9 ~~      x9 0.566 0.071  8.003      0    0.427    0.705
+19  visual ~~  visual 0.809 0.145  5.564      0    0.524    1.094
+20 textual ~~ textual 0.979 0.112  8.737      0    0.760    1.199
+21   speed ~~   speed 0.384 0.086  4.451      0    0.215    0.553
+22  visual ~~ textual 0.408 0.074  5.552      0    0.264    0.552
+23  visual ~~   speed 0.262 0.056  4.660      0    0.152    0.373
+24 textual ~~   speed 0.173 0.049  3.518      0    0.077    0.270
+\end{verbatim}
+
+\paragraph{standardizedSolution}
+
+The \texttt{standardizedSolution()} function is similar to the
+\texttt{parameterEstimates()} function, but only shows the
+unstandardized and standardized parameter estimates.
+
+\paragraph{fitted.values}
+
+The \texttt{fitted()} and \texttt{fitted.values()} functions return the
+model-implied (fitted) covariance matrix (and mean vector) of a fitted
+model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\KeywordTok{fitted}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$cov
+   x1    x2    x3    x4    x5    x6    x7    x8    x9   
+x1 1.358                                                
+x2 0.448 1.382                                          
+x3 0.590 0.327 1.275                                    
+x4 0.408 0.226 0.298 1.351                              
+x5 0.454 0.252 0.331 1.090 1.660                        
+x6 0.378 0.209 0.276 0.907 1.010 1.196                  
+x7 0.262 0.145 0.191 0.173 0.193 0.161 1.183            
+x8 0.309 0.171 0.226 0.205 0.228 0.190 0.453 1.022      
+x9 0.284 0.157 0.207 0.188 0.209 0.174 0.415 0.490 1.015
+
+$mean
+x1 x2 x3 x4 x5 x6 x7 x8 x9 
+ 0  0  0  0  0  0  0  0  0 
+\end{verbatim}
+
+\paragraph{residuals}
+
+The \texttt{resid()} or \texttt{residuals()} functions return
+(unstandardized) residuals of a fitted model. This is simply the
+difference between the observed and implied covariance matrix and mean
+vector. If the estimator is maximum likelihood, it is also possible to
+obtain the normalized and the standardized residuals (note: you may
+observe several \texttt{NA} values, but they can be safely ignored)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\KeywordTok{resid}\NormalTok{(fit, }\DataTypeTok{type =} \StringTok{"standardized"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$cov
+   x1     x2     x3     x4     x5     x6     x7     x8     x9    
+x1     NA                                                        
+x2 -2.196     NA                                                 
+x3 -1.199  2.692  0.000                                          
+x4  2.465 -0.283 -1.948     NA                                   
+x5 -0.362 -0.610 -4.443  0.856     NA                            
+x6  2.032  0.661 -0.701     NA  0.633     NA                     
+x7 -3.787 -3.800 -1.882  0.839 -0.837 -0.321  0.000              
+x8 -1.456 -1.137 -0.305 -2.049 -1.100 -0.635  3.804     NA       
+x9  4.062  1.517  3.328  1.237  1.723  1.436 -2.772     NA     NA
+
+$mean
+x1 x2 x3 x4 x5 x6 x7 x8 x9 
+ 0  0  0  0  0  0  0  0  0 
+\end{verbatim}
+
+\paragraph{vcov}
+
+The function \texttt{vcov()} returns the estimated covariance matrix of
+the parameter estimates.
+
+\paragraph{AIC and BIC}
+
+The \texttt{AIC()} and \texttt{BIC()} functions return the AIC and BIC
+values of a fitted model.
+
+\paragraph{fitMeasures}
+
+The \texttt{fitMeasures()} function returns all the fit measures
+computed by lavaan as a named numeric vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\KeywordTok{fitMeasures}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             fmin             chisq                df            pvalue 
+            0.142            85.306            24.000             0.000 
+   baseline.chisq       baseline.df   baseline.pvalue               cfi 
+          918.852            36.000             0.000             0.931 
+              tli              nnfi               rfi               nfi 
+            0.896             0.896             0.861             0.907 
+             pnfi               ifi               rni              logl 
+            0.605             0.931             0.931         -3737.745 
+unrestricted.logl              npar               aic               bic 
+        -3695.092            21.000          7517.490          7595.339 
+           ntotal              bic2             rmsea    rmsea.ci.lower 
+          301.000          7528.739             0.092             0.071 
+   rmsea.ci.upper      rmsea.pvalue               rmr        rmr_nomean 
+            0.114             0.001             0.082             0.082 
+             srmr       srmr_nomean             cn_05             cn_01 
+            0.065             0.065           129.490           152.654 
+              gfi              agfi              pgfi               mfi 
+            0.943             0.894             0.503             0.903 
+             ecvi 
+            0.423 
+\end{verbatim}
+
+If you only want the value of a single fit measure, say, the CFI, you
+give the name (in lower case) as the second argument:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\KeywordTok{fitMeasures}\NormalTok{(fit, }\StringTok{"cfi"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  cfi 
+0.931 
+\end{verbatim}
+
+Or you can provide a vector of fit measures, as in
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{fitMeasures}\NormalTok{(fit, }\KeywordTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{, }\StringTok{"rmsea"}\NormalTok{, }\StringTok{"srmr"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  cfi rmsea  srmr 
+0.931 0.092 0.065 
+\end{verbatim}
+
+\paragraph{inspect}
+
+If you want to peek inside a fitted lavaan object (the object that is
+returned by a call to \texttt{cfa()}, \texttt{sem()}or
+\texttt{growth()}), you can use the \texttt{inspect()} function, with a
+variety of options. By default, calling \texttt{inspect()} on a fitted
+lavaan object returns a list of the model matrices that are used
+internally to represent the model. The free parameters are nonzero
+integers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\KeywordTok{inspect}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$lambda
+   visual textul speed
+x1      0      0     0
+x2      1      0     0
+x3      2      0     0
+x4      0      0     0
+x5      0      3     0
+x6      0      4     0
+x7      0      0     0
+x8      0      0     5
+x9      0      0     6
+
+$theta
+   x1 x2 x3 x4 x5 x6 x7 x8 x9
+x1  7                        
+x2  0  8                     
+x3  0  0  9                  
+x4  0  0  0 10               
+x5  0  0  0  0 11            
+x6  0  0  0  0  0 12         
+x7  0  0  0  0  0  0 13      
+x8  0  0  0  0  0  0  0 14   
+x9  0  0  0  0  0  0  0  0 15
+
+$psi
+        visual textul speed
+visual  16                 
+textual 19     17          
+speed   20     21     18   
+\end{verbatim}
+
+To see the starting values of parameters in each model matrix, type
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{inspect}\NormalTok{(fit, }\DataTypeTok{what =} \StringTok{"start"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$lambda
+   visual textul speed
+x1  1.000  0.000 0.000
+x2  0.778  0.000 0.000
+x3  1.107  0.000 0.000
+x4  0.000  1.000 0.000
+x5  0.000  1.133 0.000
+x6  0.000  0.924 0.000
+x7  0.000  0.000 1.000
+x8  0.000  0.000 1.225
+x9  0.000  0.000 0.854
+
+$theta
+   x1    x2    x3    x4    x5    x6    x7    x8    x9   
+x1 0.679                                                
+x2 0.000 0.691                                          
+x3 0.000 0.000 0.637                                    
+x4 0.000 0.000 0.000 0.675                              
+x5 0.000 0.000 0.000 0.000 0.830                        
+x6 0.000 0.000 0.000 0.000 0.000 0.598                  
+x7 0.000 0.000 0.000 0.000 0.000 0.000 0.592            
+x8 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.511      
+x9 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.508
+
+$psi
+        visual textul speed
+visual  0.05               
+textual 0.00   0.05        
+speed   0.00   0.00   0.05 
+\end{verbatim}
+
+To see how lavaan internally represents a model, you can type
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{inspect}\NormalTok{(fit, }\DataTypeTok{what =} \StringTok{"list"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   id     lhs op     rhs user group free ustart exo label eq.id unco
+1   1  visual =~      x1    1     1    0      1   0           0    0
+2   2  visual =~      x2    1     1    1     NA   0           0    1
+3   3  visual =~      x3    1     1    2     NA   0           0    2
+4   4 textual =~      x4    1     1    0      1   0           0    0
+5   5 textual =~      x5    1     1    3     NA   0           0    3
+6   6 textual =~      x6    1     1    4     NA   0           0    4
+7   7   speed =~      x7    1     1    0      1   0           0    0
+8   8   speed =~      x8    1     1    5     NA   0           0    5
+9   9   speed =~      x9    1     1    6     NA   0           0    6
+10 10      x1 ~~      x1    0     1    7     NA   0           0    7
+11 11      x2 ~~      x2    0     1    8     NA   0           0    8
+12 12      x3 ~~      x3    0     1    9     NA   0           0    9
+13 13      x4 ~~      x4    0     1   10     NA   0           0   10
+14 14      x5 ~~      x5    0     1   11     NA   0           0   11
+15 15      x6 ~~      x6    0     1   12     NA   0           0   12
+16 16      x7 ~~      x7    0     1   13     NA   0           0   13
+17 17      x8 ~~      x8    0     1   14     NA   0           0   14
+18 18      x9 ~~      x9    0     1   15     NA   0           0   15
+19 19  visual ~~  visual    0     1   16     NA   0           0   16
+20 20 textual ~~ textual    0     1   17     NA   0           0   17
+21 21   speed ~~   speed    0     1   18     NA   0           0   18
+22 22  visual ~~ textual    0     1   19     NA   0           0   19
+23 23  visual ~~   speed    0     1   20     NA   0           0   20
+24 24 textual ~~   speed    0     1   21     NA   0           0   21
+\end{verbatim}
+
+This is equivalent to the \texttt{parTable(fit)} function. The table
+that is returned here is called the `parameter table'.
+
+For more inspect options, see the help page for the lavaan class which
+you can find by typing the following:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class?lavaan}
+\end{Highlighting}
+\end{Shaded}
+

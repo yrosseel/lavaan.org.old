@@ -30,10 +30,6 @@ pdf: $(addsuffix .tex, $(objects)) tutorial.tex
 	latexmk -pdf tutorial.tex
 	cp tutorial.pdf ../tutorial
 	cp -r figure ../tutorial
-	latexmk -c -quiet tutorial.tex
-	rm -rf $(addsuffix .tex, $(objects)) 
-	rm -rf figure
-	rm tutorial.pdf
 
 # build html pages
 # html: $(addsuffix .html, $(objects))

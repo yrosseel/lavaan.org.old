@@ -26,24 +26,31 @@ endogenous variables. Only the three-stage WLS approach is currently supported,
 including some 'robust' variants. To use binary/ordinal data, you have two
 choices:
 
-1.  declare them as 'ordered' (using the `ordered` function, which is part of
+1. declare them as 'ordered' (using the `ordered` function, which is part of
 base R) in your data.frame before you run the analysis; for example, if you
 need to declare four variables (say, `item1`, `item2`, `item3`, `item4`) as
 ordinal in your data.frame (called `Data`), you can use something like:
 
-```{r eval=FALSE}
-Data[,c("item1","item2","item3","item4")] <-
-    lapply(Data[,c("item1","item2","item3","item4")], ordered)
-```
-
-2.  used the argument when using one of the fitting functions
+    ```{r eval=FALSE, tidy=FALSE}
+    Data[,c("item1",
+            "item2",
+            "item3",
+            "item4")] <-
+        lapply(Data[,c("item1",
+                       "item2",
+                       "item3",
+                       "item4")], ordered)
+    ```
+2. use the `ordered` argument when using one of the fitting functions
 (cfa/sem/growth/lavaan), for example, if you have four binary or ordinal
 variables (say, `item1`, `item2`, `item3`, `item4`), you can use:
 
-```{r eval=FALSE}
-fit <- cfa(myModel, data=myData,
-           ordered=c("item1","item2","item3","item4"))
-```
+    ```{r eval=FALSE, tidy=FALSE}
+    fit <- cfa(myModel, data = myData,
+               ordered=c("item1","item2",
+                         "item3","item4"))
+    ```
+
 In both cases, lavaan will automatically switch to the `WLSMV` estimator: it
 will use diagonally weighted least squares (`DWLS`) to estimate the model
 parameters, but it will use the full weight matrix to compute robust standard

@@ -1,0 +1,119 @@
+If you have no full dataset, but you do have a sample covariance matrix,
+you can still fit your model. If you wish to add a mean structure, you
+need to provide a mean vector too. Importantly, if only sample
+statistics are provided, you must specify the number of observations
+that were used to compute the sample moments. The following example
+illustrates the use of a sample covariance matrix as input. First, we
+read in the lower half of the covariance matrix (including the
+diagonal):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lower <-}\StringTok{ '}
+\StringTok{ 11.834}
+\StringTok{  6.947   9.364}
+\StringTok{  6.819   5.091  12.532}
+\StringTok{  4.783   5.028   7.495   9.986}
+\StringTok{ -3.839  -3.889  -3.841  -3.625  9.610}
+\StringTok{-21.899 -18.831 -21.748 -18.775 35.522 450.288 '}
+
+\NormalTok{wheaton.cov <-}\StringTok{ }
+\StringTok{    }\KeywordTok{getCov}\NormalTok{(lower, }\DataTypeTok{names =} \KeywordTok{c}\NormalTok{(}\StringTok{"anomia67"}\NormalTok{, }\StringTok{"powerless67"}\NormalTok{, }
+                            \StringTok{"anomia71"}\NormalTok{, }\StringTok{"powerless71"}\NormalTok{,}
+                            \StringTok{"education"}\NormalTok{, }\StringTok{"sei"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{getCov()} function makes it easy to create a full covariance
+matrix (including variable names) if you only have the lower-half
+elements (perhaps pasted from a textbook or a paper). Note that the
+lower-half elements are written between two single quotes. Therefore,
+you have some additional flexibility. You can add comments, and blank
+lines. If the numbers are separated by a comma, or a semi-colon, that is
+fine too. For more information about \texttt{getCov()}, see the online
+manual page.
+
+Next, we can specify our model, estimate it, and request a summary of
+the results:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# classic wheaton et al model}
+\NormalTok{wheaton.model <-}\StringTok{ '}
+\StringTok{  # latent variables}
+\StringTok{    ses     =~ education + sei}
+\StringTok{    alien67 =~ anomia67 + powerless67}
+\StringTok{    alien71 =~ anomia71 + powerless71}
+\StringTok{  # regressions}
+\StringTok{    alien71 ~ alien67 + ses}
+\StringTok{    alien67 ~ ses}
+\StringTok{  # correlated residuals}
+\StringTok{    anomia67 ~~ anomia71}
+\StringTok{    powerless67 ~~ powerless71}
+\StringTok{'}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(wheaton.model, }
+           \DataTypeTok{sample.cov =} \NormalTok{wheaton.cov, }
+           \DataTypeTok{sample.nobs =} \DecValTok{932}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{standardized =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan (0.5-13) converged normally after  82 iterations
+
+  Number of observations                           932
+
+  Estimator                                         ML
+  Minimum Function Test Statistic                4.735
+  Degrees of freedom                                 4
+  P-value (Chi-square)                           0.316
+
+Parameter estimates:
+
+  Information                                 Expected
+  Standard Errors                             Standard
+
+                   Estimate  Std.err  Z-value  P(>|z|)   Std.lv  Std.all
+Latent variables:
+  ses =~
+    education         1.000                               2.607    0.842
+    sei               5.219    0.422   12.364    0.000   13.609    0.642
+  alien67 =~
+    anomia67          1.000                               2.663    0.774
+    powerless67       0.979    0.062   15.895    0.000    2.606    0.852
+  alien71 =~
+    anomia71          1.000                               2.850    0.805
+    powerless71       0.922    0.059   15.498    0.000    2.628    0.832
+
+Regressions:
+  alien71 ~
+    alien67           0.607    0.051   11.898    0.000    0.567    0.567
+    ses              -0.227    0.052   -4.334    0.000   -0.207   -0.207
+  alien67 ~
+    ses              -0.575    0.056  -10.195    0.000   -0.563   -0.563
+
+Covariances:
+  anomia67 ~~
+    anomia71          1.623    0.314    5.176    0.000    1.623    0.356
+  powerless67 ~~
+    powerless71       0.339    0.261    1.298    0.194    0.339    0.121
+
+Variances:
+    education         2.801    0.507                      2.801    0.292
+    sei             264.597   18.126                    264.597    0.588
+    anomia67          4.731    0.453                      4.731    0.400
+    powerless67       2.563    0.403                      2.563    0.274
+    anomia71          4.399    0.515                      4.399    0.351
+    powerless71       3.070    0.434                      3.070    0.308
+    ses               6.798    0.649                      1.000    1.000
+    alien67           4.841    0.467                      0.683    0.683
+    alien71           4.083    0.404                      0.503    0.503
+\end{verbatim}
+
+If you have multiple groups, the \texttt{sample.cov} argument must be a
+list containing the sample variance-covariance matrix of each group as a
+separate element in the list. If a mean structure is needed, the
+\texttt{sample.mean} argument must be a list containing the sample means
+of each group. Finally, the \texttt{sample.nobs} argument can be either
+a list or an integer vector containing the number of observations for
+each group.

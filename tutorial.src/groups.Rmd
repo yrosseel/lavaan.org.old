@@ -11,23 +11,25 @@ library(lavaan)
 
 The lavaan package has full support for multiple groups. To request a multiple
 group analysis, you need to add the name of the group variable in your dataset
-to the argument in the and function calls. By default, the same model is fitted
-in all groups. In the following example, we fit the H&S CFA model for the two
-schools (Pasteur and Grant-White).
+to the argument `group` in the fitting function. By default, the same model is
+fitted in all groups. In the following example, we fit the H&S CFA model for
+the two schools (Pasteur and Grant-White).
 
 ```{r tidy=FALSE, comment=""}
 HS.model <- '  visual =~ x1 + x2 + x3
               textual =~ x4 + x5 + x6
               speed   =~ x7 + x8 + x9 '
-fit <- cfa(HS.model, data=HolzingerSwineford1939, group="school")
+fit <- cfa(HS.model, 
+           data = HolzingerSwineford1939, 
+           group = "school")
 summary(fit)
 ```
 
 If you want to fix parameters, or provide starting values, you can use the same
 pre-multiplication techniques, but the single argument is now replaced by a
-vector of arguments, one for each group. If you use a single element instead of
-a vector, that element will be applied for all groups (note: this is NOT true
-for labels, since this would imply equality constraints). For example:
+*vector* of arguments, one for each group. If you use a single element instead
+of a vector, that element will be applied for all groups (note: this is NOT
+true for labels, since this would imply equality constraints). For example:
 
 ```{r tidy=FALSE, comment=""}
 HS.model <- '  visual =~ x1 + 0.5*x2 + c(0.6, 0.8)*x3
@@ -44,12 +46,14 @@ for each group. In addition, we have labeled the factor loading of the `x6`
 indicator as 'a', but this label is only given to the parameter of the first
 group. If you want to provide labels to each of the two groups, you can write
 something like `c(a1,a2)*x6`.  Be careful: if you write `c(a,a)*x6`, both
-parameters (in the first and second) group will get the same label, and hence
+parameters (in the first and second group) will get the same label, and hence
 they will be treated as a single parameter. To verify the effects of these
 modifiers, we refit the model:
 
 ```{r tidy=FALSE, comment=""}
-fit <- cfa(HS.model, data=HolzingerSwineford1939, group="school")
+fit <- cfa(HS.model, 
+           data = HolzingerSwineford1939, 
+           group = "school")
  summary(fit)
 ```
 
@@ -57,7 +61,7 @@ fit <- cfa(HS.model, data=HolzingerSwineford1939, group="school")
 
 If you want to constrain one or more parameters to be equal across groups, you
 need to give them the same label. For example, to constrain the factor loading
-of the indicator to be equal across (two) groups, you can write:
+of the indicator `x3` to be equal across (two) groups, you can write:
 
 ```{r tidy=FALSE, eval=FALSE}
 HS.model <- '  visual =~ x1 + x2 + c(v3,v3)*x3
@@ -65,7 +69,7 @@ HS.model <- '  visual =~ x1 + x2 + c(v3,v3)*x3
               speed   =~ x7 + x8 + x9 '
 ```
 
-Again, identical labels imply identical parameters, Both within and across
+Again, identical labels imply identical parameters, both within and across
 groups.
 
 #### Constraining groups of parameters to be equal across groups ####
@@ -75,20 +79,22 @@ equality constraints for a few parameters, there is a more convenient way to
 impose equality constraints on a whole set of parameters (for example: all
 factor loadings, or all intercepts). We call these type of constraints *group
 equality constraints* and they can be specified by the argument `group.equal`
-in the `cfa` or `sem` function calls.  For example, to constrain (all) the
+in the fitting function. For example, to constrain (all) the
 factor loadings to be equal across groups, you can proceed as follows:
 
 ```{r tidy=FALSE, comment=""}
 HS.model <- '  visual =~ x1 + x2 + x3
               textual =~ x4 + x5 + x6
               speed   =~ x7 + x8 + x9 '
-fit <- cfa(HS.model, data=HolzingerSwineford1939, group="school",
-           group.equal=c("loadings"))
+fit <- cfa(HS.model, 
+           data = HolzingerSwineford1939, 
+           group = "school",
+           group.equal = c("loadings"))
 summary(fit)
 ```
 
 More 'group equality constraints' can be added. In addition to the factor
-loadings, the following keywords are currently supported:
+loadings, the following keywords are supported in the `group.equal` argument:
 
 - `intercepts`: the intercepts of the observed variables
 - `means`: the intercepts/means of the latent variables
@@ -98,8 +104,8 @@ loadings, the following keywords are currently supported:
 - `lv.covariances`: the (residual) covariances of the latent varibles
 - `regressions`: all regression coefficients in the model
 
-If you omit the arguments, all parameters are freely estimated in each group
-(but the model structure is the same).
+If you omit the `group.equal` argument, all parameters are freely estimated in
+each group (but the model structure is the same).
 
 But what if you want to constrain a whole group of parameters (say all factor
 loadings and intercepts) across groups, except for one or two parameters that
@@ -108,31 +114,34 @@ need to stay free in all groups. For this scenario, you can use the argument
 free. For example:
 
 ```{r eval=FALSE, tidy=FALSE}
-fit <- cfa(HS.model, data=HolzingerSwineford1939, group="school",
-           group.equal=c("loadings", "intercepts"),
-           group.partial=c("visual=~x2", "x7~1"))
+fit <- cfa(HS.model, 
+           data = HolzingerSwineford1939, 
+           group = "school",
+           group.equal = c("loadings", "intercepts"),
+           group.partial = c("visual=~x2", "x7~1"))
 ```
 
 #### Measurement Invariance ####
 
 If you are interested in testing the measurement invariance of a CFA model
-across several groups, you can use the function `measurementInvariance` which
+across several groups, you can use the function `measurementInvariance()` which
 performs a number of multiple group analyses in a particular sequence, with
 increasingly more restrictions on the parameters. (Note: from the 0.5 series
 onwards, the `measurementInvariance()` function has been moved to the
-`semTools` package) Each model is compared to the baseline model and the
+`semTools` package.) Each model is compared to the baseline model and the
 previous model using chi-square difference tests. In addition, the difference
 in the fit measure is also shown. Although the current implementation of the
 function is still a bit primitive, it does illustrate how the various
 components of the lavaan package can be used as building blocks for
-constructing higher level functions (such as the `measurementInvariance`
+constructing higher level functions (such as the `measurementInvariance()`
 function), something that is often very hard to accomplish with commercial
 software.
 
 ```{r message=FALSE, comment=""}
 library(semTools)
-measurementInvariance(HS.model, data=HolzingerSwineford1939, 
-                      group="school")
+measurementInvariance(HS.model, 
+                      data = HolzingerSwineford1939, 
+                      group = "school")
 ```
 
 By adding the `group.partial` argument, you can test for partial measurement

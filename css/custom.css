@@ -109,8 +109,8 @@ pre {
 
 body code, li code {
   font-family: Consolas,"Liberation Mono",Courier,monospace;
-  margin: 0px 2px;
-  padding: 0px 5px;
+  margin: 0px 0px;
+  padding: 0px 2px;
   border: 1px solid rgb(234, 234, 234);
   background-color: rgb(248, 248, 248);
   border-radius: 3px 3px 3px 3px;

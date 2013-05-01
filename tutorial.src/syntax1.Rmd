@@ -14,22 +14,22 @@ In the R environment, a regression formula has the following form:
 
     y ~ x1 + x2 + x3 + x4
 
-In this formula, the tilde sign ("`~`") is the regression operator. On
-the left-hand side of the operator, we have the dependent variable (y),
+In this formula, the tilde ("`~`") is the regression operator. On
+the left-hand side of the operator, we have the dependent variable (`y`),
 and on the right-hand side, we have the independent variables, separated
-by the "+" operator. In lavaan, a typical model is simply a set (or system)
-of regression formulas, where some variables (starting with an 'f'
+by the "`+`" operator. In lavaan, a typical model is simply a set (or system)
+of regression formulas, where some variables (starting with an '`f`'
 below) may be latent. For example:
 
      y ~ f1 + f2 + x1 + x2 
     f1 ~ f2 + f3 
     f2 ~ f3 + x1 + x2
 
-If we have latent variables in any of the regression formulas, we must
-'define' them by listing their manifest indicators. We do this by using
-the special operator "`=~`", which can be read as *is manifested by*.
-For example, to define the three latent variabels `f1`, `f2` and `f3`,
-we can use something like:
+If we have latent variables in any of the regression formulas, we must 'define'
+them by listing their (manifest or latent) indicators. We do this by using the
+special operator "`=~`", which can be read as *is measured by*.  For example,
+to define the three latent variabels `f1`, `f2` and `f3`, we can use something
+like:
 
     f1 =~ y1 + y2 + y3 
     f2 =~ y4 + y5 + y6 
@@ -44,7 +44,7 @@ tilde' operator, for example:
 
 And finally, intercepts for observed and latent variables are simple
 regression formulas with only an intercept (explicitly denoted by the
-number '1') as the only predictor:
+number '`1`') as the only predictor:
 
     y1 ~ 1
     f1 ~ 1
@@ -61,8 +61,8 @@ below.
 | intercept                  |   `~ 1`  | intercept          |
 
 
-If the model syntax is fairly short, you can specify it interactively at
-the R prompt by enclosing the formulas with single quotes. For example:
+A complete lavaan model syntax is simply a combination of these formula types,
+enclosed between *single* quotes. For example:
 
 ```{r eval=FALSE, tidy=FALSE}
 myModel <- ' # regressions
@@ -86,21 +86,21 @@ myModel <- ' # regressions
            '
 ```
 
-Of course, instead of typing this interactively at the R prompt, you should
-type the whole model first in an external text editor, and when you are
-done, you can copy/paste it to the R console. If you are using 
-[RStudio](http://www.rstudio.com/), open a new 'R script', and type
-your model syntax (and all other R commands needed for this session) in the 
-source editor of RStudio. And save your script, so you can reuse it later on.
+You can type this syntax interactively at the R prompt, but it is much more
+convenient to type the whole model syntax first in an external text editor.
+And when you are done, you can copy/paste it to the R console. If you are
+using [RStudio](http://www.rstudio.com/), open a new 'R script', and type your
+model syntax (and all other R commands needed for this session) in the source
+editor of RStudio. And save your script, so you can reuse it later on.
 
-This piece of code will produce a model syntax object, called `myModel` that
+The code piece above will produce a model syntax object, called `myModel` that
 can be used later when calling a function that actually estimates this model
 given a dataset. Note that formulas can be split over multiple lines, and you
 can use comments (starting with the `#` character) and blank lines within the
-single quotes to improve readability of the model syntax.
+single quotes to improve the readability of the model syntax.
 
 If your model syntax is rather long, or you need to reuse the model syntax over
-and over again, you may prefer to type it in a separate text file called, say,
+and over again, you may prefer to store it in a separate text file called, say,
 `myModel.lav`. This text file should be in a human readable format (not a Word
 document). Within R, you can then read the model syntax from the file as
 follows:
@@ -110,5 +110,5 @@ follows:
 ```
 
 The argument of `readLines` is the full path to the file containing the model
-syntax.  Again, the model syntax object can be used later to fit this model
+syntax. Again, the model syntax object can be used later to fit this model
 given a dataset.

@@ -6,9 +6,8 @@ submenu: lavaan
 ---
 
 #### Asking for help ####
-If you are looking for help, please do not email me directly. Remember
-that lavaan is free software, developed by volunteers, with very limited
-time resources. Please use the lavaan discussion group instead.
+If you are looking for help, please do not email me directly. Please use the
+lavaan discussion group instead.
 
 #### lavaan discussion group ####
 If you have questions about the use of lavaan, or if you would like to discuss
@@ -34,7 +33,8 @@ If you have found a (possible) bug, please report it. You can either:
 3. create an issue on [GitHub](https://github.com/yrosseel/lavaan/issues) (to remind me, once we have agreed it is a bug)
 
 But please, *always* include a reproducible example containing an R script, and
-a snippet of your data (just enough to reproduce the issue).
+a snippet of your data (just enough to reproduce the issue). And make
+sure you are using the latest version of lavaan.
 
 All verified bugs (and other reported issues) are listed in the [version history](/history/index.html).
 

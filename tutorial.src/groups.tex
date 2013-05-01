@@ -1,0 +1,598 @@
+The lavaan package has full support for multiple groups. To request a
+multiple group analysis, you need to add the name of the group variable
+in your dataset to the argument \texttt{group} in the fitting function.
+By default, the same model is fitted in all groups. In the following
+example, we fit the H\&S CFA model for the two schools (Pasteur and
+Grant-White).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + x3}
+\StringTok{              textual =~ x4 + x5 + x6}
+\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan (0.5-13) converged normally after  63 iterations
+
+  Number of observations per group         
+  Pasteur                                          156
+  Grant-White                                      145
+
+  Estimator                                         ML
+  Minimum Function Test Statistic              115.851
+  Degrees of freedom                                48
+  P-value (Chi-square)                           0.000
+
+Chi-square for each group:
+
+  Pasteur                                       64.309
+  Grant-White                                   51.542
+
+Parameter estimates:
+
+  Information                                 Expected
+  Standard Errors                             Standard
+
+Group 1 [Pasteur]:
+
+                   Estimate  Std.err  Z-value  P(>|z|)
+Latent variables:
+  visual =~
+    x1                1.000
+    x2                0.394    0.122    3.220    0.001
+    x3                0.570    0.140    4.076    0.000
+  textual =~
+    x4                1.000
+    x5                1.183    0.102   11.613    0.000
+    x6                0.875    0.077   11.421    0.000
+  speed =~
+    x7                1.000
+    x8                1.125    0.277    4.057    0.000
+    x9                0.922    0.225    4.104    0.000
+
+Covariances:
+  visual ~~
+    textual           0.479    0.106    4.531    0.000
+    speed             0.185    0.077    2.397    0.017
+  textual ~~
+    speed             0.182    0.069    2.628    0.009
+
+Intercepts:
+    x1                4.941    0.095   52.249    0.000
+    x2                5.984    0.098   60.949    0.000
+    x3                2.487    0.093   26.778    0.000
+    x4                2.823    0.092   30.689    0.000
+    x5                3.995    0.105   38.183    0.000
+    x6                1.922    0.079   24.321    0.000
+    x7                4.432    0.087   51.181    0.000
+    x8                5.563    0.078   71.214    0.000
+    x9                5.418    0.079   68.440    0.000
+    visual            0.000
+    textual           0.000
+    speed             0.000
+
+Variances:
+    x1                0.298    0.232
+    x2                1.334    0.158
+    x3                0.989    0.136
+    x4                0.425    0.069
+    x5                0.456    0.086
+    x6                0.290    0.050
+    x7                0.820    0.125
+    x8                0.510    0.116
+    x9                0.680    0.104
+    visual            1.097    0.276
+    textual           0.894    0.150
+    speed             0.350    0.126
+
+
+
+Group 2 [Grant-White]:
+
+                   Estimate  Std.err  Z-value  P(>|z|)
+Latent variables:
+  visual =~
+    x1                1.000
+    x2                0.736    0.155    4.760    0.000
+    x3                0.925    0.166    5.583    0.000
+  textual =~
+    x4                1.000
+    x5                0.990    0.087   11.418    0.000
+    x6                0.963    0.085   11.377    0.000
+  speed =~
+    x7                1.000
+    x8                1.226    0.187    6.569    0.000
+    x9                1.058    0.165    6.429    0.000
+
+Covariances:
+  visual ~~
+    textual           0.408    0.098    4.153    0.000
+    speed             0.276    0.076    3.639    0.000
+  textual ~~
+    speed             0.222    0.073    3.022    0.003
+
+Intercepts:
+    x1                4.930    0.095   51.696    0.000
+    x2                6.200    0.092   67.416    0.000
+    x3                1.996    0.086   23.195    0.000
+    x4                3.317    0.093   35.625    0.000
+    x5                4.712    0.096   48.986    0.000
+    x6                2.469    0.094   26.277    0.000
+    x7                3.921    0.086   45.819    0.000
+    x8                5.488    0.087   63.174    0.000
+    x9                5.327    0.085   62.571    0.000
+    visual            0.000
+    textual           0.000
+    speed             0.000
+
+Variances:
+    x1                0.715    0.126
+    x2                0.899    0.123
+    x3                0.557    0.103
+    x4                0.315    0.065
+    x5                0.419    0.072
+    x6                0.406    0.069
+    x7                0.600    0.091
+    x8                0.401    0.094
+    x9                0.535    0.089
+    visual            0.604    0.160
+    textual           0.942    0.152
+    speed             0.461    0.118
+\end{verbatim}
+
+If you want to fix parameters, or provide starting values, you can use
+the same pre-multiplication techniques, but the single argument is now
+replaced by a \emph{vector} of arguments, one for each group. If you use
+a single element instead of a vector, that element will be applied for
+all groups (note: this is NOT true for labels, since this would imply
+equality constraints). For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + 0.5*x2 + c(0.6, 0.8)*x3}
+\StringTok{              textual =~ x4 + start(c(1.2, 0.6))*x5 + a*x6}
+\StringTok{              speed   =~ x7 + x8 + x9 '}
+\end{Highlighting}
+\end{Shaded}
+
+In the definition of the latent factor \texttt{visual}, we have fixed
+the factor loading of the indicator \texttt{x3} to the value `0.6' in
+the first group, and to the value `0.8' in the second group, while the
+factor loading of the indicator is fixed to the value `0.5' in both
+groups. In the definition of the \texttt{textual} factor, two different
+starting values are provided for the \texttt{x5} indicator; one for each
+group. In addition, we have labeled the factor loading of the
+\texttt{x6} indicator as `a', but this label is only given to the
+parameter of the first group. If you want to provide labels to each of
+the two groups, you can write something like \texttt{c(a1,a2)*x6}. Be
+careful: if you write \texttt{c(a,a)*x6}, both parameters (in the first
+and second group) will get the same label, and hence they will be
+treated as a single parameter. To verify the effects of these modifiers,
+we refit the model:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{)}
+ \KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan (0.5-13) converged normally after  58 iterations
+
+  Number of observations per group         
+  Pasteur                                          156
+  Grant-White                                      145
+
+  Estimator                                         ML
+  Minimum Function Test Statistic              118.976
+  Degrees of freedom                                52
+  P-value (Chi-square)                           0.000
+
+Chi-square for each group:
+
+  Pasteur                                       64.901
+  Grant-White                                   54.075
+
+Parameter estimates:
+
+  Information                                 Expected
+  Standard Errors                             Standard
+
+Group 1 [Pasteur]:
+
+                   Estimate  Std.err  Z-value  P(>|z|)
+Latent variables:
+  visual =~
+    x1                1.000
+    x2                0.500
+    x3                0.600
+  textual =~
+    x4                1.000
+    x5                1.185    0.102   11.598    0.000
+    x6        (a)     0.876    0.077   11.409    0.000
+  speed =~
+    x7                1.000
+    x8                1.129    0.279    4.055    0.000
+    x9                0.931    0.227    4.103    0.000
+
+Covariances:
+  visual ~~
+    textual           0.460    0.103    4.479    0.000
+    speed             0.182    0.076    2.408    0.016
+  textual ~~
+    speed             0.181    0.069    2.625    0.009
+
+Intercepts:
+    x1                4.941    0.094   52.379    0.000
+    x2                5.984    0.100   59.945    0.000
+    x3                2.487    0.092   26.983    0.000
+    x4                2.823    0.092   30.689    0.000
+    x5                3.995    0.105   38.183    0.000
+    x6                1.922    0.079   24.321    0.000
+    x7                4.432    0.087   51.181    0.000
+    x8                5.563    0.078   71.214    0.000
+    x9                5.418    0.079   68.440    0.000
+    visual            0.000
+    textual           0.000
+    speed             0.000
+
+Variances:
+    x1                0.388    0.129
+    x2                1.304    0.155
+    x3                0.965    0.120
+    x4                0.427    0.069
+    x5                0.454    0.086
+    x6                0.289    0.050
+    x7                0.824    0.124
+    x8                0.510    0.116
+    x9                0.677    0.105
+    visual            1.001    0.172
+    textual           0.892    0.150
+    speed             0.346    0.125
+
+
+
+Group 2 [Grant-White]:
+
+                   Estimate  Std.err  Z-value  P(>|z|)
+Latent variables:
+  visual =~
+    x1                1.000
+    x2                0.500
+    x3                0.800
+  textual =~
+    x4                1.000
+    x5                0.990    0.087   11.425    0.000
+    x6                0.963    0.085   11.374    0.000
+  speed =~
+    x7                1.000
+    x8                1.228    0.188    6.539    0.000
+    x9                1.081    0.168    6.417    0.000
+
+Covariances:
+  visual ~~
+    textual           0.454    0.099    4.585    0.000
+    speed             0.315    0.079    4.004    0.000
+  textual ~~
+    speed             0.222    0.073    3.049    0.002
+
+Intercepts:
+    x1                4.930    0.097   50.688    0.000
+    x2                6.200    0.089   69.616    0.000
+    x3                1.996    0.086   23.223    0.000
+    x4                3.317    0.093   35.625    0.000
+    x5                4.712    0.096   48.986    0.000
+    x6                2.469    0.094   26.277    0.000
+    x7                3.921    0.086   45.819    0.000
+    x8                5.488    0.087   63.174    0.000
+    x9                5.327    0.085   62.571    0.000
+    visual            0.000
+    textual           0.000
+    speed             0.000
+
+Variances:
+    x1                0.637    0.115
+    x2                0.966    0.120
+    x3                0.601    0.091
+    x4                0.316    0.065
+    x5                0.418    0.072
+    x6                0.407    0.069
+    x7                0.609    0.091
+    x8                0.411    0.094
+    x9                0.522    0.089
+    visual            0.735    0.132
+    textual           0.942    0.152
+    speed             0.453    0.117
+\end{verbatim}
+
+\paragraph{Constraining a single parameter to be equal across groups}
+
+If you want to constrain one or more parameters to be equal across
+groups, you need to give them the same label. For example, to constrain
+the factor loading of the indicator \texttt{x3} to be equal across (two)
+groups, you can write:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + c(v3,v3)*x3}
+\StringTok{              textual =~ x4 + x5 + x6}
+\StringTok{              speed   =~ x7 + x8 + x9 '}
+\end{Highlighting}
+\end{Shaded}
+
+Again, identical labels imply identical parameters, both within and
+across groups.
+
+\paragraph{Constraining groups of parameters to be equal across groups}
+
+Although providing identical labels is a very flexible method to specify
+equality constraints for a few parameters, there is a more convenient
+way to impose equality constraints on a whole set of parameters (for
+example: all factor loadings, or all intercepts). We call these type of
+constraints \emph{group equality constraints} and they can be specified
+by the argument \texttt{group.equal} in the fitting function. For
+example, to constrain (all) the factor loadings to be equal across
+groups, you can proceed as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + x3}
+\StringTok{              textual =~ x4 + x5 + x6}
+\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{,}
+           \DataTypeTok{group.equal =} \KeywordTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{))}
+\KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan (0.5-13) converged normally after  46 iterations
+
+  Number of observations per group         
+  Pasteur                                          156
+  Grant-White                                      145
+
+  Estimator                                         ML
+  Minimum Function Test Statistic              124.044
+  Degrees of freedom                                54
+  P-value (Chi-square)                           0.000
+
+Chi-square for each group:
+
+  Pasteur                                       68.825
+  Grant-White                                   55.219
+
+Parameter estimates:
+
+  Information                                 Expected
+  Standard Errors                             Standard
+
+Group 1 [Pasteur]:
+
+                   Estimate  Std.err  Z-value  P(>|z|)
+Latent variables:
+  visual =~
+    x1                1.000
+    x2                0.599    0.100    5.979    0.000
+    x3                0.784    0.108    7.267    0.000
+  textual =~
+    x4                1.000
+    x5                1.083    0.067   16.049    0.000
+    x6                0.912    0.058   15.785    0.000
+  speed =~
+    x7                1.000
+    x8                1.201    0.155    7.738    0.000
+    x9                1.038    0.136    7.629    0.000
+
+Covariances:
+  visual ~~
+    textual           0.416    0.097    4.271    0.000
+    speed             0.169    0.064    2.643    0.008
+  textual ~~
+    speed             0.176    0.061    2.882    0.004
+
+Intercepts:
+    x1                4.941    0.093   52.991    0.000
+    x2                5.984    0.100   60.096    0.000
+    x3                2.487    0.094   26.465    0.000
+    x4                2.823    0.093   30.371    0.000
+    x5                3.995    0.101   39.714    0.000
+    x6                1.922    0.081   23.711    0.000
+    x7                4.432    0.086   51.540    0.000
+    x8                5.563    0.078   71.087    0.000
+    x9                5.418    0.079   68.153    0.000
+    visual            0.000
+    textual           0.000
+    speed             0.000
+
+Variances:
+    x1                0.551    0.137
+    x2                1.258    0.155
+    x3                0.882    0.128
+    x4                0.434    0.070
+    x5                0.508    0.082
+    x6                0.266    0.050
+    x7                0.849    0.114
+    x8                0.515    0.095
+    x9                0.658    0.096
+    visual            0.805    0.171
+    textual           0.913    0.137
+    speed             0.305    0.078
+
+
+
+Group 2 [Grant-White]:
+
+                   Estimate  Std.err  Z-value  P(>|z|)
+Latent variables:
+  visual =~
+    x1                1.000
+    x2                0.599    0.100    5.979    0.000
+    x3                0.784    0.108    7.267    0.000
+  textual =~
+    x4                1.000
+    x5                1.083    0.067   16.049    0.000
+    x6                0.912    0.058   15.785    0.000
+  speed =~
+    x7                1.000
+    x8                1.201    0.155    7.738    0.000
+    x9                1.038    0.136    7.629    0.000
+
+Covariances:
+  visual ~~
+    textual           0.437    0.099    4.423    0.000
+    speed             0.314    0.079    3.958    0.000
+  textual ~~
+    speed             0.226    0.072    3.144    0.002
+
+Intercepts:
+    x1                4.930    0.097   50.763    0.000
+    x2                6.200    0.091   68.379    0.000
+    x3                1.996    0.085   23.455    0.000
+    x4                3.317    0.092   35.950    0.000
+    x5                4.712    0.100   47.173    0.000
+    x6                2.469    0.091   27.248    0.000
+    x7                3.921    0.086   45.555    0.000
+    x8                5.488    0.087   63.257    0.000
+    x9                5.327    0.085   62.786    0.000
+    visual            0.000
+    textual           0.000
+    speed             0.000
+
+Variances:
+    x1                0.645    0.127
+    x2                0.933    0.121
+    x3                0.605    0.096
+    x4                0.329    0.062
+    x5                0.384    0.073
+    x6                0.437    0.067
+    x7                0.599    0.090
+    x8                0.406    0.089
+    x9                0.532    0.086
+    visual            0.722    0.161
+    textual           0.906    0.136
+    speed             0.475    0.109
+\end{verbatim}
+
+More `group equality constraints' can be added. In addition to the
+factor loadings, the following keywords are supported in the
+\texttt{group.equal} argument:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  \texttt{intercepts}: the intercepts of the observed variables
+\item
+  \texttt{means}: the intercepts/means of the latent variables
+\item
+  \texttt{residuals}: the residual variances of the observed variables
+\item
+  \texttt{residual.covariances}: the residual covariances of the
+  observed variables
+\item
+  \texttt{lv.variances}: the (residual) variances of the latent
+  variables
+\item
+  \texttt{lv.covariances}: the (residual) covariances of the latent
+  varibles
+\item
+  \texttt{regressions}: all regression coefficients in the model
+\end{itemize}
+
+If you omit the \texttt{group.equal} argument, all parameters are freely
+estimated in each group (but the model structure is the same).
+
+But what if you want to constrain a whole group of parameters (say all
+factor loadings and intercepts) across groups, except for one or two
+parameters that need to stay free in all groups. For this scenario, you
+can use the argument \texttt{group.partial}, containing the names of
+those parameters that need to remain free. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
+           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{,}
+           \DataTypeTok{group.equal =} \KeywordTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{, }\StringTok{"intercepts"}\NormalTok{),}
+           \DataTypeTok{group.partial =} \KeywordTok{c}\NormalTok{(}\StringTok{"visual=~x2"}\NormalTok{, }\StringTok{"x7~1"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Measurement Invariance}
+
+If you are interested in testing the measurement invariance of a CFA
+model across several groups, you can use the function
+\texttt{measurementInvariance()} which performs a number of multiple
+group analyses in a particular sequence, with increasingly more
+restrictions on the parameters. (Note: from the 0.5 series onwards, the
+\texttt{measurementInvariance()} function has been moved to the
+\texttt{semTools} package.) Each model is compared to the baseline model
+and the previous model using chi-square difference tests. In addition,
+the difference in the fit measure is also shown. Although the current
+implementation of the function is still a bit primitive, it does
+illustrate how the various components of the lavaan package can be used
+as building blocks for constructing higher level functions (such as the
+\texttt{measurementInvariance()} function), something that is often very
+hard to accomplish with commercial software.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(semTools)}
+\KeywordTok{measurementInvariance}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }\DataTypeTok{group =} \StringTok{"school"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Measurement invariance tests:
+
+Model 1: configural invariance:
+   chisq       df   pvalue      cfi    rmsea      bic 
+ 115.851   48.000    0.000    0.923    0.097 7706.822 
+
+Model 2: weak invariance (equal loadings):
+   chisq       df   pvalue      cfi    rmsea      bic 
+ 124.044   54.000    0.000    0.921    0.093 7680.771 
+
+[Model 1 versus model 2]
+  delta.chisq      delta.df delta.p.value     delta.cfi 
+        8.192         6.000         0.224         0.002 
+
+Model 3: strong invariance (equal loadings + intercepts):
+   chisq       df   pvalue      cfi    rmsea      bic 
+ 164.103   60.000    0.000    0.882    0.107 7686.588 
+
+[Model 1 versus model 3]
+  delta.chisq      delta.df delta.p.value     delta.cfi 
+       48.251        12.000         0.000         0.041 
+
+[Model 2 versus model 3]
+  delta.chisq      delta.df delta.p.value     delta.cfi 
+       40.059         6.000         0.000         0.038 
+
+Model 4: equal loadings + intercepts + means:
+   chisq       df   pvalue      cfi    rmsea      bic 
+ 204.605   63.000    0.000    0.840    0.122 7709.969 
+
+[Model 1 versus model 4]
+  delta.chisq      delta.df delta.p.value     delta.cfi 
+       88.754        15.000         0.000         0.083 
+
+[Model 3 versus model 4]
+  delta.chisq      delta.df delta.p.value     delta.cfi 
+       40.502         3.000         0.000         0.042 
+\end{verbatim}
+
+By adding the \texttt{group.partial} argument, you can test for partial
+measurement invariance by allowing a few parameters to remain free.

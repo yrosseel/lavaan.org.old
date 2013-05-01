@@ -1,0 +1,135 @@
+At the heart of the lavaan package is the `model syntax'. The model
+syntax is a description of the model to be estimated. In this section,
+we briefly explain the elements of the lavaan model syntax. More details
+are given in the examples that follow.
+
+In the R environment, a regression formula has the following form:
+
+\begin{verbatim}
+y ~ x1 + x2 + x3 + x4
+\end{verbatim}
+
+In this formula, the tilde (``\texttt{\textasciitilde{}}'') is the
+regression operator. On the left-hand side of the operator, we have the
+dependent variable (\texttt{y}), and on the right-hand side, we have the
+independent variables, separated by the ``\texttt{+}'' operator. In
+lavaan, a typical model is simply a set (or system) of regression
+formulas, where some variables (starting with an `\texttt{f}' below) may
+be latent. For example:
+
+\begin{verbatim}
+ y ~ f1 + f2 + x1 + x2 
+f1 ~ f2 + f3 
+f2 ~ f3 + x1 + x2
+\end{verbatim}
+
+If we have latent variables in any of the regression formulas, we must
+`define' them by listing their (manifest or latent) indicators. We do
+this by using the special operator ``\texttt{=\textasciitilde{}}'',
+which can be read as \emph{is measured by}. For example, to define the
+three latent variabels \texttt{f1}, \texttt{f2} and \texttt{f3}, we can
+use something like:
+
+\begin{verbatim}
+f1 =~ y1 + y2 + y3 
+f2 =~ y4 + y5 + y6 
+f3 =~ y7 + y8 + y9 + y10
+\end{verbatim}
+
+Furthermore, variances and covariances are specified using a `double
+tilde' operator, for example:
+
+\begin{verbatim}
+y1 ~~ y1  # variance
+y1 ~~ y2  # covariance
+f1 ~~ f2  # covariance
+\end{verbatim}
+
+And finally, intercepts for observed and latent variables are simple
+regression formulas with only an intercept (explicitly denoted by the
+number `\texttt{1}') as the only predictor:
+
+\begin{verbatim}
+y1 ~ 1
+f1 ~ 1
+\end{verbatim}
+
+Using these four \emph{formula types}, a large variety of latent
+variable models can be described. The current set of formula types is
+summarized in the table below.
+
+\begin{longtable}[c]{@{}lll@{}}
+\hline\noalign{\medskip}
+formula type & operator & mnemonic
+\\\noalign{\medskip}
+\hline\noalign{\medskip}
+latent variable definition & \texttt{=\textasciitilde{}} & is measured
+by
+\\\noalign{\medskip}
+regression & \texttt{\textasciitilde{}} & is regressed on
+\\\noalign{\medskip}
+(residual) (co)variance & \texttt{\textasciitilde{}\textasciitilde{}} &
+is correlated with
+\\\noalign{\medskip}
+intercept & \texttt{\textasciitilde{} 1} & intercept
+\\\noalign{\medskip}
+\hline
+\end{longtable}
+
+A complete lavaan model syntax is simply a combination of these formula
+types, enclosed between \emph{single} quotes. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myModel <-}\StringTok{ ' # regressions}
+\StringTok{             y1 + y2 ~ f1 + f2 + x1 + x2}
+\StringTok{                  f1 ~ f2 + f3}
+\StringTok{                  f2 ~ f3 + x1 + x2}
+
+\StringTok{             # latent variable definitions }
+\StringTok{               f1 =~ y1 + y2 + y3 }
+\StringTok{               f2 =~ y4 + y5 + y6 }
+\StringTok{               f3 =~ y7 + y8 + y9 + y10}
+
+\StringTok{             # variances and covariances }
+\StringTok{               y1 ~~ y1 }
+\StringTok{               y1 ~~ y2 }
+\StringTok{               f1 ~~ f2}
+
+\StringTok{             # intercepts }
+\StringTok{               y1 ~ 1 }
+\StringTok{               f1 ~ 1}
+\StringTok{           '}
+\end{Highlighting}
+\end{Shaded}
+
+You can type this syntax interactively at the R prompt, but it is much
+more convenient to type the whole model syntax first in an external text
+editor. And when you are done, you can copy/paste it to the R console.
+If you are using \href{http://www.rstudio.com/}{RStudio}, open a new `R
+script', and type your model syntax (and all other R commands needed for
+this session) in the source editor of RStudio. And save your script, so
+you can reuse it later on.
+
+The code piece above will produce a model syntax object, called
+\texttt{myModel} that can be used later when calling a function that
+actually estimates this model given a dataset. Note that formulas can be
+split over multiple lines, and you can use comments (starting with the
+\texttt{\#} character) and blank lines within the single quotes to
+improve the readability of the model syntax.
+
+If your model syntax is rather long, or you need to reuse the model
+syntax over and over again, you may prefer to store it in a separate
+text file called, say, \texttt{myModel.lav}. This text file should be in
+a human readable format (not a Word document). Within R, you can then
+read the model syntax from the file as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myModel <-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"/mydirectory/myModel.lav"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The argument of \texttt{readLines} is the full path to the file
+containing the model syntax. Again, the model syntax object can be used
+later to fit this model given a dataset.
