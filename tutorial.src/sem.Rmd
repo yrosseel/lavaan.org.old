@@ -13,9 +13,10 @@ help page and the references therein.
 The figure below contains a graphical representation
 of the model that we want to fit. 
 
-```{r sem, echo=FALSE, message=FALSE, dev=c("png","pdf"), dpi=c(140,100), fig.cap="Political Democracy SEM example"}
+```{r sem, echo=FALSE, message=FALSE, dev=c("png","pdf"), dpi=c(100,100), fig.cap="Political Democracy SEM example", fig.keep="last"}
 library(lavaan) # only needed once per session
 library(semPlot)
+library(qgraph)
 model <- '
   # measurement model
     ind60 =~ x1 + x2 + x3
@@ -32,16 +33,45 @@ model <- '
     y6 ~~ y8
 '
 fit <- sem(model, data=PoliticalDemocracy)
-semPaths(fit, layout="tree2", curve=1, rotation=4, 
-nCharNodes=0, mar=c(3,3,3,3),
-border.width=1.0, esize=1.0, edge.color="black",
+Graph <- semPaths(fit,
+#layout=L, 
+layout="tree2",
+nCharNodes=0,
+curve=1,
+rotation=4,
+#mar=c(3,3,3,3),
+edge.color="black",
+border.width=1.0, esize=1.0,
 label.scale=FALSE,
 label.cex=1.0,
 residuals=FALSE,
 fixedStyle=1,
 freeStyle=1,
 curvePivot=FALSE,
-sizeMan=7, sizeLat=10)
+#style="LISREL",
+exoVar=FALSE,
+sizeMan=7,
+sizeLat=10
+)
+
+L <- matrix(c(
+  0.4 ,   1 ,
+  0.7 ,   1 ,
+  1.0 ,   1 ,
+ -1.0 ,   1 ,
+ -1.0 ,   0.71 ,
+ -1.0 ,   0.43 ,
+ -1.0 ,   0.14 ,
+ -1.0 ,  -0.14 ,
+ -1.0 ,  -0.43 ,
+ -1.0 ,  -0.71 ,
+ -1.0 ,  -1    ,
+  0.7 ,   0.4 ,
+  0.0 ,   0.4 ,
+  0.0 ,  -0.4
+), 14,2, byrow=TRUE)
+
+qgraph(Graph, layout=L, arrowAngle=0.5)
 ```
 The corresponding lavaan syntax for specifying this model
 is as follows:

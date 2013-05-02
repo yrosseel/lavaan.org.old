@@ -30,27 +30,32 @@ To get a first impression of how lavaan works in practice, consider the
 following example of a SEM model. The figure below contains
 a graphical representation of the model that we want to fit. 
 
-![lavaan example](/tutorial/figure/sem.png)
+<div class="row clearfix">
+<div class="seven columns alpha">
+<p>
+<img src="/tutorial/figure/sem.png" alt="lavaan example" width="100%"/>
+</p>
+</div>
+<div class="six columns omega">
+<div class="highlight"><pre><code class="r">model <span class="o">&lt;-</span> <span class="s">&#39;</span>
+<span class="s">   # latent variables</span>
+<span class="s">     ind60 =~ x1 + x2 + x3</span>
+<span class="s">     dem60 =~ y1 + y2 + y3 + y4</span>
+<span class="s">     dem65 =~ y5 + y6 + y7 + y8</span>
+<span class="s">   # regressions</span>
+<span class="s">     dem60 ~ ind60</span>
+<span class="s">     dem65 ~ ind60 + dem60</span>
+<span class="s">   # residual covariances</span>
+<span class="s">     y1 ~~ y5</span>
+<span class="s">     y2 ~~ y4 + y6</span>
+<span class="s">     y3 ~~ y7</span>
+<span class="s">     y4 ~~ y8</span>
+<span class="s">     y6 ~~ y8</span>
+<span class="s">&#39;</span>
+fit <span class="o">&lt;-</span> sem<span class="p">(</span>model<span class="p">,</span>
+           data<span class="o">=</span>PoliticalDemocracy<span class="p">)</span>
+summary<span class="p">(</span>fit<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
 
-This is the corresponding R code to fit this model using the lavaan package:
-
-```r
-model <- '
-   # latent variables
-     ind60 =~ x1 + x2 + x3
-     dem60 =~ y1 + y2 + y3 + y4
-     dem65 =~ y5 + y6 + y7 + y8
-   # regressions
-     dem60 ~ ind60
-     dem65 ~ ind60 + dem60
-   # residual covariances
-     y1 ~~ y5
-     y2 ~~ y4 + y6
-     y3 ~~ y7
-     y4 ~~ y8
-     y6 ~~ y8
-'
-fit <- sem(model, 
-           data=PoliticalDemocracy)
-summary(fit)
-```

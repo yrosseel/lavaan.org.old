@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.4.30)  1 MAY 2013 20:25
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.4.24)  2 MAY 2013 12:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -514,30 +514,30 @@ T1/cmr/m/n/10 .
 <figure/cfa.pdf, id=113, 505.89pt x 505.89pt>
 File: figure/cfa.pdf Graphic file (type pdf)
  <use figure/cfa.pdf>
-Package pdftex.def Info: figure/cfa.pdf used on input line 40.
+Package pdftex.def Info: figure/cfa.pdf used on input line 36.
 (pdftex.def)             Requested size: 379.41655pt x 379.42427pt.
  [4] [5 <./figure/cfa.pdf>] [6]
-LaTeX Font Info:    Try loading font information for OML+cmtt on input line 224
+LaTeX Font Info:    Try loading font information for OML+cmtt on input line 220
 .
-LaTeX Font Info:    No file OMLcmtt.fd. on input line 224.
+LaTeX Font Info:    No file OMLcmtt.fd. on input line 220.
 
 
 LaTeX Font Warning: Font shape `OML/cmtt/m/n' undefined
 (Font)              using `OML/cmm/m/it' instead
-(Font)              for symbol `textgreater' on input line 224.
+(Font)              for symbol `textgreater' on input line 220.
 
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 224
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 220
 .
 (/home/yves/texmf/tex/latex/omscmtt.fd
 File: omscmtt.fd 
 )
 LaTeX Font Info:    Font shape `OMS/cmtt/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 224.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 220.
  [7]) (./sem.tex
 <figure/sem.pdf, id=137, 505.89pt x 505.89pt>
 File: figure/sem.pdf Graphic file (type pdf)
  <use figure/sem.pdf>
-Package pdftex.def Info: figure/sem.pdf used on input line 14.
+Package pdftex.def Info: figure/sem.pdf used on input line 10.
 (pdftex.def)             Requested size: 379.41655pt x 379.42427pt.
  [8] [9 <./figure/sem.pdf>] [10] [11]) (./syntax2.tex [12] [13] [14]) (./means.
 tex [15]
@@ -545,7 +545,7 @@ tex [15]
 [26] <figure/growth.pdf, id=236, 505.89pt x 505.89pt>
 File: figure/growth.pdf Graphic file (type pdf)
  <use figure/growth.pdf>
-Package pdftex.def Info: figure/growth.pdf used on input line 98.
+Package pdftex.def Info: figure/growth.pdf used on input line 94.
 (pdftex.def)             Requested size: 379.41655pt x 379.42427pt.
 
 [27] [28 <./figure/growth.pdf>]) (./cat.tex) (./cov.tex [29] [30]) (./est.tex
@@ -586,7 +586,7 @@ usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmtt10.pfb>
-Output written on tutorial.pdf (38 pages, 286652 bytes).
+Output written on tutorial.pdf (38 pages, 283177 bytes).
 PDF statistics:
  382 PDF objects out of 1000 (max. 8388607)
  317 compressed objects within 4 object streams

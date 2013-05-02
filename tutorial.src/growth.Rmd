@@ -47,7 +47,7 @@ addition, a time-varying covariate `c` that influences the outcome measure at
 the four time points has been added to the model.  A graphical representation
 of this model is presented below.
 
-```{r growth, echo=FALSE, message=FALSE, dev=c("png","pdf"), dpi=c(140,100), fig.cap="A growth curve examples"}
+```{r growth, echo=FALSE, message=FALSE, dev=c("png","pdf"), dpi=c(100,100), fig.cap="A growth curve examples", warning=FALSE}
 library(semPlot)
 # a linear growth model with a time-varying covariate
 model <- '
@@ -64,7 +64,13 @@ model <- '
     t4 ~ c4
 '
 fit <- growth(model, data=Demo.growth)
-semPaths(fit, layout="tree", rotation=3,
+
+L <- matrix(
+  c('t1','t2','t3','t4',NA,NA,
+    NA,NA,NA,NA,'i','s',
+    'c1','c2','c3','c4','x1','x2'), 3,,byrow=TRUE)
+
+semPaths(fit, layout=L, rotation=3,
 exoVar=FALSE,
 exoCov=FALSE,
 intercepts=FALSE,
