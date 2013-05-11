@@ -51,7 +51,8 @@ curvePivot=FALSE,
 #style="LISREL",
 exoVar=FALSE,
 sizeMan=7,
-sizeLat=10
+sizeLat=10,
+DoNotPlot=TRUE
 )
 
 L <- matrix(c(

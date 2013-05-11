@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1367488985 "tutorial.tex" "tutorial.pdf" "tutorial" 1367489332
+["pdflatex"] 1368276103 "tutorial.tex" "tutorial.pdf" "tutorial" 1368276217
   "/home/yves/texmf/tex/latex/omscmtt.fd" 1272989404 607 06eee81c7b03b7b3b2af97278f259b7d ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1366264901 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1366264886 1004 54797486969f23fa377b128694d548df ""
@@ -87,7 +87,7 @@
   "/usr/share/texmf-dist/tex/latex/url/url.sty" 1366264896 21932 e3a9cf32ee9b853b42be14c2f25b873c ""
   "/usr/share/texmf/web2c/texmf.cnf" 1328230870 29610 220a4f4cc0d915bf8fcbcb553dcee1ae ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1366805061 879001 0ec2dd0238720aa71ffa917b6d3e724f ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1366804989 6913478 2e58c2dd65beda6ddde3d388babf7ee6 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1367931095 6913477 eecfe839a34e734faf6e51f11fb2d44c ""
   "before.tex" 1367481931 3043 0814d5c991629be222948552ff7eb8a8 ""
   "cat.tex" 1367481935 2980 98850daae26fc0d9bd9390972a043d55 ""
   "cfa.tex" 1367482112 10593 14ef9352ee61cea4b965138334be359d ""
@@ -95,7 +95,6 @@
   "est.tex" 1367481934 5927 aa7d83b33e6f7bf009460a1a01708311 ""
   "figure/cfa.pdf" 1367482112 5355 ffbbd13fe0f3092acf641edf86730f56 ""
   "figure/growth.pdf" 1367488984 5228 429f028232c92031873dd2432880b646 ""
-  "figure/sem.pdf" 1367488981 6737 4fa2e2f28d2d3af885b24130eb8528f0 ""
   "groups.tex" 1367481940 22051 3c7aa224c80dc8a56c47df81d8cc63b0 ""
   "growth.tex" 1367488984 4712 53633198aaca5a9224eaf152229288bc ""
   "inspect.tex" 1367481946 13038 5a193be2a2fd8753b699da06b0c0fd39 ""
@@ -104,13 +103,13 @@
   "mediation.tex" 1367481936 3052 c0a6c6ef6a6173d07e855c9bd73e609c ""
   "modindices.tex" 1367481953 2825 53b8818404bb04343ba2585418fcedc9 ""
   "pandoc.tex" 1367245545 1157 0b8e6abc071674196fee9bb110907cee ""
-  "sem.tex" 1367488981 8344 37e6654dd6e3e82689511e1d9c4a29c8 ""
+  "sem.tex" 1368276101 8310 a50c7674b95a0774ac06d4d956cc367a ""
   "syntax1.tex" 1367481950 4948 8f3943ae9673c085ccae8c9f9b85886a ""
   "syntax2.tex" 1367481952 12554 a7170d60ce55d5d85431fa8ff899f749 ""
-  "tutorial.aux" 1367488985 4388 792b203718fcffcbb85b50c8e257e00d ""
-  "tutorial.out" 1367488985 984 e7e376ddee62508ac7c512abae3ca6a0 ""
+  "tutorial.aux" 1368276103 4388 6567b645485cf5db4647c7d088b1fee8 ""
+  "tutorial.out" 1368276103 984 e7e376ddee62508ac7c512abae3ca6a0 ""
   "tutorial.tex" 1367420198 2485 de856623cd2d165d3bb1be126069b596 ""
-  "tutorial.toc" 1367488985 2873 0065e044ed71fd3724a44e974a36c07d ""
+  "tutorial.toc" 1368276103 2873 c8db10bd066cce54a04df68b9b210466 ""
   (generated)
   "tutorial.aux"
   "tutorial.pdf"
