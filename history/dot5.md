@@ -7,6 +7,24 @@ submenu: history
 
 #### 0.5 series ####
 
+##### Version 0.5-13 #####
+
+- Released on CRAN: 11 May 2013
+- New features and user-visible changes:
+  - mplus2lavaan() (written by Michael Hallquist) is capable of reading (and
+    fitting) models specified in an Mplus input file
+  - new function lavExport() allows exporting a lavaan model to an external
+    program (currently only Mplus)
+  - new function lavTables() shows observed and expected frequencies for
+    pairwise tables of categorical variables
+  - new function lavMatrixRepresentation()
+  - changes of function names: lavaanNames() becomes lavNames(), parseModelString(), becomes lavParseModelString(), lavaanify() becomes lavParTable() (but the
+  old names are still valid)
+  - scale check has been relaxed (and ignores exogenous variables)
+  - standardized=TRUE in simulateData() now also applies to latent variables
+- Bugs/glitches discovered after the release:
+  - (just released)
+
 ##### Version 0.5-12 #####
 
 - Released on CRAN: 8 March 2013

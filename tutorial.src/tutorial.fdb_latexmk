@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1368276103 "tutorial.tex" "tutorial.pdf" "tutorial" 1368276217
+["pdflatex"] 1368347609 "tutorial.tex" "tutorial.pdf" "tutorial" 1368347637
   "/home/yves/texmf/tex/latex/omscmtt.fd" 1272989404 607 06eee81c7b03b7b3b2af97278f259b7d ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1366264901 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1366264886 1004 54797486969f23fa377b128694d548df ""
@@ -85,9 +85,9 @@
   "/usr/share/texmf-dist/tex/latex/rotating/rotating.sty" 1366264896 7131 a49b179ae7108fe42935176733099fc0 ""
   "/usr/share/texmf-dist/tex/latex/tools/longtable.sty" 1366264896 11948 81a7677988a1aa6fe0c169167e78a0d7 ""
   "/usr/share/texmf-dist/tex/latex/url/url.sty" 1366264896 21932 e3a9cf32ee9b853b42be14c2f25b873c ""
-  "/usr/share/texmf/web2c/texmf.cnf" 1328230870 29610 220a4f4cc0d915bf8fcbcb553dcee1ae ""
-  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1366805061 879001 0ec2dd0238720aa71ffa917b6d3e724f ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1367931095 6913477 eecfe839a34e734faf6e51f11fb2d44c ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1323553176 29610 220a4f4cc0d915bf8fcbcb553dcee1ae ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1367315819 873956 c9c5a15e2adae1a52b38cdce69160429 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1367315782 6913478 90cfc18610b66e6cdec9e454b4916c8e ""
   "before.tex" 1367481931 3043 0814d5c991629be222948552ff7eb8a8 ""
   "cat.tex" 1367481935 2980 98850daae26fc0d9bd9390972a043d55 ""
   "cfa.tex" 1367482112 10593 14ef9352ee61cea4b965138334be359d ""
@@ -106,13 +106,13 @@
   "sem.tex" 1368276101 8310 a50c7674b95a0774ac06d4d956cc367a ""
   "syntax1.tex" 1367481950 4948 8f3943ae9673c085ccae8c9f9b85886a ""
   "syntax2.tex" 1367481952 12554 a7170d60ce55d5d85431fa8ff899f749 ""
-  "tutorial.aux" 1368276103 4388 6567b645485cf5db4647c7d088b1fee8 ""
-  "tutorial.out" 1368276103 984 e7e376ddee62508ac7c512abae3ca6a0 ""
+  "tutorial.aux" 1368347610 4388 6567b645485cf5db4647c7d088b1fee8 ""
+  "tutorial.out" 1368347610 984 e7e376ddee62508ac7c512abae3ca6a0 ""
   "tutorial.tex" 1367420198 2485 de856623cd2d165d3bb1be126069b596 ""
-  "tutorial.toc" 1368276103 2873 c8db10bd066cce54a04df68b9b210466 ""
+  "tutorial.toc" 1368347610 2873 c8db10bd066cce54a04df68b9b210466 ""
   (generated)
   "tutorial.aux"
   "tutorial.pdf"
-  "tutorial.toc"
   "tutorial.out"
+  "tutorial.toc"
   "tutorial.log"

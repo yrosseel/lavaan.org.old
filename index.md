@@ -10,9 +10,8 @@ submenu: lavaan
 - A double-block session on lavaan will be presented at the
   [Modern Modeling Methods (M3)](http://www.modeling.uconn.edu/) conference
   on Monday 21th of May. Slides and materials will be available soon.
+- (11 May 2013): version 0.5-13 has been released on [CRAN](http://cran.r-project.org/web/packages/lavaan/). See [Version History](http://lavaan.ugent.be/history/dot5.html) for new features.
 - (26 April 2013): the lavaan.org website has been redesigned
-- (8 March 2013): version 0.5-12 has been released on [CRAN](http://cran.r-project.org/web/packages/lavaan/).
-  This is a maintenance release, fixing some small issues only.
 
 ####  What is lavaan? ####
 The lavaan package is developed to provide useRs, researchers and teachers a
