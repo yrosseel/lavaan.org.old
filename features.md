@@ -27,7 +27,7 @@ as follows:
 
     ```r
     library(lavaan)
-    myData <- read.cv("/path/to/mydata/myData.csv")
+    myData <- read.csv("/path/to/mydata/myData.csv")
     myModel <- ' 
         f1 =~ item1 + item2 + item3
         f2 =~ item4 + item5 + item6

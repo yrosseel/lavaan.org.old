@@ -10,7 +10,6 @@ paginate: 4
 exclude: ['README.YR']
 exclude: ['Makefile']
 exclude: ['tutorial.src']
-auto: false
 
 # must be redcarpet, for github style fenced code blocks (```r)
 markdown: redcarpet

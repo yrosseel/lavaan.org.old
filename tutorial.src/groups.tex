@@ -18,7 +18,7 @@ Grant-White).
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  63 iterations
+lavaan (0.5-16) converged normally after  57 iterations
 
   Number of observations per group         
   Pasteur                                          156
@@ -164,11 +164,11 @@ equality constraints). For example:
 In the definition of the latent factor \texttt{visual}, we have fixed
 the factor loading of the indicator \texttt{x3} to the value `0.6' in
 the first group, and to the value `0.8' in the second group, while the
-factor loading of the indicator is fixed to the value `0.5' in both
-groups. In the definition of the \texttt{textual} factor, two different
-starting values are provided for the \texttt{x5} indicator; one for each
-group. In addition, we have labeled the factor loading of the
-\texttt{x6} indicator as `a', but this label is only given to the
+factor loading of the indicator \texttt{x2} is fixed to the value `0.5'
+in both groups. In the definition of the \texttt{textual} factor, two
+different starting values are provided for the \texttt{x5} indicator;
+one for each group. In addition, we have labeled the factor loading of
+the \texttt{x6} indicator as `a', but this label is only given to the
 parameter of the first group. If you want to provide labels to each of
 the two groups, you can write something like \texttt{c(a1,a2)*x6}. Be
 careful: if you write \texttt{c(a,a)*x6}, both parameters (in the first
@@ -186,7 +186,7 @@ we refit the model:
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  58 iterations
+lavaan (0.5-16) converged normally after  48 iterations
 
   Number of observations per group         
   Pasteur                                          156
@@ -357,7 +357,7 @@ groups, you can proceed as follows:
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  46 iterations
+lavaan (0.5-16) converged normally after  41 iterations
 
   Number of observations per group         
   Pasteur                                          156
@@ -410,7 +410,7 @@ Intercepts:
     x5                3.995    0.101   39.714    0.000
     x6                1.922    0.081   23.711    0.000
     x7                4.432    0.086   51.540    0.000
-    x8                5.563    0.078   71.087    0.000
+    x8                5.563    0.078   71.088    0.000
     x9                5.418    0.079   68.153    0.000
     visual            0.000
     textual           0.000

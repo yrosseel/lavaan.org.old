@@ -39,8 +39,8 @@ HS.model <- '  visual =~ x1 + 0.5*x2 + c(0.6, 0.8)*x3
 
 In the definition of the latent factor `visual`, we have fixed the factor
 loading of the indicator `x3` to the value '0.6' in the first group, and to the
-value '0.8' in the second group, while the factor loading of the indicator is
-fixed to the value '0.5' in both groups. In the definition of the `textual`
+value '0.8' in the second group, while the factor loading of the indicator `x2`
+is fixed to the value '0.5' in both groups. In the definition of the `textual`
 factor, two different starting values are provided for the `x5` indicator; one
 for each group. In addition, we have labeled the factor loading of the `x6`
 indicator as 'a', but this label is only given to the parameter of the first

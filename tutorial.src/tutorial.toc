@@ -27,7 +27,7 @@
 \contentsline {paragraph}{Standard errors}{31}{section*.16}
 \contentsline {paragraph}{Bootstrapping}{31}{section*.17}
 \contentsline {section}{\numberline {13}Indirect effects and mediation analysis}{31}{section.13}
-\contentsline {section}{\numberline {14}Modication Indices}{32}{section.14}
+\contentsline {section}{\numberline {14}Modification Indices}{32}{section.14}
 \contentsline {section}{\numberline {15}Extracting information from a fitted model}{33}{section.15}
 \contentsline {paragraph}{parameterEstimates}{33}{section*.18}
 \contentsline {paragraph}{standardizedSolution}{34}{section*.19}

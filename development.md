@@ -36,18 +36,19 @@ all the recent changes that have been committed.
 
 #### Future plans ####
 
-Version 0.5 is already fairly complete, but new features (mostly related to categorical data) are still added. In particular, we are working on implementing
-marginal ML estimation for categorical SEM.
+Version 0.5 is already fairly complete, but new features (mostly related to categorical data) are still added. In particular, we are working on 1) implementing
+marginal ML estimation for categorical SEM, 2) fine-tuning the PML estimator,
+3) adding functions to assess the fit of SEM models when the data is categorical.
 
 For version 0.6, we plan to redesign the internals of lavaan, and create an
 API, so that it becomes easier for package developers to access/change the
-internals of lavaan.
+internals of lavaan. We hope to start this in October 2013.
 
 Other plans for future releases:
 
 - support for Bayesian estimation (BUGS interface, perhaps a STAN interface, and eventually using custom code)
 - full support for multilevel SEM (mostly likely, lavaan will adopt the GLLAMM approach)
 - support for discrete latent variables (aka mixture modeling, latent class analysis)
-
+- C++ engine for the core computations
 
 

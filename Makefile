@@ -1,6 +1,6 @@
 build: clean
 	make -C tutorial.src build
-	jekyll
+	jekyll build
 
 .PHONY: clean
 clean:

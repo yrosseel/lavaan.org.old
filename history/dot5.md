@@ -7,6 +7,103 @@ submenu: history
 
 #### 0.5 series ####
 
+##### Version 0.5-16 #####
+
+- Released on CRAN: 7 March 2014
+- New features and user-visible changes:
+  - parameterization="theta" is now available for categorical data
+  - initial support for marginal maximum likelihood (estimator = "MML")
+  - new function lavTestLRT() to compare nested models using LRT; the anova()
+    function is now just a wrapper around this function
+  - in both the anova() and lavTestLRT() function, SB.classic=TRUE is the
+    default; to get the old behaviour, use SB.classic=FALSE
+  - new function lavTestWald() allows for arbitrary Wald tests
+  - new function lavCor() to compute polychoric/tetrachoric/... correlations
+    directly from the data
+  - fitMeasures() gains a new baseline.model argument to allow for user-defined
+    baseline models
+  - new group.w.free argument allows the group weights to be treated 
+    as free parameters in a multiple group analysis
+  - new functions lavTablesFitCf(), lavTablesFitCm(), lavTablesFitCp() provide
+    three measures of fit for the PML method (contributed by Mariska Barendse)
+  - SRMR is now identical to the Mplus value if information = "observed"; the
+    WRMR is added to the output if mimic = "Mplus"
+  - allow for zero iterations using control=list(optim.method="none") argument
+- Known issues:
+  - marginal ML limitations: only works if we have latent variables; 
+    only probit metric; extremely slow (for now) if more than 2 dimensions; no 
+    documentation yet; only Gauss-Hermite quadrature
+- Bugs/glitches discovered after the release:
+ - summary(fit, fit.measures=TRUE) gives error: object 'logl.H1' not found; this   can occur if the columns of the data.frame are of type 'matrix' (instead
+   of numeric/integer/factor/ordered)
+ - predict() with continuous observed variables fails in the presence of
+   exogenous covariates
+ - when we have both continuous and categorical (endogenous) variables,
+   the latter with more than 2 response categories, the signs of the
+   thresholds/means are reversed (although the estimates are accurate)
+ - simulateData() with skewness/kurtosis argument(s) (ie using ValeMaurelli)
+   sometimes resulted in wrong means for the observed variables, due to
+   the scale() function which first centers, and then scales (while it should
+   be the other way around). This has no effect on the covariance structure.
+ - free residual covariances between ordered endogenous variables are set to
+   zero (post-estimation) under parameterization="delta" (the default)
+
+##### Version 0.5-15 #####
+
+- Released on CRAN: 15 November 2013
+- New features and user-visible changes:
+  - this is mainly a maintenance release
+  - lavTables() has been redesigned
+  - zero.add and zero.keep.margins arguments control how lavaan deals 
+    with missing values in bivariate frequency tables
+  - PML estimator uses a different objective function and converges 
+    (much) faster
+  - inspect(fit, "covarage") and inspect(fit, "patterns") return information
+    about missingness coverage and missing patterns respectively
+- Known issues:
+  - parameterization="theta" is not implemented yet
+  - (marginal) ML estimation for categorical data is not implemented yet
+- Bugs/glitches discovered after the release:
+  - the shortcut 'item ~ 0' to fix an intercept to zero seems to be broken;
+    workaround: use 'item ~ 0*1' instead
+  - the polychoric correlation between two variables is computed wrongly if
+    (and only if) the variables are binary and they happen to have exactly
+    the same threshold (ie the marginal distributions are identical); the
+    result is a fatal error (so it does not happen silently)
+  - modindices did not work if explicit equality constraints 
+    (using the "==" operator) were included in the model syntax
+  - missing="pairwise" (if data are categorical) was also deleting cases with
+    missing values in the exogenous covariates
+  - if some cases have only missing values (and should be removed), 
+    the exogenous covariate values (if any) were not removed
+  - if a ";" was included after a comment ("#"), this confused the syntax parser
+
+##### Version 0.5-14 #####
+
+- Released on CRAN: 21 July 2013
+- New features and user-visible changes:
+  - lavTables(, dimension=1L) produces one-way tables
+  - WLS(MV) estimator + categorical data now allows for missing data via
+    the missing="pairwise" argument
+  - predict() and bootstrapping now also work in the categorical case
+  - relax check for non positive-definite theta and psi matrices: eigenvalues
+    are allowed to be negative within a tolerance of .Machine$double.eps^(3/4)
+  - resid() and residuals() gain type="casewise" argument to compute 
+    (unstandardized) casewise residuals
+  - inspect(fit, "data") now returns the raw data
+- Known issues:
+  - parameterization="theta" is not implemented yet
+  - (marginal) ML estimation for categorical data is not implemented yet
+- Bugs/glitches discovered after the release:
+  - the (rarely used) ":" operator added an extra group
+  - predict() and resid(, "casewise") fail in the presence of exogenous
+    covariates
+  - RMSEA is using N-g (instead of N) even if likelihood == "normal"
+  - 0.5 was added to all bivariate frequency cell; for larger tables with
+    many empty cells, this may distort the polychoric correlation in small
+    samples
+  - poor starting values (always 1) for factor loadings if only two indicators
+
 ##### Version 0.5-13 #####
 
 - Released on CRAN: 11 May 2013
@@ -20,10 +117,15 @@ submenu: history
   - new function lavMatrixRepresentation()
   - changes of function names: lavaanNames() becomes lavNames(), parseModelString(), becomes lavParseModelString(), lavaanify() becomes lavParTable() (but the
   old names are still valid)
-  - scale check has been relaxed (and ignores exogenous variables)
+  - scale check has been relaxed (but see bugs!)
   - standardized=TRUE in simulateData() now also applies to latent variables
 - Bugs/glitches discovered after the release:
-  - (just released)
+  - scale check should ignore exogenous variables, but instead, only includes
+    exogenous variables (workaround: warn=FALSE)
+  - simulateData() can not handle a parameter table as input (although the
+    documentation claims it can)
+  - user-specified 'ordered' variables with numeric 0 values were not (always)
+    properly converted to integer codes (starting from 1)
 
 ##### Version 0.5-12 #####
 

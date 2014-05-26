@@ -1,21 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.4.30)  12 MAY 2013 10:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2014.4.17)  24 APR 2014 10:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **tutorial.tex
 (./tutorial.tex
 LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
-rman-x-2012-05-30, ngerman-x-2012-05-30, afrikaans, ancientgreek, ibycus, arabi
-c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
-h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
-h, french, friulan, galician, german, ngerman, swissgerman, monogreek, greek, h
-ungarian, icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, ma
-rathi, oriya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, 
-kurmanji, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nynorsk,
- polish, portuguese, romanian, romansh, russian, sanskrit, serbian, serbianc, s
-lovak, slovenian, spanish, swedish, turkish, turkmen, ukrainian, uppersorbian, 
-welsh, loaded.
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-dist/tex/latex/base/size10.clo
@@ -219,7 +209,8 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 Package: floatrow 2008/08/02 v0.3b floatrow: float package extension
 
 (/usr/share/texmf-dist/tex/latex/caption/caption3.sty
-Package: caption3 2013/02/03 v1.5-62 caption3 kernel (AR)
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen140
 \captionmargin@=\dimen141
 \captionwidth=\dimen142
@@ -340,7 +331,7 @@ Package hyperref Info: Bookmarks ON on input line 4688.
 
 (/usr/share/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
-Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen152
@@ -552,7 +543,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 84.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 84.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 84.
 Package rerunfilecheck Info: File `tutorial.out' has not changed.
-(rerunfilecheck)             Checksum: E7E376DDEE62508AC7C512ABAE3CA6A0;984.
+(rerunfilecheck)             Checksum: CA0461E400D6ED4E2C5211EEC1CF525E;986.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -560,13 +551,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 84.
  ) 
 Here is how much of TeX's memory you used:
- 8025 strings out of 493488
- 117489 string characters out of 3146892
- 225089 words of memory out of 3000000
- 11108 multiletter control sequences out of 15000+200000
- 10621 words of font info for 39 fonts, out of 3000000 for 9000
+ 8035 strings out of 493308
+ 117697 string characters out of 6143616
+ 229104 words of memory out of 5000000
+ 11270 multiletter control sequences out of 15000+600000
+ 10621 words of font info for 39 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 37i,6n,38p,256b,447s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 37i,6n,38p,256b,447s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr/share/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public
@@ -580,7 +571,7 @@ usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmtt10.pfb>
-Output written on tutorial.pdf (37 pages, 276914 bytes).
+Output written on tutorial.pdf (37 pages, 276617 bytes).
 PDF statistics:
  371 PDF objects out of 1000 (max. 8388607)
  309 compressed objects within 4 object streams

@@ -7,11 +7,21 @@ submenu: lavaan
 
 #### News: ####
 
-- A double-block session on lavaan will be presented at the
-  [Modern Modeling Methods (M3)](http://www.modeling.uconn.edu/) conference
-  on Monday 21th of May. Slides and materials will be available soon.
-- (11 May 2013): version 0.5-13 has been released on [CRAN](http://cran.r-project.org/web/packages/lavaan/). See [Version History](http://lavaan.ugent.be/history/dot5.html) for new features.
-- (26 April 2013): the lavaan.org website has been redesigned
+- (26 May 2014): the slides from the special session on the lavaan ecosystem 
+  during the 
+  [Modern Modeling Methods Conference](http://www.modeling.uconn.edu/)
+  (May 20-21, University of Connecticut) are now available 
+  [here](http://simsem.org/lavaan-ecosystem-M3-2014).
+
+- (26 May 2014): [Alex Beaujean](http://www.baylor.edu/soe/faculty/index.php?id=38476) has published a book on [Latent Variable Modeling Using R: A Step by Step Guide](http://blogs.baylor.edu/rlatentvariable/) focusing on the lavaan
+ package.
+
+- (24 April 2014): the lavaan paper has been downloaded >20.000 times.
+
+- (7 March 2014): version 0.5-16 has been released on
+  [CRAN](http://cran.r-project.org/web/packages/lavaan/).
+  See [Version History](http://lavaan.ugent.be/history/dot5.html)
+  for more information.
 
 ####  What is lavaan? ####
 The lavaan package is developed to provide useRs, researchers and teachers a

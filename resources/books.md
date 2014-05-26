@@ -31,5 +31,22 @@ willing to share your code on this page.
 </div>
 &nbsp;
 
+#### Principles and Practice of Structural Equation Modeling (Third Edition) ####
+<div class="container">
+  <div class="three columns">
+    <img src="kline.jpg" alt="cfa book" width="100%">
+  </div>
+  <div class="ten columns">
+  <ul>
+    <li>book title: Principles and Practice of Structural Equation Modeling (Third Edition)</li>
+    <li>book author: Rex B. Kline</li>
+    <li>book publisher: <a href="http://www.guilford.com/cgi-bin/cartscript.cgi?page=pr/kline.htm">Guildford Press</a></li>
+    <li>R syntax (prepared by Catherine Gunsalus, Kansas University) is available (as a zip file) on
+    <a href="https://github.com/rgroup-crmda/rgroup-crmda/blob/master/documentation/lavaan.Kline.examples.zip?raw=true">GitHub</a></li>
+  </ul>
+  </div>
+</div>
+&nbsp;
+
 #### Next book ####
 
