@@ -24,7 +24,7 @@ Several people have contributed source code to the lavaan project:
 - [Victoria Savalei](http://www2.psych.ubc.ca/~vsavalei/) (R code for missing data and the Yuan-Bentler test statistic)
 - [Ed Merkle](http://psychology.missouri.edu/merklee) (added type="yuan" in the bootstrapLavaan() function)
 - [Mijke Rhemtulla](http://www.crmda.ku.edu/people/mijke/) (R code for computing the fraction of missing information (fmi))
-- [Myrsini Katsikatsou](http://katalog.uu.se/empInfo/?languageId=1&id=N8-1027/) (R code for estimator="PML": pairwise maximum likelihood for ordinal data)
+- [Myrsini Katsikatsou](http://personal.lse.ac.uk/katsikat/) (R code for estimator="PML": pairwise maximum likelihood for ordinal data)
 
 #### Thanks ####
 

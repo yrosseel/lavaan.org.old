@@ -18,7 +18,7 @@ proposed for these 9 variables consists of three latent variables (or
 factors), each with three indicators:
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   a \emph{visual} factor measured by 3 variables: \texttt{x1},
   \texttt{x2} and \texttt{x3}
@@ -33,9 +33,8 @@ factors), each with three indicators:
 The figure below contains a graphical representation of the three-factor
 model.
 
-\includegraphics{figure/cfa.pdf}
-
-The corresponding lavaan syntax for specifying this model is as follows:
+\includegraphics{figure/cfa-1.pdf} The corresponding lavaan syntax for
+specifying this model is as follows:
 
 \begin{verbatim}
  visual =~ x1 + x2 + x3
@@ -79,7 +78,7 @@ We can now fit the model as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data =} \NormalTok{HolzingerSwineford1939)}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -91,7 +90,7 @@ the observed variables. Once the model has been fitted, the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{fit.measures =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{fit.measures=}\OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -100,12 +99,12 @@ find it confusing or esthetically unpleasing, please let us know, and we
 will try to improve it.
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  41 iterations
+lavaan (0.6-1) converged normally after  35 iterations
 
   Number of observations                           301
 
   Estimator                                         ML
-  Minimum Function Test Statistic               85.306
+  Model Fit Test Statistic                      85.306
   Degrees of freedom                                24
   P-value (Chi-square)                           0.000
 
@@ -115,7 +114,7 @@ Model test baseline model:
   Degrees of freedom                                36
   P-value                                        0.000
 
-Full model versus baseline model:
+User model versus baseline model:
 
   Comparative Fit Index (CFI)                    0.931
   Tucker-Lewis Index (TLI)                       0.896
@@ -140,53 +139,56 @@ Standardized Root Mean Square Residual:
 
   SRMR                                           0.065
 
-Parameter estimates:
+Parameter Estimates:
 
   Information                                 Expected
+  Information saturated (h1) model          Structured
   Standard Errors                             Standard
 
-                   Estimate  Std.err  Z-value  P(>|z|)
-Latent variables:
-  visual =~
-    x1                1.000
-    x2                0.553    0.100    5.554    0.000
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.554    0.100    5.554    0.000
     x3                0.729    0.109    6.685    0.000
-  textual =~
-    x4                1.000
+  textual =~                                          
+    x4                1.000                           
     x5                1.113    0.065   17.014    0.000
     x6                0.926    0.055   16.703    0.000
-  speed =~
-    x7                1.000
+  speed =~                                            
+    x7                1.000                           
     x8                1.180    0.165    7.152    0.000
     x9                1.082    0.151    7.155    0.000
 
 Covariances:
-  visual ~~
+                   Estimate  Std.Err  z-value  P(>|z|)
+  visual ~~                                           
     textual           0.408    0.074    5.552    0.000
     speed             0.262    0.056    4.660    0.000
-  textual ~~
+  textual ~~                                          
     speed             0.173    0.049    3.518    0.000
 
 Variances:
-    x1                0.549    0.114
-    x2                1.134    0.102
-    x3                0.844    0.091
-    x4                0.371    0.048
-    x5                0.446    0.058
-    x6                0.356    0.043
-    x7                0.799    0.081
-    x8                0.488    0.074
-    x9                0.566    0.071
-    visual            0.809    0.145
-    textual           0.979    0.112
-    speed             0.384    0.086
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .x1                0.549    0.114    4.833    0.000
+   .x2                1.134    0.102   11.146    0.000
+   .x3                0.844    0.091    9.317    0.000
+   .x4                0.371    0.048    7.779    0.000
+   .x5                0.446    0.058    7.642    0.000
+   .x6                0.356    0.043    8.277    0.000
+   .x7                0.799    0.081    9.823    0.000
+   .x8                0.488    0.074    6.573    0.000
+   .x9                0.566    0.071    8.003    0.000
+    visual            0.809    0.145    5.564    0.000
+    textual           0.979    0.112    8.737    0.000
+    speed             0.384    0.086    4.451    0.000
 \end{verbatim}
 
 The output consists of three parts. The first six lines are called
 \emph{the header}. The header contains the following information:
 
 \begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
+\tightlist
 \item
   the lavaan version number
 \item
@@ -203,8 +205,8 @@ The output consists of three parts. The first six lines are called
 \end{itemize}
 
 The next section contains additional fit measures, and is only shown
-because we use the optional argument \texttt{fit.measures = TRUE}. It
-starts with the line \texttt{Model test baseline model} and ends with
+because we use the optional argument \texttt{fit.measures\ =\ TRUE}. It
+starts with the line \texttt{Model\ test\ baseline\ model} and ends with
 the value for the \texttt{SRMR}. The last section contains the parameter
 estimates. It starts with information about the standard errors (if the
 information matrix is expected or observed, and if the standard errors

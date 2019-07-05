@@ -33,82 +33,86 @@ model, we can add the intercepts of the observed variables as follows:
 
 However, it is more convenient to omit the intercept formulas in the
 model syntax (unless you want to fix their values), and to add the
-argument \texttt{meanstructure = TRUE} in the fitting function. For
+argument \texttt{meanstructure\ =\ TRUE} in the fitting function. For
 example, we can refit the three-factor H\&S CFA model as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
            \DataTypeTok{meanstructure =} \OtherTok{TRUE}\NormalTok{)}
 \KeywordTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  41 iterations
+lavaan (0.6-1) converged normally after  35 iterations
 
   Number of observations                           301
 
   Estimator                                         ML
-  Minimum Function Test Statistic               85.306
+  Model Fit Test Statistic                      85.306
   Degrees of freedom                                24
   P-value (Chi-square)                           0.000
 
-Parameter estimates:
+Parameter Estimates:
 
   Information                                 Expected
+  Information saturated (h1) model          Structured
   Standard Errors                             Standard
 
-                   Estimate  Std.err  Z-value  P(>|z|)
-Latent variables:
-  visual =~
-    x1                1.000
-    x2                0.553    0.100    5.554    0.000
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  visual =~                                           
+    x1                1.000                           
+    x2                0.554    0.100    5.554    0.000
     x3                0.729    0.109    6.685    0.000
-  textual =~
-    x4                1.000
+  textual =~                                          
+    x4                1.000                           
     x5                1.113    0.065   17.014    0.000
     x6                0.926    0.055   16.703    0.000
-  speed =~
-    x7                1.000
+  speed =~                                            
+    x7                1.000                           
     x8                1.180    0.165    7.152    0.000
     x9                1.082    0.151    7.155    0.000
 
 Covariances:
-  visual ~~
+                   Estimate  Std.Err  z-value  P(>|z|)
+  visual ~~                                           
     textual           0.408    0.074    5.552    0.000
     speed             0.262    0.056    4.660    0.000
-  textual ~~
+  textual ~~                                          
     speed             0.173    0.049    3.518    0.000
 
 Intercepts:
-    x1                4.936    0.067   73.473    0.000
-    x2                6.088    0.068   89.855    0.000
-    x3                2.250    0.065   34.579    0.000
-    x4                3.061    0.067   45.694    0.000
-    x5                4.341    0.074   58.452    0.000
-    x6                2.186    0.063   34.667    0.000
-    x7                4.186    0.063   66.766    0.000
-    x8                5.527    0.058   94.854    0.000
-    x9                5.374    0.058   92.546    0.000
-    visual            0.000
-    textual           0.000
-    speed             0.000
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .x1                4.936    0.067   73.473    0.000
+   .x2                6.088    0.068   89.855    0.000
+   .x3                2.250    0.065   34.579    0.000
+   .x4                3.061    0.067   45.694    0.000
+   .x5                4.341    0.074   58.452    0.000
+   .x6                2.186    0.063   34.667    0.000
+   .x7                4.186    0.063   66.766    0.000
+   .x8                5.527    0.058   94.854    0.000
+   .x9                5.374    0.058   92.546    0.000
+    visual            0.000                           
+    textual           0.000                           
+    speed             0.000                           
 
 Variances:
-    x1                0.549    0.114
-    x2                1.134    0.102
-    x3                0.844    0.091
-    x4                0.371    0.048
-    x5                0.446    0.058
-    x6                0.356    0.043
-    x7                0.799    0.081
-    x8                0.488    0.074
-    x9                0.566    0.071
-    visual            0.809    0.145
-    textual           0.979    0.112
-    speed             0.384    0.086
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .x1                0.549    0.114    4.833    0.000
+   .x2                1.134    0.102   11.146    0.000
+   .x3                0.844    0.091    9.317    0.000
+   .x4                0.371    0.048    7.779    0.000
+   .x5                0.446    0.058    7.642    0.000
+   .x6                0.356    0.043    8.277    0.000
+   .x7                0.799    0.081    9.823    0.000
+   .x8                0.488    0.074    6.573    0.000
+   .x9                0.566    0.071    8.003    0.000
+    visual            0.809    0.145    5.564    0.000
+    textual           0.979    0.112    8.737    0.000
+    speed             0.384    0.086    4.451    0.000
 \end{verbatim}
 
 As you can see in the output, the model includes intercept parameters

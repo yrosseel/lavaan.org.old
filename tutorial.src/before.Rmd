@@ -15,15 +15,20 @@ Before you start, please read these points carefully:
     useful for most users, or so we hope. However, some important
     features that are currently *NOT* available in lavaan are:
 
-    -   support for hierarchical/multilevel datasets (multilevel cfa,
-        multilevel sem)
+    -   full support for hierarchical/multilevel datasets (multilevel cfa,
+        multilevel sem); however version 0.6-1 supports two-level cfa/sem
+        with random intercepts only, for continuous complete data
+
+    -   full support for sampling (and other) weights (0.6-1 has sampling 
+        weights, but only for complete continuous and non-clustered data)
 
     -   support for discrete latent variables (mixture models, latent
         classes)
 
-    -   Bayesian estimation
+    -   Bayesian estimation (but see the blavaan package)
 
-    We hope to add these features in the next (two?) year(s) or so.
+    We hope to add these features to lavaan in the near future (but please do 
+    not ask when).
 
 -   We consider the current version as *beta* software. This does NOT
     mean that you can not trust the results. We believe the results are

@@ -17,7 +17,7 @@ Once you have installed R, you can install the lavaan package simply by
 starting up R, and typing
 
 ```r
-install.packages("lavaan", dependencies=TRUE)
+install.packages("lavaan", dependencies = TRUE)
 ```
   
 To check if the installation was succesful, you can load the lavaan package and try one of the examples. For example:

@@ -7,21 +7,30 @@ submenu: lavaan
 
 #### News: ####
 
-- (26 May 2014): the slides from the special session on the lavaan ecosystem 
-  during the 
-  [Modern Modeling Methods Conference](http://www.modeling.uconn.edu/)
-  (May 20-21, University of Connecticut) are now available 
-  [here](http://simsem.org/lavaan-ecosystem-M3-2014).
-
-- (26 May 2014): [Alex Beaujean](http://www.baylor.edu/soe/faculty/index.php?id=38476) has published a book on [Latent Variable Modeling Using R: A Step by Step Guide](http://blogs.baylor.edu/rlatentvariable/) focusing on the lavaan
- package.
-
-- (24 April 2014): the lavaan paper has been downloaded >20.000 times.
-
-- (7 March 2014): version 0.5-16 has been released on
-  [CRAN](http://cran.r-project.org/web/packages/lavaan/).
-  See [Version History](http://lavaan.ugent.be/history/dot5.html)
+- (3 July 2019): lavaan version 0.6-4 has been released on
+  [CRAN](https://cran.r-project.org/web/packages/lavaan/).
+  See [Version History](http://lavaan.ugent.be/history/dot6.html)
   for more information.
+
+- (10 Jun 2018): the blavaan paper (on Bayesian SEM with a lavaan syntax) is 
+[published](https://www.jstatsoft.org/article/view/v085i04) in the 
+Journal of Statistical Software.
+
+- (18 Dec 2017): a tutorial on 'The Pairwise Likelihood Method for Structural
+Equation Modelling with ordinal variables and data with missing values using
+the R package lavaan' prepared by Myrsini Katsikatsou has been added to the
+(new) [tutorial](http://lavaan.ugent.be/resources/tutorial.html) page of the
+resources section.
+
+- (16 July 2017): a recording of my keynote presentation `Structural Equation Modeling: models, software and stories' given at the [useR!2017 Conference](https://user2017.brussels/) is available [here](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/KEYNOTE-Structural-Equation-Modeling-models-software-and-stories).
+
+
+#### Workshops #####
+
+- Santiago (Chili), 15 July 2019: one-day pre-conference IMPS workshop on
+''[Structural equation modeling with lavaan](https://www.psychometricsociety.org/content/short-courses-imps-2019)''
+
+
 
 ####  What is lavaan? ####
 The lavaan package is developed to provide useRs, researchers and teachers a

@@ -14,6 +14,7 @@ that were reported for this version.
 
 Version history:
 
+- lavaan [0.6 series](/history/dot6.html)
 - lavaan [0.5 series](/history/dot5.html)
 - lavaan [0.4 series](/history/dot4.html)
 - lavaan [0.3 series](/history/dot3.html)

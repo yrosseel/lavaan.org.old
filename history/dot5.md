@@ -7,6 +7,252 @@ submenu: history
 
 #### 0.5 series ####
 
+
+##### Version 0.5-23.1097 #####
+
+- Released on CRAN: 24 February 2017
+- New features and user-visible changes:
+  - factor scores (computed by lavPredict()) are now complete, even
+    if the items contain missing values
+  - Bartlett factor scores now handle singular lambda and theta matrices
+  - mplus2lavaan() function gains a run=FALSE argument (so it acts only
+    as a syntax converter)
+  - new function lavOptions() shows the default options used by the
+    sem/cfa/lavaan functions; all these options are now described in a
+    single man page (see ?lavOptions)
+  - new functions semList(), cfaList() and lavaanList() allow for fitting
+    the same model on multiple datasets
+  - the (often many) warnings about empty cells in bivariate cells (when 
+    categorical data is used) are now replaced by a single warning, and 
+    lavInspect(fit, "zero.cell.tables") can be used to see these tables
+- Known issues:
+  - same as 0.5-19
+- Bugs/glitches discovered after the release:
+  - the commit number (1097) was not stripped from the version number
+  - the fit measure rni.scaled was using the naive baseline values
+    for chisq and df
+  - when the model syntax contains only covariances (~~) (and perhaps
+    intercepts), and some of the ~~ formulas correspond to values of
+    the covariance matrix below the diagonal (instead of above), the
+    order of the variable names in the final parameter table may be wrong; as
+    a result, some of the variables in the extractor functions may be
+    mislabeled; a symptom of this is that
+    the output of lavNames(lavParseModelString(model.syntax)) is different
+    from the output of lavNames(fit) (bug reported by Cory Costello)
+  - lavTestLRT() with method = "satorra.bentler.2010" is broken, often
+    resulting in negative values for the test statistic
+  - scaled RMSEA value is wrong if mimic="EQS" and test="scaled.shifted" (but
+    the confidence interval is still ok)
+
+##### Version 0.5-22 #####
+
+- Released on CRAN: 24 September 2016
+- New features and user-visible changes:
+  - (old) 'scaled' versions of CFI/TLI/RMSEA are again printed in the
+    summary() output
+  - the (new) robust versions of CFI/TLI/RMSEA are printed on separate
+    lines
+  - inspect/lavInspect/lavTech gains a "residuals" option, for printing raw
+    residuals between observed and model-implied sample statistics
+  - inspect/lavInspect/lavTech: options "sampstat",
+    "implied", and "residuals" now consistently use the same names for
+    the summary statistics (notably res.cov, res.int, res.slopes and res.th
+    when conditional.x = TRUE)
+- Known issues:
+  - same as 0.5-19
+- Bugs/glitches discovered after the release:
+  - lavCor() with output="est" returns the unstandardized solution; therefore,
+    when some variables were continuous, we got covariances instead of 
+    correlations
+
+##### Version 0.5-21 #####
+
+- Released on CRAN: 7 September 2016
+- New features and user-visible changes:
+  - robust RMSEA and CFI values are now computed correctly, following
+    Brosseau-Liard, P. E., Savalei, V., and Li, L. (2012), and
+    Brosseau-Liard, P. E. and Savalei, V. (2014); in the output of
+    fitMeasures(), the 'new' ones are called cfi.robust and rmsea.robust,
+    while the 'old' ones are called cfi.scaled and rmsea.scaled
+  - SRMR is now displayed in the summary(, fit.measures = TRUE) output in
+    the categorical case
+  - in the summary() output, a dot (.) is added in front of the names of
+    endogenous intercepts, covariances and variances; this is mostly for
+    teaching purposes, to distinguish between for example residual and plain
+    variances; the '.' prefix was the least obtrusive way I could think of;
+    feedback about this is welcome
+  - the inspect/lavInspect() function will now always return a nested list
+    in the multiple group setting
+  - the inspect/lavInspect() function with the "free" argument will now
+    show a header with equality constraints (if any)
+  - GLS/WLS (and friends) now work when fixed.x = TRUE
+  - a new argument conditional.x (TRUE/FALSE) can be used with all
+    estimators (ML, GLS, (D)WLS)
+  - a two-way interaction between observed variables can now be specified
+    in the model syntax by using a colon, for example: y ~ x1 + x2 + x1:x2
+    and a product term will be created automatically 
+- Known issues:
+  - same as 0.5-19
+- Bugs/glitches discovered after the release:
+  - the (new) robust CFI/TLI/RMSEA values as printed in the summary() output 
+    of version 0.5-21 (only) are wrong if (and only if) the test statistic is 
+    "mean.var.adjusted" or "scaled.shifted" (the latter is used when 
+    estimator = "WLSMV", the default estimator in the categorical case)
+
+##### Version 0.5-20 #####
+
+- Released on CRAN: 7 November 2015
+- New features and user-visible changes:
+  - this is mainly a small maintenance release, to ease the forthcoming
+    updates of a few packages (blavaan, lavaan.survey, semTools)
+  - when the model is just a simple univariate regression, lavaan does no 
+    longer use an analytic shortcut (therefore, estimation may take
+    much longer, in particular in the presence of (in)equality constraints)
+  - more options have been added to lavTech/lavInspect, and the man page
+    has been updated
+  - lavScores() and vcov() gain a new argument `remove.duplicated', which
+    is set to TRUE in the case of lavScores() (but not vcov); for lavScores(),
+    this restores the behavior of <= 0.5-17 when only simple equality 
+    constraints are used in the model
+- Known issues:
+  - same as 0.5-19
+- Bugs/glitches discovered after the release:
+  - when NACOV is provided as an argument, and mimic="Mplus", lavaan 
+    (wrongly) tries to 'fix' the G11 part of the NACOV matrix
+  - the "?"-modifier (as shortcut for start()*) did not work in many 
+    settings (eg multiple groups)
+  - combination of arguments se="robust.sem" and information="observed" was
+    allowed and gave an error
+  - lavTestLRT(, method="satorra.2000") failed in the multiple group case
+  - combination se="robust" and esetimator="ULS" did not work
+  - if data was a tiblle, lavaan would fail
+  - fabin.uni() fails when trying to invert a singular matrix
+  - WLS.VD was NULL when WLS.V was user-specified
+  - lavtable(,dim=1) gave wrong frequencies in the presence of empty cells
+  - lavInspect(,"information.first.order") failed when the model was fitted
+    without a meanstructure
+  - modindices() failed if the information matrix is singular
+
+
+##### Version 0.5-19 #####
+
+- Released on CRAN: 3 October 2015
+- New features and user-visible changes:
+  - the parameter estimates section of the summary() output has been
+    redesigned: the section headers are now repeated, and the number of 
+    digits after the decimal point can be changed; eg. summary(fit, nd = 5)
+  - the function modindices() will now only show modification indices for
+    newly added parameters; to assess the impact of releasing equality
+    constraints, use the function lavTestScore()
+  - new function lavTestScore() allows for univariate and multivariate
+    score tests (aka Lagrange Multiplier tests) for releasing (general)
+    equality constraints
+  - the output of parTable(fit) now fully reflects the changes
+    described [here](http://lavaan.ugent.be/notes/lavaan_eq_constraints.pdf)
+  - lavPredict() now consistently ignores the structural component; it 
+    only computes values for latent variables and their indicators; if
+    all variables are observed, the function simply returns the observed
+    values
+  - lavTestLRT() gives a warning if the restricted model contains 
+    parameters that are free in the restricted model, but fixed in the 
+    full model
+- Known issues:
+  - marginal ML limitations: same as 0.5-16, 0.5-17 and 0.5-18 (this will be
+    addressed in 0.6)
+  - lav_partable_df() does not take the equality constraints into account,
+    and does not handle the setting where the number of variables differs
+    among groups in a multiple group analysis (this will be
+    addressed in 0.6)
+- Bugs/glitches discovered after the release:
+  - in ill-conditioned settings, with equality constraints, NA may appear
+    among the standard errors; this turned out to be a numerical issue, 
+    due to a rather conservative tolerance value when computing the 
+    generalized inverse
+
+
+
+##### Version 0.5-18 #####
+
+- Released on CRAN: 4 April 2015
+- New features and user-visible changes:
+  - huge improvement in speed and stability when (many) linear equality
+    constraints are used in the model; the details of the 
+    changes are described [here](http://lavaan.ugent.be/notes/lavaan_eq_constraints.pdf)
+  - new function lavPredict() to compute predicted values for latent 
+    variables and observed variables
+  - many low-level lav_matrix_* functions are now public
+  - modindices() function has gained many filter options, 
+    including a sort= argument
+  - estimator = "PML" now provides a goodness-of-fit test (PLRT)
+  - many new output options for the lavTech/lavInspect/inspect functions
+- Known issues:
+  - marginal ML limitations: same as 0.5-16 and 0.5-17 (this will be
+    addressed in 0.6)
+  - the modification indices do not reflect (yet) what happens if
+    an equality constraint is released; a warning is given in this case
+  - the parameter table still contains the 'unco' and 'eq.id' columns,
+    although they are not used anymore (they will be removed in 0.5-19)
+  - lav_partable_df() does not take the equality constraints into account
+- Bugs/glitches discovered after the release:
+  - lavTestLRT(,method = "sattora.2000") gives the wrong result if
+    the restricted model contains parameters that are free in the 
+    restricted model, but fixed in the full model; a typical example
+    is when comparing the weak invariance versus the strong invariance
+    model (the latent means are free in the strong invariance model)
+  - the modifier c(NA,NA)* does not work (in a multiple group analysis)
+  - labels for the augmented part in lavInspect(fit, "augmented.information")
+    are missing, resulting in an error
+  - the post-estimation checks sometimes produce a false warning that
+    the model-implied covariance matrix of the latent variables is 
+    non-positive definite (only when `dummy' (phantom) latent variables
+    are involved in the model)
+  - inspect(fit, "cov.lv") had label issues when formative latent 
+    variables were involved
+
+##### Version 0.5-17 #####
+
+- Released on CRAN: 30 September 2014
+- New features and user-visible changes:
+  - this is mainly a maintenance release
+  - two new functions: lavInspect() and lavTech() extend the familiar
+    inspect() function (with more arguments); they now have a dedicated
+    help page (see ?lavInspect)
+  - for saturated models (df = 0), the p-value will always be 'NA' (instead
+    of 1 or sometimes 0)
+  - more low-level functions are now public: lav_partable_independence,
+    lav_partable_unrestricted, lav_partable_npar, lav_partable_ndat,
+    lav_partable_df, lav_func_gradient_complex, lav_func_gradient_simple,
+    lav_func_jacobian_complex, lav_func_jacobian_simple
+- Known issues:
+  - marginal ML limitations: same as 0.5-16
+  - modindices() does not work in models with both explictit equality 
+    constraints (==), and label-based (or group.equal based) equality 
+    constraints
+  - resid(, "casewise") fails in the presence of exogenous covariates
+- Bugs/glitches discovered after the release:
+ - resid(,"obs") fails if the model contains exogenous covariates
+ - parameterization="theta" does not work in a multiple group analysis if 
+   there are exogenous covariates in the model
+ - when a variable in the model syntax was called `label', this would
+   confuse the syntax parser
+ - modindices() did not (alwayw) work when estimator = "WLS"
+ - pc_cor_TS (the function computing polychoric correlations) could fail 
+   (integer overflow) in very large samples
+ - std.all was wrong for covariances ("~~") where the lhs was a factor, while
+   the rhs was a observed variable (and hence fixed.x = FALSE)
+ - std.ov = TRUE fails when the model contains (exactly) one exogenous variable
+ - standard errors of standardized parameters (as shown in the output of
+   the standardizedSolution() function) are mostly wrong, because they do
+   not take the sampling variability of the latent variables into account
+ - lavTestLRT() does not warn (or throw an error) if the restricted model (H0)
+   contains model parameters that are free in H0, but fixed in H1. A common
+   example of this is in measurement invariance testing when testing for
+   strong (versus weak) invariance (by default, the strong invariance model will   free up the latent means). In combination with SB.classic = FALSE, 
+   the resulting test statistic is not correct (Note: 0.5-18 does not solve 
+   this, but issues a warning when H0 contains such free parameters). In
+   general, SB.classic = FALSE only works correctly when the free 
+   parameters in H0 are a subset of the free parameters of H1.
+
 ##### Version 0.5-16 #####
 
 - Released on CRAN: 7 March 2014
@@ -45,8 +291,14 @@ submenu: history
    sometimes resulted in wrong means for the observed variables, due to
    the scale() function which first centers, and then scales (while it should
    be the other way around). This has no effect on the covariance structure.
+ - simuldateData() failed (cov.x error) in the presence of exogenous
+   covariates and if standardized = TRUE
  - free residual covariances between ordered endogenous variables are set to
    zero (post-estimation) under parameterization="delta" (the default)
+ - anova(..., SB.classic = FALSE) complains about multiple actual arguments
+ - modindices() fails when parameteriation = "theta"
+ - summary(.., rsquare = TRUE) does not show the R-square values (while
+   inspect(, "rsquare") works)
 
 ##### Version 0.5-15 #####
 

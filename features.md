@@ -33,8 +33,8 @@ as follows:
         f2 =~ item4 + item5 + item6
         f3 =~ item7 + item8 + item9
     '
-    fit <- cfa(model=myModel, data=myData)
-    summary(fit, fit.measures=TRUE)
+    fit <- cfa(model = myModel, data = myData)
+    summary(fit, fit.measures = TRUE)
     ```
 
 - you can choose between a user-friendly interface (in combination with the
@@ -67,3 +67,5 @@ scale-shifted, Bollen-Stine bootstrap
 
 - full support for analyzing **categorical data**: lavaan (from version 0.5 onwards) can handle any mixture of binary, ordinal
 and continuous observed variables
+
+- (from version 0.6 onwards): support for **multilevel level SEM**

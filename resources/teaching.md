@@ -11,6 +11,10 @@ teaching materials you would like to share, please contact us, and will put
 them here online. Recent materials are on the top. A selection of my
 own materials can be found at the bottom of the page.
 
+- [Lavaan: how to get started](https://www.rensvandeschoot.com/tutorials/lavaan-how-to-get-started/): a short tutorial to get you started developed by Naomi Schalken and Rens van de Schoot.
+
+- [Latent variable modelling of cross-national survey data](http://essedunet.nsd.uib.no/cms/topics/latentvar/): an introduction to Factor Analysis and SEM with examples both in both STATA and lavaan, written by Myrsini Katsikatsou and Jouni Kuha ([LSE](http://www.lse.ac.uk/statistics/research/Social-Statistics/Index.aspx))
+
 - One week workshop on SEM and R (using lavaan) in Spanish, 
 prepared by Mauricio Garnier-Villarreal 
 ([Center for Research Methods and Data Analysis](http://http://www.crmda.ku.edu/), University of Kansas):
@@ -23,12 +27,18 @@ prepared by Mauricio Garnier-Villarreal
 - A short introduction to lavaan in German, prepared by [Christina Werner](http://www.psychologie.uzh.ch/fachrichtungen/methoden/team/christinawerner.html)
 (University of Zurich), can be found [here](http://www.psychologie.uzh.ch/fachrichtungen/methoden/team/christinawerner/sem/einfuehrung_lavaan_cswerner.pdf).
 
+- A teaching session on measurement invariance analysis using
+lavaan, prepared by [Kate Xu](http://www.neuroscience.cam.ac.uk/directory/profile.php?mx212), Department of Psychiatry, University of Cambridge:
+[PDF](http://users.ugent.be/~yrosseel/lavaan/multiplegroup6Dec2012.pdf) (1.6MB),
+[PPTX](http://users.ugent.be/~yrosseel/lavaan/multiplegroup6Dec2012.pptx) (1.4MB),
+[R code](http://users.ugent.be/~yrosseel/lavaan/MItestsholzinger5dec2012.R).
+
 - A full semester course (Fall 2012) on 'Latent Variable Models in Education'
 prepared by [A. Alexander Beaujean](http://www.baylor.edu/mediacommunications/index.php?id=88573): [PDF](http://users.ugent.be/~yrosseel/lavaan/AlexBeaujean.pdf) (2.2MB, 578 slides).
 
 - Teaching materials for a course 'An Introduction to Structural Equation
 Modeling for Ecology and Evolutionary Biology' prepared by Jarrett Byrnes:
-[http://jarrettbyrnes.info/ubc_sem/](http://jarrettbyrnes.info/ubc_sem/)
+[http://byrneslab.net/teaching/sem/](http://byrneslab.net/teaching/sem/)
 
 - Teaching materials for a one day tutorial 'Covariance Based Structural
 Equation Modeling', prepared by Joerg Evermann (Memorial University of

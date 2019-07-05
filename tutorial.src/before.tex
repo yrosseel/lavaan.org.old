@@ -2,8 +2,8 @@ Before you start, please read these points carefully:
 
 \begin{itemize}
 \item
-  First of all, you must have a recent version ($3.0.0$ or higher) of R
-  installed. You can download the latest version of R from this page:
+  First of all, you must have a recent version (\(3.0.0\) or higher) of
+  R installed. You can download the latest version of R from this page:
   \url{http://cran.r-project.org/}.
 \item
   The lavaan package is not finished yet. But it is already very useful
@@ -12,16 +12,21 @@ Before you start, please read these points carefully:
 
   \begin{itemize}
   \item
-    support for hierarchical/multilevel datasets (multilevel cfa,
-    multilevel sem)
+    full support for hierarchical/multilevel datasets (multilevel cfa,
+    multilevel sem); however version 0.6-1 supports two-level cfa/sem
+    with random intercepts only, for continuous complete data
+  \item
+    full support for sampling (and other) weights (0.6-1 has sampling
+    weights, but only for complete continuous and non-clustered data)
   \item
     support for discrete latent variables (mixture models, latent
     classes)
   \item
-    Bayesian estimation
+    Bayesian estimation (but see the blavaan package)
   \end{itemize}
 
-  We hope to add these features in the next (two?) year(s) or so.
+  We hope to add these features to lavaan in the near future (but please
+  do not ask when).
 \item
   We consider the current version as \emph{beta} software. This does NOT
   mean that you can not trust the results. We believe the results are
@@ -54,8 +59,8 @@ Before you start, please read these points carefully:
   group. Go to \url{https://groups.google.com/d/forum/lavaan/} and join
   the group. Once you have joined the group, you can email your
   questions to
-  \href{mailto:lavaan@googlegroups.com}{lavaan@googlegroups.com}. If you
-  think you have found a bug, or if you have a suggestion for
+  \href{mailto:lavaan@googlegroups.com}{\nolinkurl{lavaan@googlegroups.com}}.
+  If you think you have found a bug, or if you have a suggestion for
   improvement, you can either email me directly (to alert me), post it
   to the discussion group (to discuss it), or open an issue on github
   (see \url{https://github.com/yrosseel/lavaan/issues}). The latter is

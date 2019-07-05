@@ -52,62 +52,66 @@ the results:
 \StringTok{    powerless67 ~~ powerless71}
 \StringTok{'}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(wheaton.model, }
-           \DataTypeTok{sample.cov =} \NormalTok{wheaton.cov, }
+           \DataTypeTok{sample.cov =}\NormalTok{ wheaton.cov, }
            \DataTypeTok{sample.nobs =} \DecValTok{932}\NormalTok{)}
 \KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{standardized =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  82 iterations
+lavaan (0.6-1) converged normally after  73 iterations
 
   Number of observations                           932
 
   Estimator                                         ML
-  Minimum Function Test Statistic                4.735
+  Model Fit Test Statistic                       4.735
   Degrees of freedom                                 4
   P-value (Chi-square)                           0.316
 
-Parameter estimates:
+Parameter Estimates:
 
   Information                                 Expected
+  Information saturated (h1) model          Structured
   Standard Errors                             Standard
 
-                   Estimate  Std.err  Z-value  P(>|z|)   Std.lv  Std.all
-Latent variables:
-  ses =~
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  ses =~                                                                
     education         1.000                               2.607    0.842
     sei               5.219    0.422   12.364    0.000   13.609    0.642
-  alien67 =~
+  alien67 =~                                                            
     anomia67          1.000                               2.663    0.774
     powerless67       0.979    0.062   15.895    0.000    2.606    0.852
-  alien71 =~
+  alien71 =~                                                            
     anomia71          1.000                               2.850    0.805
     powerless71       0.922    0.059   15.498    0.000    2.628    0.832
 
 Regressions:
-  alien71 ~
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  alien71 ~                                                             
     alien67           0.607    0.051   11.898    0.000    0.567    0.567
     ses              -0.227    0.052   -4.334    0.000   -0.207   -0.207
-  alien67 ~
+  alien67 ~                                                             
     ses              -0.575    0.056  -10.195    0.000   -0.563   -0.563
 
 Covariances:
-  anomia67 ~~
-    anomia71          1.623    0.314    5.176    0.000    1.623    0.356
-  powerless67 ~~
-    powerless71       0.339    0.261    1.298    0.194    0.339    0.121
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+ .anomia67 ~~                                                           
+   .anomia71          1.623    0.314    5.176    0.000    1.623    0.356
+ .powerless67 ~~                                                        
+   .powerless71       0.339    0.261    1.298    0.194    0.339    0.121
 
 Variances:
-    education         2.801    0.507                      2.801    0.292
-    sei             264.597   18.126                    264.597    0.588
-    anomia67          4.731    0.453                      4.731    0.400
-    powerless67       2.563    0.403                      2.563    0.274
-    anomia71          4.399    0.515                      4.399    0.351
-    powerless71       3.070    0.434                      3.070    0.308
-    ses               6.798    0.649                      1.000    1.000
-    alien67           4.841    0.467                      0.683    0.683
-    alien71           4.083    0.404                      0.503    0.503
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .education         2.801    0.507    5.525    0.000    2.801    0.292
+   .sei             264.597   18.126   14.597    0.000  264.597    0.588
+   .anomia67          4.731    0.453   10.441    0.000    4.731    0.400
+   .powerless67       2.563    0.403    6.359    0.000    2.563    0.274
+   .anomia71          4.399    0.515    8.542    0.000    4.399    0.351
+   .powerless71       3.070    0.434    7.070    0.000    3.070    0.308
+    ses               6.798    0.649   10.475    0.000    1.000    1.000
+   .alien67           4.841    0.467   10.359    0.000    0.683    0.683
+   .alien71           4.083    0.404   10.104    0.000    0.503    0.503
 \end{verbatim}
 
 If you have multiple groups, the \texttt{sample.cov} argument must be a

@@ -57,6 +57,23 @@ fit <- cfa(HS.model,
  summary(fit)
 ```
 
+#### Fixing parameters in some groups, but not all ####
+
+Sometimes, we wish to fix the value of a parameter in all groups, except
+for one particular group. In this group, we wish to freely estimate the
+value of that parameter. The modifier for this parameter
+is again a vector containing the fixed values for this parameter for each 
+group, but we can use `NA` to force a parameter to be free in one (or more)
+group(s). Suppose for 
+example we have four groups. We define a latent variable (say `f`) 
+with three indicators. We wish to fix the factor loading of 
+indicator `item2` to 1.0 in all but the second group. We can write
+something like
+
+```{r tidy=FALSE, comment=""}
+f =~ item1 + c(1,NA,1,1)*item2 + item3
+```
+
 #### Constraining a single parameter to be equal across groups ####
 
 If you want to constrain one or more parameters to be equal across groups, you

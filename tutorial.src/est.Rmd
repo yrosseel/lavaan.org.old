@@ -103,6 +103,6 @@ test statistic independently by using the `test` argument, which can be set to
 There are two ways for using the bootstrap in lavaan. Either you can set `se =
 "bootstrap"` or `test = "bootstrap"` when fitting the model (and you will get
 bootstrap standard errors, and/or a bootstrap based p-value respectively), or
-you can you the `boostrapLavaan()` function, which needs an already fitted
+you can you the `bootstrapLavaan()` function, which needs an already fitted
 lavaan object. The latter function can be used to 'bootstrap' any statistic
 (or vector of statistics) that you can extract from a fitted lavaan object.

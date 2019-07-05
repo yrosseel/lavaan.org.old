@@ -58,22 +58,18 @@ Using these four \emph{formula types}, a large variety of latent
 variable models can be described. The current set of formula types is
 summarized in the table below.
 
-\begin{longtable}[c]{@{}lll@{}}
-\hline\noalign{\medskip}
-formula type & operator & mnemonic
-\\\noalign{\medskip}
-\hline\noalign{\medskip}
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+formula type & operator & mnemonic\tabularnewline
+\midrule
+\endhead
 latent variable definition & \texttt{=\textasciitilde{}} & is measured
-by
-\\\noalign{\medskip}
-regression & \texttt{\textasciitilde{}} & is regressed on
-\\\noalign{\medskip}
+by\tabularnewline
+regression & \texttt{\textasciitilde{}} & is regressed on\tabularnewline
 (residual) (co)variance & \texttt{\textasciitilde{}\textasciitilde{}} &
-is correlated with
-\\\noalign{\medskip}
-intercept & \texttt{\textasciitilde{} 1} & intercept
-\\\noalign{\medskip}
-\hline
+is correlated with\tabularnewline
+intercept & \texttt{\textasciitilde{}\ 1} & intercept\tabularnewline
+\bottomrule
 \end{longtable}
 
 A complete lavaan model syntax is simply a combination of these formula
@@ -126,7 +122,7 @@ read the model syntax from the file as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{myModel <-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"/mydirectory/myModel.lav"}\NormalTok{)}
+\NormalTok{    myModel <-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"/mydirectory/myModel.lav"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

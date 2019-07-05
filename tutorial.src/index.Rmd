@@ -34,4 +34,5 @@ Contents:
 - [Estimators, missing values, standard errors and bootstrapping](/tutorial/est.html)
 - [Indirect effects and mediation analysis](/tutorial/mediation.html)
 - [Modification indices](/tutorial/modindices.html)
-- [Extracting information from a fitted lavaan object](/inspect.html)
+- [Extracting information from a fitted lavaan object](/tutorial/inspect.html)
+- [Multilevel SEM](/tutorial/multilevel.html)

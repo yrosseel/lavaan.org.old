@@ -2,18 +2,22 @@ Binary, ordinal and nominal variables are considered categorical (not
 continuous). It makes a big difference if these categorical variables
 are exogenous (independent) or endogenous (dependent) in the model.
 
-\paragraph{Exogenous categorical variables}
+\hypertarget{exogenous-categorical-variables}{%
+\paragraph{Exogenous categorical
+variables}\label{exogenous-categorical-variables}}
 
 If you have a binary exogenous covariate (say, gender), all you need to
 do is to recode it as a dummy (0/1) variable. Just like you would do in
 a classic regression model. If you have an exogenous ordinal variable,
 you can use a coding scheme reflecting the order (say, 1,2,3,\ldots{})
 and treat it as any other (numeric) covariate. If you have a nominal
-categorical variable with $K > 2$ levels, you need to replace it by a
-set of $K-1$ dummy variables, again, just like you would do in classical
-regression.
+categorical variable with \(K > 2\) levels, you need to replace it by a
+set of \(K-1\) dummy variables, again, just like you would do in
+classical regression.
 
-\paragraph{Endogenous categorical variables}
+\hypertarget{endogenous-categorical-variables}{%
+\paragraph{Endogenous categorical
+variables}\label{endogenous-categorical-variables}}
 
 The lavaan 0.5 series can deal with binary and ordinal (but not nominal)
 endogenous variables. Only the three-stage WLS approach is currently
@@ -49,7 +53,7 @@ you have two choices:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(myModel, }\DataTypeTok{data =} \NormalTok{myData,}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(myModel, }\DataTypeTok{data =}\NormalTok{ myData,}
            \DataTypeTok{ordered=}\KeywordTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}\StringTok{"item2"}\NormalTok{,}
                      \StringTok{"item3"}\NormalTok{,}\StringTok{"item4"}\NormalTok{))}
 \end{Highlighting}

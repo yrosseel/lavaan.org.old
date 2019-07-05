@@ -1,4 +1,5 @@
-\paragraph{Fixing parameters}
+\hypertarget{fixing-parameters}{%
+\paragraph{Fixing parameters}\label{fixing-parameters}}
 
 Consider a simple one-factor model with 4 indicators. By default, lavaan
 will always fix the factor loading of the first indicator to 1. The
@@ -51,7 +52,7 @@ covariance formulas in the model syntax and simply add an argument
 \StringTok{              speed   =~ x7 + x8 + x9 '}
 
 \NormalTok{fit.HS.ortho <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-                    \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+                    \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
                     \DataTypeTok{orthogonal =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -66,7 +67,7 @@ the argument \texttt{std.lv=TRUE} to the function call:
 \StringTok{              textual =~ x4 + x5 + x6}
 \StringTok{              speed   =~ x7 + x8 + x9 '}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =} \NormalTok{HolzingerSwineford1939, }
+           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
            \DataTypeTok{std.lv =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -74,7 +75,8 @@ the argument \texttt{std.lv=TRUE} to the function call:
 If the argument \texttt{std.lv=TRUE} is used, the factor loadings of the
 first indicator of each latent variable will no longer be fixed to 1.
 
-\paragraph{Starting Values}
+\hypertarget{starting-values}{%
+\paragraph{Starting Values}\label{starting-values}}
 
 The lavaan package automatically generates starting values for all free
 parameters. Normally, this works fine. But if you must provide your own
@@ -89,7 +91,8 @@ textual =~ x4 + start(0.5)*x5 + start(1.0)*x6
 speed   =~ x7 + start(0.7)*x8 + start(1.8)*x9
 \end{verbatim}
 
-\paragraph{Parameter labels}
+\hypertarget{parameter-labels}{%
+\paragraph{Parameter labels}\label{parameter-labels}}
 
 A nice property of the lavaan package is that all free parameters are
 automatically named according to a simple set of rules. This is
@@ -115,7 +118,7 @@ model that we used for the Politcal Democracy data.
 \StringTok{    y6 ~~ y8}
 \StringTok{'}
 \NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }
-           \DataTypeTok{data =} \NormalTok{PoliticalDemocracy)}
+           \DataTypeTok{data =}\NormalTok{ PoliticalDemocracy)}
 \KeywordTok{coef}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
@@ -180,7 +183,8 @@ The only reason why it should be used in new syntax is if the label
 contains an operator like ``\texttt{\textasciitilde{}}'' or
 ``\texttt{=\textasciitilde{}}''.
 
-\paragraph{Modifiers}
+\hypertarget{modifiers}{%
+\paragraph{Modifiers}\label{modifiers}}
 
 We have seen the use of the pre-multiplication mechanism (using the
 \texttt{*} operator) a number of times: to fix a parameter, to provide a
@@ -200,7 +204,9 @@ The indicator \texttt{y3} was listed twice, each time with a different
 modifier. The parser will accumulate all the different modifiers, but
 still treat \texttt{y3} as a single indicator.
 
-\paragraph{Simple equality constraints}
+\hypertarget{simple-equality-constraints}{%
+\paragraph{Simple equality
+constraints}\label{simple-equality-constraints}}
 
 In some applications, it is useful to impose equality constraints on one
 or more otherwise free parameters. Consider again the three-factor H\&S
@@ -232,7 +238,9 @@ textual =~ x4 + x5 + x6
 speed   =~ x7 + x8 + x9
 \end{verbatim}
 
-\paragraph{Nonlinear equality and inequality constraints}
+\hypertarget{nonlinear-equality-and-inequality-constraints}{%
+\paragraph{Nonlinear equality and inequality
+constraints}\label{nonlinear-equality-and-inequality-constraints}}
 
 Consider the following regression:
 
@@ -263,8 +271,8 @@ containing these four variables and fit the regression model:
 \end{verbatim}
 
 Suppose that we need to impose the following two (nonlinear) constraints
-on $b_1$: $b_1 = (b_2+b_3)^2$ and $b_1 \geq \exp(b_2 + b_3)$. The first
-constraint is an equality constraint. The second is an inequality
+on \(b_1\): \(b_1 = (b_2+b_3)^2\) and \(b_1 \geq \exp(b_2 + b_3)\). The
+first constraint is an equality constraint. The second is an inequality
 constraint. To specify these constraints, you can use the following
 syntax:
 
@@ -299,5 +307,5 @@ To see the effect of the constraints, we refit the model:
 
 The reader can verify that the constraints are indeed respected. The
 equality constraint holds exactly. The inequality constraint has
-resulted in an equality between the left-hand side ($b_1$) and the
-right-hand side ($\exp(b_2 + b_3)$).
+resulted in an equality between the left-hand side (\(b_1\)) and the
+right-hand side (\(\exp(b_2 + b_3)\)).

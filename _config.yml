@@ -1,12 +1,11 @@
 # VARIABLES
 # ---------
 title: latent variable analysis
-copyright: "Copyright 2010-2013, Yves Rosseel."
+copyright: "Copyright 2010-2019, Yves Rosseel."
 
 # YEKYLL
 # ------
-pygments: true
-paginate: 4
+highlighter: pigments
 exclude: ['README.YR']
 exclude: ['Makefile']
 exclude: ['tutorial.src']

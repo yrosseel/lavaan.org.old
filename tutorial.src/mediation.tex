@@ -8,9 +8,9 @@ and the indirect effect of X on Y via M.
 \begin{Highlighting}[]
 \KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
 \NormalTok{X <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{M <-}\StringTok{ }\FloatTok{0.5}\NormalTok{*X +}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{Y <-}\StringTok{ }\FloatTok{0.7}\NormalTok{*M +}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{Data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{X =} \NormalTok{X, }\DataTypeTok{Y =} \NormalTok{Y, }\DataTypeTok{M =} \NormalTok{M)}
+\NormalTok{M <-}\StringTok{ }\FloatTok{0.5}\OperatorTok{*}\NormalTok{X }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{Y <-}\StringTok{ }\FloatTok{0.7}\OperatorTok{*}\NormalTok{M }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{Data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ X, }\DataTypeTok{Y =}\NormalTok{ Y, }\DataTypeTok{M =}\NormalTok{ M)}
 \NormalTok{model <-}\StringTok{ ' # direct effect}
 \StringTok{             Y ~ c*X}
 \StringTok{           # mediator}
@@ -21,40 +21,43 @@ and the indirect effect of X on Y via M.
 \StringTok{           # total effect}
 \StringTok{             total := c + (a*b)}
 \StringTok{         '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }\DataTypeTok{data =} \NormalTok{Data)}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }\DataTypeTok{data =}\NormalTok{ Data)}
 \KeywordTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.5-13) converged normally after  13 iterations
+lavaan (0.6-1) converged normally after  12 iterations
 
   Number of observations                           100
 
   Estimator                                         ML
-  Minimum Function Test Statistic                0.000
+  Model Fit Test Statistic                       0.000
   Degrees of freedom                                 0
-  P-value (Chi-square)                           0.000
+  Minimum Function Value               0.0000000000000
 
-Parameter estimates:
+Parameter Estimates:
 
   Information                                 Expected
+  Information saturated (h1) model          Structured
   Standard Errors                             Standard
 
-                   Estimate  Std.err  Z-value  P(>|z|)
 Regressions:
-  Y ~
-    X         (c)     0.036    0.104    0.348    0.728
-  M ~
-    X         (a)     0.474    0.103    4.613    0.000
-  Y ~
-    M         (b)     0.788    0.092    8.539    0.000
+                   Estimate  Std.Err  z-value  P(>|z|)
+  Y ~                                                 
+    X          (c)    0.036    0.104    0.348    0.728
+  M ~                                                 
+    X          (a)    0.474    0.103    4.613    0.000
+  Y ~                                                 
+    M          (b)    0.788    0.092    8.539    0.000
 
 Variances:
-    Y                 0.898    0.127
-    M                 1.054    0.149
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .Y                 0.898    0.127    7.071    0.000
+   .M                 1.054    0.149    7.071    0.000
 
-Defined parameters:
+Defined Parameters:
+                   Estimate  Std.Err  z-value  P(>|z|)
     ab                0.374    0.092    4.059    0.000
     total             0.410    0.125    3.287    0.001
 \end{verbatim}
@@ -67,4 +70,4 @@ parameter \emph{labels} that are explicitly mentioned in the model
 syntax. By default, the standard errors for these defined parameters are
 computed by using the so-called Delta method. As with other models,
 bootstrap standard errors can be requested simply by specifying
-\texttt{se = "bootstrap"} in the fitting function.
+\texttt{se\ =\ "bootstrap"} in the fitting function.

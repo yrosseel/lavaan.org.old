@@ -52,7 +52,7 @@ curvePivot=FALSE,
 exoVar=FALSE,
 sizeMan=7,
 sizeLat=10,
-DoNotPlot=TRUE
+DoNotPlot=FALSE
 )
 
 L <- matrix(c(
@@ -74,6 +74,7 @@ L <- matrix(c(
 
 qgraph(Graph, layout=L, arrowAngle=0.5)
 ```
+
 The corresponding lavaan syntax for specifying this model
 is as follows:
 
