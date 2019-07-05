@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>About lavaan</h4>
+<ul>
+<li><a href="/">Welcome</a></li>
+<li><a href="/start.html">Getting started</a></li>
+<li><a href="/features.html">Features</a></li>
+<li><a href="/development.html">Development</a></li>
+<li><a href="/support.html">Support</a></li>
+<li><a href="/about.html">About</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">lavaan is reliable, open and extensible</h4>
+
+<ul>
+<li><p>by default, lavaan implements the textbook/paper formulas, so there are no
+surprises</p></li>
+<li><p>lavaan can mimic the results of several commercial packages (including Mplus
+and Eqs using the <code>mimic=&quot;Mplus&quot;</code> or <code>mimic=&quot;EQS&quot;</code>
+arguments)</p></li>
+<li><p>lavaan is not a black box: you can browse the source code on <a href="https://github.com/yrosseel/lavaan/">GitHub</a></p></li>
+<li><p>lavaan can be extended: see the <a href="/resources/related.html">Related Projects</a>
+page for extensions and add-ons.</p></li>
+</ul>
+
+<h4 id="toc_1">lavaan is easy and intuitive to use</h4>
+
+<ul>
+<li><p>the &#39;lavaan model syntax&#39; allows users to express their models in a compact,
+elegant and useR-friendly way; for example, a typical CFA analysis looks
+as follows:</p>
+<div class="highlight"><pre><code class="r">library<span class="p">(</span>lavaan<span class="p">)</span>
+myData <span class="o">&lt;-</span> read.cv<span class="p">(</span><span class="s">&quot;/path/to/mydata/myData.csv&quot;</span><span class="p">)</span>
+myModel <span class="o">&lt;-</span> <span class="s">&#39; </span>
+<span class="s">    f1 =~ item1 + item2 + item3</span>
+<span class="s">    f2 =~ item4 + item5 + item6</span>
+<span class="s">    f3 =~ item7 + item8 + item9</span>
+<span class="s">&#39;</span>
+fit <span class="o">&lt;-</span> cfa<span class="p">(</span>model<span class="o">=</span>myModel<span class="p">,</span> data<span class="o">=</span>myData<span class="p">)</span>
+summary<span class="p">(</span>fit<span class="p">,</span> fit.measures<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</code></pre></div></li>
+<li><p>you can choose between a user-friendly interface (in combination with the
+fitting functions <code>cfa()</code>, <code>sem()</code>, <code>growth()</code>) or a low-level interface (using
+the fitting function <code>lavaan()</code> where &#39;defaults&#39; do not get in the way)</p></li>
+<li><p>convenient arguments (eg. <code>group.equal=&quot;loadings&quot;</code>) simplify many common tasks
+(eg. measurement invariance testing)</p></li>
+<li><p>lavaan outputs all the information you need: a huge number of fit measures,
+modification indices, R-squared values, standardized solutions, and much much
+more</p></li>
+</ul>
+
+<h4 id="toc_2">lavaan provides many advanced options</h4>
+
+<ul>
+<li><p>full support for meanstructures and multiple groups</p></li>
+<li><p>several estimators are available: ML (and robust variants MLM, MLMV, MLR),
+GLS, WLS (and robust variants DWLS, WLSM, WLSMV), ULS (ULSM, ULMV) and
+pairwise ML (PML)</p></li>
+<li><p>standard errors: standard, robust, huber-white, bootstrap</p></li>
+<li><p>test statistics: standard, Satorra-Bentler, Yuan-Bentler, Satterthwaite,
+scale-shifted, Bollen-Stine bootstrap</p></li>
+<li><p>missing data: FIML estimation</p></li>
+<li><p>linear and nonlinear equality and inequality constraints</p></li>
+<li><p>full support for analyzing <strong>categorical data</strong>: lavaan (from version 0.5 onwards) can handle any mixture of binary, ordinal
+and continuous observed variables</p></li>
+</ul>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>Version History</h4>
+<ul>
+<li><a href="/history/index.html">Overview</a></li>
+<li><a href="/history/dot5.html">0.5 Series</a></li>
+<li><a href="/history/dot4.html">0.4 Series</a></li>
+<li><a href="/history/dot3.html">0.3 Series</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">0.5 series</h4>
+
+<h5 id="toc_1">Version 0.5-16</h5>
+
+<ul>
+<li>Released on CRAN: 7 March 2014</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>parameterization=&quot;theta&quot; is now available for categorical data</li>
+<li>initial support for marginal maximum likelihood (estimator = &quot;MML&quot;)</li>
+<li>new function lavTestLRT() to compare nested models using LRT; the anova()
+function is now just a wrapper around this function</li>
+<li>in both the anova() and lavTestLRT() function, SB.classic=TRUE is the
+default; to get the old behaviour, use SB.classic=FALSE</li>
+<li>new function lavTestWald() allows for arbitrary Wald tests</li>
+<li>new function lavCor() to compute polychoric/tetrachoric/... correlations
+directly from the data</li>
+<li>fitMeasures() gains a new baseline.model argument to allow for user-defined
+baseline models</li>
+<li>new group.w.free argument allows the group weights to be treated 
+as free parameters in a multiple group analysis</li>
+<li>new functions lavTablesFitCf(), lavTablesFitCm(), lavTablesFitCp() provide
+three measures of fit for the PML method (contributed by Mariska Barendse)</li>
+<li>SRMR is now identical to the Mplus value if information = &quot;observed&quot;; the
+WRMR is added to the output if mimic = &quot;Mplus&quot;</li>
+<li>allow for zero iterations using control=list(optim.method=&quot;none&quot;) argument</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>marginal ML limitations: only works if we have latent variables; 
+only probit metric; extremely slow (for now) if more than 2 dimensions; no 
+documentation yet; only Gauss-Hermite quadrature</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>summary(fit, fit.measures=TRUE) gives error: object &#39;logl.H1&#39; not found; this   can occur if the columns of the data.frame are of type &#39;matrix&#39; (instead
+of numeric/integer/factor/ordered)</li>
+<li>predict() with continuous observed variables fails in the presence of
+exogenous covariates</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_2">Version 0.5-15</h5>
+
+<ul>
+<li>Released on CRAN: 15 November 2013</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>this is mainly a maintenance release</li>
+<li>lavTables() has been redesigned</li>
+<li>zero.add and zero.keep.margins arguments control how lavaan deals 
+with missing values in bivariate frequency tables</li>
+<li>PML estimator uses a different objective function and converges 
+(much) faster</li>
+<li>inspect(fit, &quot;covarage&quot;) and inspect(fit, &quot;patterns&quot;) return information
+about missingness coverage and missing patterns respectively</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>parameterization=&quot;theta&quot; is not implemented yet</li>
+<li>(marginal) ML estimation for categorical data is not implemented yet</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>the shortcut &#39;item ~ 0&#39; to fix an intercept to zero seems to be broken;
+workaround: use &#39;item ~ 0*1&#39; instead</li>
+<li>the polychoric correlation between two variables is computed wrongly if
+(and only if) the variables are binary and they happen to have exactly
+the same threshold (ie the marginal distributions are identical); the
+result is a fatal error (so it does not happen silently)</li>
+<li>modindices did not work if explicit equality constraints 
+(using the &quot;==&quot; operator) were included in the model syntax</li>
+<li>missing=&quot;pairwise&quot; (if data are categorical) was also deleting cases with
+missing values in the exogenous covariates</li>
+<li>if some cases have only missing values (and should be removed), 
+the exogenous covariate values (if any) were not removed</li>
+<li>if a &quot;;&quot; was included after a comment (&quot;#&quot;), this confused the syntax parser</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_3">Version 0.5-14</h5>
+
+<ul>
+<li>Released on CRAN: 21 July 2013</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>lavTables(, dimension=1L) produces one-way tables</li>
+<li>WLS(MV) estimator + categorical data now allows for missing data via
+the missing=&quot;pairwise&quot; argument</li>
+<li>predict() and bootstrapping now also work in the categorical case</li>
+<li>relax check for non positive-definite theta and psi matrices: eigenvalues
+are allowed to be negative within a tolerance of .Machine$double.eps^(3/4)</li>
+<li>resid() and residuals() gain type=&quot;casewise&quot; argument to compute 
+(unstandardized) casewise residuals</li>
+<li>inspect(fit, &quot;data&quot;) now returns the raw data</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>parameterization=&quot;theta&quot; is not implemented yet</li>
+<li>(marginal) ML estimation for categorical data is not implemented yet</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>the (rarely used) &quot;:&quot; operator added an extra group</li>
+<li>predict() and resid(, &quot;casewise&quot;) fail in the presence of exogenous
+covariates</li>
+<li>RMSEA is using N-g (instead of N) even if likelihood == &quot;normal&quot;</li>
+<li>0.5 was added to all bivariate frequency cell; for larger tables with
+many empty cells, this may distort the polychoric correlation in small
+samples</li>
+<li>poor starting values (always 1) for factor loadings if only two indicators</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_4">Version 0.5-13</h5>
+
+<ul>
+<li>Released on CRAN: 11 May 2013</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>mplus2lavaan() (written by Michael Hallquist) is capable of reading (and
+fitting) models specified in an Mplus input file</li>
+<li>new function lavExport() allows exporting a lavaan model to an external
+program (currently only Mplus)</li>
+<li>new function lavTables() shows observed and expected frequencies for
+pairwise tables of categorical variables</li>
+<li>new function lavMatrixRepresentation()</li>
+<li>changes of function names: lavaanNames() becomes lavNames(), parseModelString(), becomes lavParseModelString(), lavaanify() becomes lavParTable() (but the
+old names are still valid)</li>
+<li>scale check has been relaxed (but see bugs!)</li>
+<li>standardized=TRUE in simulateData() now also applies to latent variables</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>scale check should ignore exogenous variables, but instead, only includes
+exogenous variables (workaround: warn=FALSE)</li>
+<li>simulateData() can not handle a parameter table as input (although the
+documentation claims it can)</li>
+<li>user-specified &#39;ordered&#39; variables with numeric 0 values were not (always)
+properly converted to integer codes (starting from 1)</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_5">Version 0.5-12</h5>
+
+<ul>
+<li>Released on CRAN: 8 March 2013</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>estfun.lavaan() or lavScores() function computes case-wise scores (first gradient) values</li>
+<li>better starting values (using an instrumental variables approach) for factor loadings when indicators are categorical</li>
+<li>full support for categorical variables in simulateData()</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>factor scores, bootstrapping and theta parameterization are not yet implemented if data is categorical</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>WLS with multiple groups with small (say, &lt; 50) and unequal sample sizes often fails (non-convergence)</li>
+<li>fitMeasures(fit, &quot;npar&quot;) was not computed correctly if explicit equality constraints (using &quot;==&quot;) were used in the model; this affects the computation of AIC and BIC in these cases</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_6">Version 0.5-11</h5>
+
+<ul>
+<li>Released on CRAN: 19 Dec 2012</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>estimator=&quot;PML&quot; is now available if all data is categorical; this is based on work done by Myrsini Katsikatsou</li>
+<li>simulateData() supports thresholds and creates ordinal data</li>
+<li>inspect() gains &#39;WLS.V&#39;, &#39;NACOV&#39;, &#39;cov.lv&#39;, &#39;cor.lv&#39;, &#39;cov.all&#39;, and &#39;cor.all&#39; arguments</li>
+<li>fitMeasures() spits out many more fit indices: rmr, cn, nnfi, nfi, rfi, ifi, rni, gfi, agfi, pnfi, mfi, ecvi</li>
+<li>new argument &#39;sample.cov.rescale&#39; to control if the sample covariance must be internally rescaled (by a factor N-1/N) or not</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>bootstrapping and theta parameterization are not yet implemented if data is categorical</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>defined (:=) and constrained (&lt;,&gt;,==) parameters are not standardized if a standardized solution is requested</li>
+<li>simulateData(): if intercepts are included in the script, and the skewness/kurtosis argument is used, the sign of the intercepts/means is switched</li>
+<li>if sample.cov is provided, and estimator=&quot;WLS&quot; (with a user-provided weight matrix), lavaan complains about the (new) sample.cov.rescale argument not set to a logical</li>
+<li>if a parameter table is given to the &#39;start&#39; argument, an error occurs
+in some extreme cases, the starting value for a polyserial correlation fell outside the [-1,1] range, causing an error</li>
+<li>vnames(partable, type=lv.y/lv.x/ov.y) did not always respect the correct order of the variable names, leading to parameters that were inadvertently set to zero</li>
+<li>consider the following model syntax: &#39;y ~ x; z ~~ y&#39;: here, y is upgraded to a phantom/dummy latent variable (in the LISREL representation), but z was not upgraded (while it should) if it was not involved in a regression formula</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_7">Version 0.5-10</h5>
+
+<ul>
+<li>Released on CRAN: 25 Okt 2012</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>modification indices, Rsquare now work if data is categorical</li>
+<li>changed package mvtnorm to package mnormt, resulting in (slightly) faster
+computations of the thresholds and polychoric correlations in some cases</li>
+<li>predict() gains a newdata argument</li>
+<li>a user-specified weight matrix can now be provided (using the WLS.V
+argument) to be used in estimation when using estimator WLS and friends</li>
+<li>a user-specified asymptotic variance matrix of the sample statistics can be
+provided (using the NACOV argument) to be used when computing robust standard
+errors and robust test statistics</li>
+<li>if a model does not converge, lavaan will not attempt to compute standard errors and a test statistic</li>
+<li>better handling of multibyte characters in summary() function
+better handling of empty cells in pairwise frequency tables</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>bootstrapping and theta parameterization are not yet implemented if data is categorical</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>if the model only contains a single variable, lavaan fails</li>
+<li>if the model only contains a single categorical variable (eg a probit regression), lavaan fails</li>
+<li>residual variances that are set to zero during estimation (eg residual variance of composite latent variable), are internally set to 1.0 again in the model matrices after model fitting; this only affects post-fitting operations using the model matrices directly (eg the predict() function)</li>
+<li>resid(fit, type=&quot;standardized&quot;) fails if there are any exogenous variables in the model, and if estimator=&quot;MLM&quot; or &quot;MLR&quot; is used</li>
+<li>bootstrapping fails if missing=&quot;ml&quot; and the model contains exogenous variables</li>
+<li>in the categorical case, an internal function (muthen1984) can not handle variables that are of type integer (workaround: coerce them to type numeric)</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_8">Version 0.5-9</h5>
+
+<ul>
+<li>Released on CRAN: 8 Sept 2012</li>
+<li>New features and user-visible changes:
+
+<ul>
+<li>full support for ordinal (and binary) dependent variables using the three stage WLS approach as described in</li>
+<li>Muthén (1984); this implies support for multiple groups (using the delta parameterization), support for a mixture of binary/ordinal/continuous (dependent) variables, and support for exogenous &#39;fixed.x&#39; covariates</li>
+<li>new test statistics: mean.var.adjusted (aka the Satterthwaite approach), and scaled.shifted (to mimic the behavior of Mplus 6 and higher)</li>
+<li>new estimators: MLMV, ULS, ULSM, ULSMV, DWLS, WLSM, WLSMV</li>
+<li>the &#39;se&#39; option robust.mlm has been renamed to robust.sem, while robust.mlr has been renamed to robust.huber.white</li>
+<li>better handling of standard errors if constraints have been used</li>
+<li>new operator &#39;|&#39; in the syntax: &#39;u | t1 + t2 + t3&#39; refers to the (three) thresholds of an ordinal variable u with four levels</li>
+<li>&#39;u ~*~ u&#39; refers to the scaling parameter (of the delta parameterization) of an ordinal variable u
+&#39;y ~ 1 + x1 + x2&#39; is now legal syntax</li>
+<li>the convenience function &#39;measurementInvariance()&#39; has been moved to another package (semTools)</li>
+</ul></li>
+<li>Known issues:
+
+<ul>
+<li>bootstrapping, modification indices, Rsquare and theta parameterization are not yet implemented (if data is categorical)
+some cases will run very slow (in fact slower than 0.5-8), due to the fact that new CRAN policies disallow using .Fortran calls to external packages (eg mvtnorm); therefore, the computation of probabilities under the bivariate standard normal distribution is not vectorized, and hence extremely slow</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>if a two-way table contains zeroes, the computation of the polychoric correlation may fail with the message &#39;Error in if (rho == 0) { : missing value where TRUE/FALSE needed&#39; (fixed in 0.5-10)</li>
+<li>estimator=&quot;ULS&quot; does not work if only sample statistics are provided</li>
+<li>if the ordered= argument contains a single variable only, it fails</li>
+<li>the anova() function may fail for scaled difference tests if the (full) M1 model contains parameters that are not listed in the parameterTable of (restricted) M0 model (workaround: use anova(fit1, fit2, SB.classic=TRUE)</li>
+</ul></li>
+</ul>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

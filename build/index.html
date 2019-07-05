@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>About lavaan</h4>
+<ul>
+<li><a href="/">Welcome</a></li>
+<li><a href="/start.html">Getting started</a></li>
+<li><a href="/features.html">Features</a></li>
+<li><a href="/development.html">Development</a></li>
+<li><a href="/support.html">Support</a></li>
+<li><a href="/about.html">About</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">News:</h4>
+
+<ul>
+<li>(7 March 2014): version 0.5-16 has been released on
+<a href="http://cran.r-project.org/web/packages/lavaan/">CRAN</a>.
+See <a href="http://lavaan.ugent.be/history/dot5.html">Version History</a>
+for more information.</li>
+</ul>
+
+<h4 id="toc_1">What is lavaan?</h4>
+
+<p>The lavaan package is developed to provide useRs, researchers and teachers a
+free open-source, but commercial-quality package for latent variable modeling.
+You can use lavaan to estimate a large variety of multivariate statistical
+models, including path analysis, confirmatory factor analysis, structural
+equation modeling and growth curve models.</p>
+
+<p>The official reference to the lavaan package is the following paper:</p>
+
+<blockquote>
+<p>Yves Rosseel (2012). lavaan: An R Package for Structural Equation Modeling. 
+<em>Journal of Statistical Software</em>, 48(2), 1-36. 
+URL <a href="http://www.jstatsoft.org/v48/i02/">http://www.jstatsoft.org/v48/i02/</a></p>
+</blockquote>
+
+<h4 id="toc_2">First impression</h4>
+
+<p>To get a first impression of how lavaan works in practice, consider the
+following example of a SEM model. The figure below contains
+a graphical representation of the model that we want to fit. </p>
+
+<div class="row clearfix">
+<div class="seven columns alpha">
+<p>
+<img src="/tutorial/figure/sem.png" alt="lavaan example" width="100%"/>
+</p>
+</div>
+
+<div class="six columns omega">
+<div class="highlight"><pre><code class="r">model <span class="o">&lt;-</span> <span class="s">&#39;</span>
+<span class="s">   # latent variables</span>
+<span class="s">     ind60 =~ x1 + x2 + x3</span>
+<span class="s">     dem60 =~ y1 + y2 + y3 + y4</span>
+<span class="s">     dem65 =~ y5 + y6 + y7 + y8</span>
+<span class="s">   # regressions</span>
+<span class="s">     dem60 ~ ind60</span>
+<span class="s">     dem65 ~ ind60 + dem60</span>
+<span class="s">   # residual covariances</span>
+<span class="s">     y1 ~~ y5</span>
+<span class="s">     y2 ~~ y4 + y6</span>
+<span class="s">     y3 ~~ y7</span>
+<span class="s">     y4 ~~ y8</span>
+<span class="s">     y6 ~~ y8</span>
+<span class="s">&#39;</span>
+fit <span class="o">&lt;-</span> sem<span class="p">(</span>model<span class="p">,</span>
+           data<span class="o">=</span>PoliticalDemocracy<span class="p">)</span>
+summary<span class="p">(</span>fit<span class="p">)</span>
+</code></pre></div>
+</div>
+
+<p></div></p>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

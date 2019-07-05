@@ -1,0 +1,271 @@
+If the data is clustered, one way to handle the clustering is to use a
+multilevel modeling approach. In the SEM framework, this leads to
+multilevel SEM. The multilevel capabilities of lavaan are still limited,
+but you can fit a two-level SEM with random intercepts (note: only when
+all data is continuous and complete; listwise deletion is currently used
+for cases with missing values).
+
+\hypertarget{multilevel-sem-model-syntax}{%
+\paragraph{Multilevel SEM model
+syntax}\label{multilevel-sem-model-syntax}}
+
+To fit a two-level SEM, you must specify a model for both levels, as
+follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    model <-}\StringTok{ '}
+\StringTok{        level: 1}
+\StringTok{            fw =~ y1 + y2 + y3}
+\StringTok{            fw ~ x1 + x2 + x3}
+\StringTok{        level: 2}
+\StringTok{            fb =~ y1 + y2 + y3}
+\StringTok{            fb ~ w1 + w2}
+\StringTok{    '}
+\end{Highlighting}
+\end{Shaded}
+
+This model syntax contains two blocks, one for level 1, and one for
+level 2. Within each block, you can specify a model just like in the
+single-level case. To fit this model, using a toy dataset
+\texttt{Demo.twolevel} that is part of the lavaan package, you need to
+add the \texttt{cluster=} argument to the sem/lavaan function call:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model, }\DataTypeTok{data =}\NormalTok{ Demo.twolevel, }\DataTypeTok{cluster =} \StringTok{"cluster"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The output looks similar to a multigroup SEM output, but where the two
+groups are now the within and the between level respectively.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## lavaan (0.6-1) converged normally after  36 iterations
+## 
+##   Number of observations                          2500
+##   Number of clusters [cluster]                     200
+## 
+##   Estimator                                         ML
+##   Model Fit Test Statistic                       8.092
+##   Degrees of freedom                                10
+##   P-value (Chi-square)                           0.620
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Observed
+##   Observed information based on                Hessian
+##   Standard Errors                             Standard
+## 
+## 
+## Level 1 [within]:
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##   fw =~                                               
+##     y1                1.000                           
+##     y2                0.774    0.034   22.671    0.000
+##     y3                0.734    0.033   22.355    0.000
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##   fw ~                                                
+##     x1                0.510    0.023   22.037    0.000
+##     x2                0.407    0.022   18.273    0.000
+##     x3                0.205    0.021    9.740    0.000
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##    .y1                0.000                           
+##    .y2                0.000                           
+##    .y3                0.000                           
+##    .fw                0.000                           
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##    .y1                0.986    0.046   21.591    0.000
+##    .y2                1.066    0.039   27.271    0.000
+##    .y3                1.011    0.037   27.662    0.000
+##    .fw                0.546    0.040   13.539    0.000
+## 
+## 
+## Level 2 [cluster]:
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##   fb =~                                               
+##     y1                1.000                           
+##     y2                0.717    0.052   13.824    0.000
+##     y3                0.587    0.048   12.329    0.000
+## 
+## Regressions:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##   fb ~                                                
+##     w1                0.165    0.079    2.093    0.036
+##     w2                0.131    0.076    1.715    0.086
+## 
+## Intercepts:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##    .y1                0.024    0.075    0.327    0.743
+##    .y2               -0.016    0.060   -0.269    0.788
+##    .y3               -0.042    0.054   -0.777    0.437
+##    .fb                0.000                           
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(>|z|)
+##    .y1                0.058    0.047    1.213    0.225
+##    .y2                0.120    0.031    3.825    0.000
+##    .y3                0.149    0.028    5.319    0.000
+##    .fb                0.899    0.118    7.592    0.000
+\end{verbatim}
+
+After fitting the model, you can inspect the intra-class correlations:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{lavInspect}\NormalTok{(fit, }\StringTok{"icc"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    y1    y2    y3    x1    x2    x3 
+## 0.331 0.263 0.232 0.000 0.000 0.000
+\end{verbatim}
+
+The see the unrestricted (h1) within and between means and covariances,
+you can use
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{lavInspect}\NormalTok{(fit, }\StringTok{"h1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $within
+## $within$cov
+##    y1     y2     y3     x1     x2     x3    
+## y1  2.000                                   
+## y2  0.789  1.674                            
+## y3  0.749  0.564  1.557                     
+## x1  0.489  0.393  0.376  0.982              
+## x2  0.416  0.322  0.299  0.001  1.011       
+## x3  0.221  0.160  0.155 -0.006  0.008  1.045
+## 
+## $within$mean
+##     y1     y2     y3     x1     x2     x3 
+##  0.001 -0.002 -0.001 -0.007 -0.003  0.020 
+## 
+## 
+## $cluster
+## $cluster$cov
+##    y1     y2     y3     w1     w2    
+## y1  0.992                            
+## y2  0.668  0.598                     
+## y3  0.548  0.391  0.469              
+## w1  0.125  0.119  0.036  0.870       
+## w2  0.086  0.057  0.130 -0.128  0.931
+## 
+## $cluster$mean
+##     y1     y2     y3     w1     w2 
+##  0.019 -0.017 -0.043  0.052 -0.091
+\end{verbatim}
+
+\hypertarget{important-notes}{%
+\paragraph{Important notes}\label{important-notes}}
+
+\begin{itemize}
+\item
+  note that in \texttt{level:\ 1} the colon follows the \texttt{level}
+  keyword; if you type \texttt{level\ 1:}, you will get an error
+\item
+  you must specify a model for each level; the following syntax is not
+  allowed and will produce an error:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    model <-}\StringTok{ '}
+\StringTok{        level: 1}
+\StringTok{            fw =~ y1 + y2 + y3}
+\StringTok{            fw ~ x1 + x2 + x3}
+\StringTok{        level: 2}
+\StringTok{    '}
+\end{Highlighting}
+\end{Shaded}
+\item
+  if you do not have a model in mind for level 2, you can specify a
+  saturated level by adding all variances and covariances of the
+  endogenous variables (here: y1, y2 and y3):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    model <-}\StringTok{ '}
+\StringTok{        level: 1}
+\StringTok{            fw =~ y1 + y2 + y3}
+\StringTok{            fw ~ x1 + x2 + x3}
+\StringTok{        level: 2}
+\StringTok{            y1 ~~ y1 + y2 + y3}
+\StringTok{            y2 ~~ y2 + y3}
+\StringTok{            y3 ~~ y3}
+\StringTok{    '}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{convergence-issues-and-solutions}{%
+\paragraph{Convergence issues and
+solutions}\label{convergence-issues-and-solutions}}
+
+By default, the current version of lavaan (0.6) uses a quasi-Newton
+procedure to maximize the loglikelihood of the data given the model
+(just like in the single-level case). For most model and data
+combinations, this will work fine (and fast). However, every now and
+then, you may experience convergence issues.
+
+Non-convergence is typically a sign that something is not quite right
+with either your model, or your data. Typical settings are: a small
+number of clusters, in combination with (almost) no variance of an
+endogenous variable at the between level.
+
+However, if you believe nothing is wrong, you may want to try another
+optimization procedure. The current version of lavaan allows for using
+the Expectation Maximization (EM) algorithm as an alternative. To switch
+to the EM algorithm, you can use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model, }\DataTypeTok{data =}\NormalTok{ Demo.twolevel, }\DataTypeTok{cluster =} \StringTok{"cluster"}\NormalTok{,}
+               \DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{optim.method =} \StringTok{"em"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+As the EM algorithm is not accelerated yet, this may take a long time.
+It is not unusual that more than 10000 iterations are needed to reach a
+solution. To control when the EM algorithm stops, you can set the
+stopping criteria as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model, }\DataTypeTok{data =}\NormalTok{ Demo.twolevel, }\DataTypeTok{cluster =} \StringTok{"cluster"}\NormalTok{,}
+               \DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{optim.method =} \StringTok{"em"}\NormalTok{, }\DataTypeTok{em.iter.max =} \DecValTok{20000}\NormalTok{,}
+               \DataTypeTok{em.fx.tol =} \FloatTok{1e-08}\NormalTok{, }\DataTypeTok{em.dx.tol =} \FloatTok{1e-04}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{em.fx.tol} argument is used to monitor the change in
+loglikelihood between the current step and the previous step. If this
+change is smaller than \texttt{em.fx.tol}, the algorithm stops. The
+\texttt{em.dx.tol} argument is used to monitor the (unscaled) gradient.
+When a solution is reached, all elements of the gradient should be near
+zero. When the largest gradient element is smaller than
+\texttt{em.dx.tol}, the algorithm stops.
+
+A word of caution: the EM algorithm can always be forced to `converge'
+(perhaps after changing the stopping criteria), but that does not mean
+you have a model/dataset combination that deserves to converge.

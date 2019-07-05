@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>Version History</h4>
+<ul>
+<li><a href="/history/index.html">Overview</a></li>
+<li><a href="/history/dot5.html">0.5 Series</a></li>
+<li><a href="/history/dot4.html">0.4 Series</a></li>
+<li><a href="/history/dot3.html">0.3 Series</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">0.3 series</h4>
+
+<h5 id="toc_1">Version 0.3-3</h5>
+
+<ul>
+<li>Released on CRAN: 19 Januari 2011</li>
+<li>only a fix for a missing link in the documentation</li>
+</ul>
+
+<h5 id="toc_2">Version 0.3-1</h5>
+
+<ul>
+<li>Released on CRAN: 11 May 2010</li>
+<li>New features/changes for this version (compared to the older program semplus that was never released on CRAN):
+
+<ul>
+<li>name of the package has changed to &#39;lavaan&#39;</li>
+<li>&#39;ML.N&#39; option is replaced by a &#39;mimic.Mplus&#39; option</li>
+<li>if do.fit=FALSE, a full summary (including standard errors) is now available</li>
+<li>if a correlation matrix is supplied (instead of a covariance matrix), only a (big) warning is now spit out (instead of an error and stopping)</li>
+<li>model syntax can now be specified as a string literal enclosed in single quotes</li>
+<li>multiple values are now accepted within pre-multiplication commands when analyzing multiple groups</li>
+<li>in a multiple group analysis, the sample moments can be provided using a list</li>
+<li>using NA*x in a formula forces the corresponding parameter to be free</li>
+<li>a new modifier &#39;label&#39; can now be used to specify custom labels</li>
+<li>added &#39;information&#39; argument</li>
+<li>if na.rm=FALSE and estimator=&quot;ML&quot;, full information ML (FIML) is used</li>
+</ul></li>
+<li>Known issues for this release:
+
+<ul>
+<li>MLM values are different in Mplus (but same as in EQS)</li>
+<li>SRMR values are sometimes different in Mplus</li>
+<li>EPCs for equality constraints are wrong</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>If the data frame contained cases where all values were missing, this produced an error</li>
+<li>In mimic models with a single covariate, the baseline chi-square test statistic was not computed correctly, and the standardized solution gave an error</li>
+<li>If an observed or latent variance (for example x1 ~~ x1 ) was included in the model syntax without a starting value or a fixed value, the starting value was set to zero</li>
+<li>lavaan could not handle some non-standard models; for example: latent variables where the indicators are a mixture of latent and observed variables; indicators that are also predictors in a regression</li>
+<li>lavaan could not handle a model with latent variables and a dependent observed-only variable (for example y ~ f1 + f2 + f3 where f1, f2 and f3 are latent variables, but y is an observed variable)</li>
+</ul></li>
+</ul>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

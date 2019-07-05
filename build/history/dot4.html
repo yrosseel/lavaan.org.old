@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>Version History</h4>
+<ul>
+<li><a href="/history/index.html">Overview</a></li>
+<li><a href="/history/dot5.html">0.5 Series</a></li>
+<li><a href="/history/dot4.html">0.4 Series</a></li>
+<li><a href="/history/dot3.html">0.3 Series</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">0.4 series</h4>
+
+<h5 id="toc_1">Version 0.4-14</h5>
+
+<ul>
+<li>Released on CRAN: 11 May 2012</li>
+<li>New features/changes:
+
+<ul>
+<li>this is a maintenance release, to go along with the official publication of the &#39;lavaan&#39; paper in the Journal of Statistical Software (volume 48)</li>
+<li>citation(&quot;lavaan&quot;) will provide correct citation information</li>
+<li>internal slot @User has been renamed @parTable</li>
+<li>internal slot @Sample has been renamed @SampleStats</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>a bug (introduced in 0.4-12) resulted in wrong derivatives for the PSI matrix; this may affect some SEs for models with more than 2 latent factors (or more than 2 observed dependent variables, since they are converted to latents) (bug reported by Mijke Rhemtulla)</li>
+<li>when estimator=&quot;(fi)ml&quot;, estimation may fail for saturated models (e.g. univariate regression models); workaround: use fixed.x=FALSE</li>
+<li>univariate regression where intercept is explicitly included in the model syntax sometimes returns the parameters in the wrong order</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_2">Version 0.4-13</h5>
+
+<ul>
+<li>Released on CRAN: 10 April 2012</li>
+<li>New features/changes:
+
+<ul>
+<li>this is a maintenance release, mainly reorganizing internal code</li>
+<li>bootstrapLavaan() and bootstrapLRT() functions gain a type=&quot;yuan&quot; method; contributed by Ed Merkle</li>
+<li>parameterEstimates() will add an &#39;fmi&#39; column containing the fraction of missing information if missing=&quot;fiml&quot;; suggested by Mijke Rhemtulla</li>
+<li>improved check for linear constraints</li>
+<li>updated versions of InformativeTesting() and related functions</li>
+<li>parseModelString() is now exported</li>
+<li>lavaan now requires R version 2.14.0 or higher</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>defined parameters (created using the &quot;:=&quot; operator) are not standardized in the Std.lv and Std.all columns</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_3">Version 0.4-12</h5>
+
+<ul>
+<li>Released on CRAN: 2 February 2012</li>
+<li>New features/changes:
+
+<ul>
+<li>bootstrapLavaan() uses a generic FUN argument to extract any type of information from a fitted lavaan object</li>
+<li>bootstrapLRT() gains a calibrate argument to switch on a double (nested) bootstrap</li>
+<li>both bootstrapLavaan() and bootstrapLRT() functions have support for the parallel package</li>
+<li>simulateData() gains a skewness and kurtosis argument to simulate nonnormal multivariate data</li>
+<li>new function InformativeTesting() for testing order restricted hypothesis; contributed by Leonard Vanbrabant</li>
+<li>initial support for a new operator &quot;&lt;~&quot; to specify formative constructs (composites)</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>bootstrapLRT() with type=&quot;bollen.stine&quot; and multiple groups is broken</li>
+<li>bollen.stine plus mean structure used sample.mean instead of Mu.hat for the transformation</li>
+<li>if data is deleted listwise, summary() does not show the &#39;Total&#39; (original) number of observations</li>
+<li>parameters for composites defined by the &lt;~ operator are not standardized, even if standardized=TRUE</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_4">Version 0.4-11</h5>
+
+<ul>
+<li>Released on CRAN: 21 December 2011</li>
+<li>New features/changes:
+
+<ul>
+<li>parametric bootstrap, see bootstrapLavaan() function</li>
+<li>simulateData() to generate data starting from a lavaan model syntax</li>
+<li>getCov() function to easily read in the lower triangular elements of a covariance matrix</li>
+<li>new operator &quot;:&quot; to allow for different models for different groups</li>
+<li>there is no need to use the &#39;label()&#39; and &#39;equal()&#39; modifiers anymore; in multiple groups, labels can</li>
+<li>be provided as follows: c(a1,a2,a3,a4)*x1 (no quotes needed!)</li>
+<li>models with only covariances and/or means (i.e. no &quot;~&quot; or &quot;=~&quot; operators) are now supported</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>bootstrapLavaan() with type=&quot;parametric&quot; only produces an error (in the CRAN version)</li>
+<li>sometimes, the optimizer (nlminb) falsely reports non-convergence if the fx is below .Machine$tol.eps</li>
+<li>modindices() with multiple groups is broken in 0.4-11</li>
+<li>estimator=&quot;MLM&quot; fails if data contains missing values (workaround: use na.omit() to remove missing cases or use estimator=&quot;MLR&quot;)</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_5">Version 0.4-10</h5>
+
+<ul>
+<li>Released on CRAN: 3 October 2011</li>
+<li>New features/changes:
+
+<ul>
+<li>mimic=&quot;Mplus&quot; is no longer the default; the default is mimic=&quot;lavaan&quot;</li>
+<li>added &#39;start&#39; argument to control the way the starting values are chosen</li>
+<li>added &#39;control&#39; argument to pass control parameters to the optimizer</li>
+<li>parameterEstimates() function always includes confidence intervals, and only standardized estimates if standardized=TRUE</li>
+<li>standardized estimates now come in three flavors: std.lv, std.all and std.nox</li>
+<li>se=&quot;boot&quot; or se=&quot;bootstrap&quot; provides bootstrap standard errors</li>
+<li>test=&quot;bollen.stine&quot; or test=&quot;bootstrap&quot; provides a p-value for the test statistic based on the Bollen-Stine bootstrap</li>
+<li>if data is missing, the h1 model is now estimated using the EM algorithm (instead of quasi-newton)</li>
+<li>new operator := for defining arbitrary (linear or nonlinear) functions of free parameters (eg ab := a*b where both a and b are labels of free parameters); standard errors are computed using the delta method</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>using multiple modifiers on intercepts [eg f ~ a*1 + start(1)*1] produces a syntax error</li>
+<li>upper CI RMSEA fails if RMSEA is zero but df &gt; 0</li>
+<li>the baseline model used by the lavaan() function (not the other fitting functions) is wrong if there were multiple groups and group equality constraints; this affects the CFI/TLI indices</li>
+<li>multiple group analyses with missing=&quot;ml&quot; has some convergence issues, due to a faulty group weight</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_6">Version 0.4-9</h5>
+
+<ul>
+<li>Released on CRAN: 15 June 2011</li>
+<li>New features/changes:
+
+<ul>
+<li>all bugs/glitches in 0.4-8 are fixed</li>
+<li>new starting values for factor loadings</li>
+<li>better scaling of free parameters in the optimization routine</li>
+<li>new modelCov() function to inspect the covariance matrix before analysis</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>if equality constraints are included in the model using the &quot;==&quot; operator, the df count is wrong</li>
+<li>in some cases, the combination of both within-group and between-group equality constraints produces errors</li>
+<li>if the argument missing=&quot;ml&quot; is used but the data does not contain any missings, the summary() function produces an error</li>
+<li>it was not allowed to specify a covariance using the &quot;~~&quot; operator where one element was an observed variable, and the other element a latent variable</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_7">Version 0.4-8</h5>
+
+<ul>
+<li>Released on CRAN: 24 April 2011</li>
+<li>New features/changes:
+
+<ul>
+<li>all bugs/glitches in 0.4-7 are fixed</li>
+<li>AIC, BIC and logLik use S4 generics from the stats4 package</li>
+<li>new lavaan-method &#39;nobs()&#39; returns the total sample size used for the analysis</li>
+<li>additional options for the &#39;group.equal&#39; argument</li>
+<li>new &#39;anova()&#39; function to compare nested models using a (possibly scaled) chi-square difference test</li>
+<li>better internal scaling makes the optimizer (nlminb) more robust, if the data is badly scaled</li>
+<li>instead of using &#39;label(&quot;mylabel&quot;)*x1&#39; to assign a parameter label, you can now use &#39;mylabel*x1&#39;</li>
+<li>instead of using the &#39;equal()&#39; modifier, you can now enforce equality constraints by using the same label for several parameters</li>
+<li>initial (and experimental) support has been added for general linear and nonlinear equality and inequality constraints</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>if the &quot;group&quot; variable in the data frame contained missing values, an additional group was added for those cases</li>
+<li>the parameter names in the group.partial argument were converted to lower caps; if some parameter names included capitals, the group.partial argument had no effect</li>
+<li>the NA* modifier is interpreted as a label, and is ignored (workaround: as.numeric(NA)* works)</li>
+<li>a bug in the code for the auto.single.fix argument (which is automatically set to TRUE in the cfa/sem/growth functions) produces the wrong model if indicators are shared by several latent variables (workaround: use the lavaan() function for these models)</li>
+</ul></li>
+</ul>
+
+<h5 id="toc_8">Version 0.4-7</h5>
+
+<ul>
+<li>Released on CRAN: 21 Februari 2011</li>
+<li>New features/changes:
+
+<ul>
+<li>completely rewritten codebase (much smaller, more modular and much faster)</li>
+<li>improved parsing mechansism using the new function lavaanify()</li>
+<li>improved model syntax (multiple modifiers, multiple lhs elements, and more)</li>
+<li>MLM results are now identical to Mplus (except for fixed.x covariates)</li>
+<li>added MLF and MLR estimators</li>
+<li>new functions: standardizedSolution, parameterEstimates, modindices, fitMeasures, update, AIC, BIC,
+    predict</li>
+<li>normalized and standardized residuals</li>
+<li>a new low-level function lavaan() has the &#39;feature&#39; of doing nothing automagically</li>
+<li>measurement.invariance function has been renamed to measurementInvariance</li>
+<li>improved summary, reporting sample size and missingness information</li>
+<li>mimic.Mplus argument is replaced by a &#39;mimic&#39; argument; can be set to &quot;Mplus&quot; (default) or &quot;EQS&quot;</li>
+<li>new argument &#39;likelihood&#39; can be set to &quot;wishart&quot; or &quot;normal&quot; (for maximum likelihood estimation only)</li>
+<li>na.rm argument is replaced by a &#39;missing&#39; argument; can be set to &quot;listwise&quot; (default) or &quot;ml&quot;</li>
+<li>group.constraints argument is replaced by a &#39;group.equal&#39; argument; new
+argument &#39;group.partial&#39; allows for partial equality constraints</li>
+<li>standard.errors argument is replaced by a &#39;se&#39; argument&#39;; new argument &#39;test&#39; for choosing the test statistic
+    new &#39;fixed.x&#39; argument</li>
+<li>new argument &#39;representation&#39; as a placeholder for the future</li>
+<li>in the standardized solutions, the (residual) covariances are now in a correlation metric</li>
+</ul></li>
+<li>Known issues for this release:
+
+<ul>
+<li>MLM value in models with fixed x covariates is (slightly) different in Mplus</li>
+<li>SRMR value is sometimes different in Mplus: if information is observed, if data is missing, and if equality constraints are used with multiple groups</li>
+<li>EPCs for equality constraints are not entirely correct (but almost)</li>
+</ul></li>
+<li>Bugs/glitches discovered after the release:
+
+<ul>
+<li>function modindices: sepc.all column contains value &#39;Inf&#39; for all covariances; in a multiple group analysis, only the last group is shown</li>
+<li>rsquare labels in the summary output are sometimes in the wrong order</li>
+<li>internal function &#39;vnames&#39; (called by function lavaanNames) with type &#39;lv.x&#39; or &#39;lv.y&#39; does not (always) return the names of the variables in the same order as for type &#39;lv&#39;</li>
+<li>function measurementInvariance(): the group.partial argument produces an error</li>
+<li>if the data contains cases where all variables are missing, these cases are silently removed from the data, but</li>
+<li>the total number of observations is not adjusted</li>
+<li>the logLik function returns a &#39;df&#39; attribute (to be used in the AIC() function); this should be the number of free parameters,
+ not (as in 0.4-7) the degrees of freedom of the model </li>
+</ul></li>
+</ul>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

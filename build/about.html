@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>About lavaan</h4>
+<ul>
+<li><a href="/">Welcome</a></li>
+<li><a href="/start.html">Getting started</a></li>
+<li><a href="/features.html">Features</a></li>
+<li><a href="/development.html">Development</a></li>
+<li><a href="/support.html">Support</a></li>
+<li><a href="/about.html">About</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">Who wrote lavaan?</h4>
+
+<p>The main developer of lavaan is: <a href="http://users.ugent.be/%7Eyrosseel/index.html">Yves Rosseel</a></p>
+
+<p>If you have questions about the use of lavaan, please do not email me directly,
+but use the discussion group:
+<a href="https://groups.google.com/d/forum/lavaan">https://groups.google.com/d/forum/lavaan</a></p>
+
+<h4 id="toc_1">Code contributors</h4>
+
+<p>Several people have contributed source code to the lavaan project:</p>
+
+<ul>
+<li>Michael Hallquist</li>
+<li><a href="http://daob.org/">Daniel Oberski</a></li>
+<li><a href="http://jarrettbyrnes.info/">Jarrett Byrnes</a></li>
+<li>Leonard Vanbrabant (the InformationTesting() function and parts of the bootstrapLRT() function)</li>
+<li><a href="http://www2.psych.ubc.ca/%7Evsavalei/">Victoria Savalei</a> (R code for missing data and the Yuan-Bentler test statistic)</li>
+<li><a href="http://psychology.missouri.edu/merklee">Ed Merkle</a> (added type=&quot;yuan&quot; in the bootstrapLavaan() function)</li>
+<li><a href="http://www.crmda.ku.edu/people/mijke/">Mijke Rhemtulla</a> (R code for computing the fraction of missing information (fmi))</li>
+<li><a href="http://katalog.uu.se/empInfo/?languageId=1&amp;id=N8-1027/">Myrsini Katsikatsou</a> (R code for estimator=&quot;PML&quot;: pairwise maximum likelihood for ordinal data)</li>
+</ul>
+
+<h4 id="toc_2">Thanks</h4>
+
+<p>Since the release of version 0.3-1, many people have provided valuable
+feedback, comments and suggestions. Below is an (incomplete) list of people
+that somehow contributed to the development of lavaan:</p>
+
+<ul>
+<li>Patrick Mair (for immediately adding lavaan to the Psychometrics Task View)</li>
+<li>Michael Hallquist (author of the MplusAutomation package, used for testing lavaan)</li>
+<li>Holger Steinmetz and Joerg Evermann: two early adaptors; their feedback helped shape the 0.4 version of lavaan</li>
+<li><a href="http://www.personality-project.org/revelle.html">William Revelle</a> (author of the psych package; the diagram() functions draws a path diagram of a fitted lavaan object)</li>
+<li><a href="http://sachaepskamp.com/">Sacha Epskamp</a> (author of the qgraph and semPlot packages with great support for lavaan)</li>
+<li><a href="http://www.statistik.uni-wuppertal.de/startseite/mitarbeiter/univ-prof-dr-gerhard-arminger.html">Gerhard Arminger</a> (provided the MECOSA source code, in the GAUSS language)</li>
+<li>(and many, many others)</li>
+</ul>
+
+<h4 id="toc_3">License</h4>
+
+<p>The lavaan package is licensed under the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> Version &gt;= 2</p>
+
+<h4 id="toc_4">Contact</h4>
+
+<p>Email: <a href="mailto:Yves.Rosseel@UGent.be">Yves.Rosseel@UGent.be</a></p>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

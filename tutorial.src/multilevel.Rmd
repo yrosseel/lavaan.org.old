@@ -1,0 +1,140 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+If the data is clustered, one way to handle the clustering is to use 
+a multilevel modeling approach. In the SEM framework, this leads to
+multilevel SEM. The multilevel capabilities of lavaan are still
+limited, but you can fit a two-level SEM with random intercepts
+(note: only when all data is continuous and complete; listwise deletion
+is currently used for cases with missing values).
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+```
+
+
+#### Multilevel SEM model syntax ####
+
+To fit a two-level SEM, you must specify a model for both levels, as 
+follows:
+
+```{r eval=TRUE, tidy=FALSE}
+    model <- '
+        level: 1
+            fw =~ y1 + y2 + y3
+            fw ~ x1 + x2 + x3
+        level: 2
+            fb =~ y1 + y2 + y3
+            fb ~ w1 + w2
+    '
+```
+This model syntax contains two blocks, one for level 1, and one for level 2.
+Within each block, you can specify a model just like in the single-level case.
+To fit this model, using a toy dataset `Demo.twolevel` that is part of
+the lavaan package, you need to add the `cluster=` argument to the sem/lavaan
+function call:
+
+```{r eval=TRUE, tidy=FALSE}
+    fit <- sem(model = model, data = Demo.twolevel, cluster = "cluster")
+```
+
+The output looks similar to a multigroup SEM output, but where the two
+groups are now the within and the between level respectively.
+```{r eval=TRUE, tidy=FALSE}
+    summary(fit)
+```
+
+After fitting the model, you can inspect the intra-class correlations:
+```{r eval=TRUE, tidy=FALSE}
+    lavInspect(fit, "icc")
+```
+The see the unrestricted (h1) within and between means and covariances,
+you can use
+
+```{r eval=TRUE, tidy=FALSE}
+    lavInspect(fit, "h1")
+```
+
+#### Important notes ####
+
+- note that in `level: 1` the colon follows the `level` keyword; if you
+type `level 1:`, you will get an error
+
+- you must specify a model for each level; the following syntax is not
+allowed and will produce an error:
+
+    ```{r eval=FALSE, tidy=FALSE}
+        model <- '
+            level: 1
+                fw =~ y1 + y2 + y3
+                fw ~ x1 + x2 + x3
+            level: 2
+        '
+    ```
+
+- if you do not have a model in mind for level 2, you can specify a 
+  saturated level by adding all variances and covariances of the 
+  endogenous variables (here: y1, y2 and y3):
+
+    ```{r eval=FALSE, tidy=FALSE}
+        model <- '
+            level: 1
+                fw =~ y1 + y2 + y3
+                fw ~ x1 + x2 + x3
+            level: 2
+                y1 ~~ y1 + y2 + y3
+                y2 ~~ y2 + y3
+                y3 ~~ y3
+        '
+    ```
+
+#### Convergence issues and solutions ####
+
+By default, the current version of lavaan (0.6) uses a quasi-Newton procedure
+to maximize the loglikelihood of the data given the model (just like in the
+single-level case). For most model and data combinations, this will work fine
+(and fast).  However, every now and then, you may experience convergence issues.
+
+Non-convergence is typically a sign that something is not quite right with
+either your model, or your data. Typical settings are: a small number of
+clusters, in combination with (almost) no variance of an endogenous variable
+at the between level.
+
+However, if you believe nothing is wrong,
+you may want to try another optimization procedure. The current version
+of lavaan allows for using the Expectation Maximization (EM) algorithm
+as an alternative. To switch to the EM algorithm, you can use:
+
+```{r eval=FALSE, tidy=FALSE}
+    fit <- sem(model = model, data = Demo.twolevel, cluster = "cluster",
+               verbose = TRUE, optim.method = "em")
+```
+
+As the EM algorithm is not accelerated yet, this may take a long time. It
+is not unusual that more than 10000 iterations are needed to reach a 
+solution. To control when the EM algorithm stops, you can set the stopping
+criteria as follows:
+
+```{r eval=FALSE, tidy=FALSE}
+    fit <- sem(model = model, data = Demo.twolevel, cluster = "cluster",
+               verbose = TRUE, optim.method = "em", em.iter.max = 20000,
+               em.fx.tol = 1e-08, em.dx.tol = 1e-04)
+```
+
+The `em.fx.tol` argument is used to monitor the change in loglikelihood
+between the current step and the previous step. If this change is smaller
+than `em.fx.tol`, the algorithm stops. The `em.dx.tol` argument is used
+to monitor the (unscaled) gradient. When a solution is reached, all 
+elements of the gradient should be near zero. When the largest gradient
+element is smaller than `em.dx.tol`, the algorithm stops.
+
+A word of caution: the EM algorithm can always be forced to 'converge'
+(perhaps after changing the stopping criteria), but that does not mean you 
+have a model/dataset combination that deserves to converge.
+
+
+  

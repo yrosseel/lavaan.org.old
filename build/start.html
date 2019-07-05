@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>The lavaan Project</title>
+	<meta name="description" content="lavaan latent variable analysis">
+	<meta name="author" content="Yves Rosseel">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="/css/skeleton_base.css">
+	<link rel="stylesheet" href="/css/skeleton_skeleton.css">
+	<link rel="stylesheet" href="/css/skeleton_layout.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<!--link rel="shortcut icon" href="images/favicon.ico"-->
+	<!--link rel="apple-touch-icon" href="images/apple-touch-icon.png"-->
+	<!--link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"-->
+	<!--link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-16524231-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+</head>
+<body>
+
+	<!-- Primary Page Layout
+	================================================== -->
+	<div id="header" class="container">
+        <div class="four columns">
+			<h1 class="remove-bottom">lavaan</h1>
+            <h6>latent variable analysis</h6>
+		</div>
+        <div id="topnav" class="twelve columns">
+            <h1 class="remove-bottom">&nbsp;</h1>
+            <ul>
+            <li><a href="/index.html">About lavaan</a></li>
+            <li><a href="/tutorial/index.html">Tutorial</a></li>
+            <!--li><a href="/manual/index.html">User Manual</a></li-->
+            <li><a href="/resources/index.html">Resources</a></li>
+            <li><a href="/history/index.html">Version History</a></li>
+            </ul>
+        </div>
+    </div><!-- container -->
+ 
+    <div class="container">
+		<div id="nav" class="three columns">
+            <hr />
+            <h4>About lavaan</h4>
+<ul>
+<li><a href="/">Welcome</a></li>
+<li><a href="/start.html">Getting started</a></li>
+<li><a href="/features.html">Features</a></li>
+<li><a href="/development.html">Development</a></li>
+<li><a href="/support.html">Support</a></li>
+<li><a href="/about.html">About</a></li>
+</ul>
+
+
+
+
+		</div>
+		<div class="thirteen columns">
+           <hr />
+           <h4 id="toc_0">Install R</h4>
+
+<p>lavaan is implemented as an R package. This means that before installing
+lavaan, you should have installed a recent version (&gt;= 3.0.0) of R. You can
+download the latest version of R from the 
+<a href="http://www.r-project.org">R-project website</a>. </p>
+
+<h4 id="toc_1">Install lavaan</h4>
+
+<p>Once you have installed R, you can install the lavaan package simply by
+starting up R, and typing</p>
+<div class="highlight"><pre><code class="r">install.packages<span class="p">(</span><span class="s">&quot;lavaan&quot;</span><span class="p">,</span> dependencies<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+</code></pre></div>
+<p>To check if the installation was succesful, you can load the lavaan package and try one of the examples. For example:</p>
+<div class="highlight"><pre><code class="r">library<span class="p">(</span>lavaan<span class="p">)</span>
+example<span class="p">(</span>cfa<span class="p">)</span>
+</code></pre></div>
+<p>If you can see the output, everything is set up and ready.</p>
+
+<h4 id="toc_2">Getting Started</h4>
+
+<p>Now that you have installed lavaan, you can:</p>
+
+<ul>
+<li>read the lavaan tutorial; either <a href="/tutorial/index.html">online</a> or as 
+a <a href="/tutorial/tutorial.pdf">PDF</a></li>
+<li>read the <a href="http://www.jstatsoft.org/v48/i02/">lavaan paper</a></li>
+<li>have a look at the teaching materials, code examples and more at
+the <a href="/resources/index.html">Resources</a> page.</li>
+</ul>
+
+           <hr />
+		</div>
+
+	</div><!-- container -->
+
+<!-- End Document
+================================================== -->
+</body>
+</html>
