@@ -9,8 +9,8 @@ variables}\label{exogenous-categorical-variables}}
 If you have a binary exogenous covariate (say, gender), all you need to
 do is to recode it as a dummy (0/1) variable. Just like you would do in
 a classic regression model. If you have an exogenous ordinal variable,
-you can use a coding scheme reflecting the order (say, 1,2,3,\ldots{})
-and treat it as any other (numeric) covariate. If you have a nominal
+you can use a coding scheme reflecting the order (say, 1,2,3,\ldots) and
+treat it as any other (numeric) covariate. If you have a nominal
 categorical variable with \(K > 2\) levels, you need to replace it by a
 set of \(K-1\) dummy variables, again, just like you would do in
 classical regression.
@@ -20,9 +20,8 @@ classical regression.
 variables}\label{endogenous-categorical-variables}}
 
 The lavaan 0.5 series can deal with binary and ordinal (but not nominal)
-endogenous variables. Only the three-stage WLS approach is currently
-supported, including some `robust' variants. To use binary/ordinal data,
-you have two choices:
+endogenous variables. There are two ways to communicate to lavaan that
+some of the endogenous variables are to be treated as categorical:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -35,11 +34,11 @@ you have two choices:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{Data[,}\KeywordTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}
+\NormalTok{Data[,}\FunctionTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}
         \StringTok{"item2"}\NormalTok{,}
         \StringTok{"item3"}\NormalTok{,}
-        \StringTok{"item4"}\NormalTok{)] <-}
-\StringTok{    }\KeywordTok{lapply}\NormalTok{(Data[,}\KeywordTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}
+        \StringTok{"item4"}\NormalTok{)] }\OtherTok{\textless{}{-}}
+    \FunctionTok{lapply}\NormalTok{(Data[,}\FunctionTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}
                    \StringTok{"item2"}\NormalTok{,}
                    \StringTok{"item3"}\NormalTok{,}
                    \StringTok{"item4"}\NormalTok{)], ordered)}
@@ -53,15 +52,20 @@ you have two choices:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(myModel, }\DataTypeTok{data =}\NormalTok{ myData,}
-           \DataTypeTok{ordered=}\KeywordTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}\StringTok{"item2"}\NormalTok{,}
-                     \StringTok{"item3"}\NormalTok{,}\StringTok{"item4"}\NormalTok{))}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(myModel, }\AttributeTok{data =}\NormalTok{ myData,}
+           \AttributeTok{ordered =} \FunctionTok{c}\NormalTok{(}\StringTok{"item1"}\NormalTok{,}\StringTok{"item2"}\NormalTok{,}
+                       \StringTok{"item3"}\NormalTok{,}\StringTok{"item4"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 \end{enumerate}
 
-In both cases, lavaan will automatically switch to the \texttt{WLSMV}
-estimator: it will use diagonally weighted least squares (\texttt{DWLS})
-to estimate the model parameters, but it will use the full weight matrix
-to compute robust standard errors, and a mean- and variance-adjusted
-test stastistic.
+If all the (endogenous) variables are to be treated as categorical, you
+can use \texttt{ordered\ =\ TRUE} as a shortcut.
+
+When the \texttt{ordered=} argument is used, lavaan will automatically
+switch to the \texttt{WLSMV} estimator: it will use diagonally weighted
+least squares (\texttt{DWLS}) to estimate the model parameters, but it
+will use the full weight matrix to compute robust standard errors, and a
+mean- and variance-adjusted test stastistic. Other options are
+unweighted least squares (ULSMV), or pairwise maximum likelihood (PML).
+Full information maximum likelihood is currently not supported.

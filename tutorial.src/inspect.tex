@@ -8,15 +8,13 @@ discussed below.
 \hypertarget{parameterestimates}{%
 \paragraph{parameterEstimates}\label{parameterestimates}}
 
-The \texttt{parameterEstimates} function extracts not only the values of
-the estimated parameters, but also the standard errors, the z-values,
-the standardized parameter values, and returns everything conveniently
-as a data frame. For example:
+The \texttt{parameterEstimates()} function returns a data.frame
+containing all the model parameters in the rows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
-\KeywordTok{parameterEstimates}\NormalTok{(fit)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data=}\NormalTok{HolzingerSwineford1939)}
+\FunctionTok{parameterEstimates}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -48,12 +46,20 @@ as a data frame. For example:
 24 textual ~~   speed 0.173 0.049  3.518      0    0.077    0.270
 \end{verbatim}
 
+The \texttt{lhs} (left-hand side), \texttt{op} (operator) and
+\texttt{rhs} (right-hand side) columns define the parameter. The
+\texttt{est}, \texttt{se}, \texttt{z} and \texttt{pvalue} columns
+provide the point estimate, the standard error, the z-value and the
+p-value for this parameter. The last two columns are the lower and upper
+bounds of a 95\% confidence interval around the point estimate.
+
 \hypertarget{standardizedsolution}{%
 \paragraph{standardizedSolution}\label{standardizedsolution}}
 
 The \texttt{standardizedSolution()} function is similar to the
-\texttt{parameterEstimates()} function, but only shows the
-unstandardized and standardized parameter estimates.
+\texttt{parameterEstimates()} function, but only shows the standardized
+parameter estimates and corresponding standard errors, z-values,
+p-values and confidence intervals.
 
 \hypertarget{fitted.values}{%
 \paragraph{fitted.values}\label{fitted.values}}
@@ -64,8 +70,8 @@ model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
-\KeywordTok{fitted}\NormalTok{(fit)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
+\FunctionTok{fitted}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -81,10 +87,6 @@ x6 0.378 0.209 0.276 0.907 1.010 1.196
 x7 0.262 0.145 0.191 0.173 0.193 0.161 1.183            
 x8 0.309 0.171 0.226 0.205 0.228 0.190 0.453 1.022      
 x9 0.284 0.157 0.207 0.188 0.209 0.174 0.415 0.490 1.015
-
-$mean
-x1 x2 x3 x4 x5 x6 x7 x8 x9 
- 0  0  0  0  0  0  0  0  0 
 \end{verbatim}
 
 \hypertarget{residuals}{%
@@ -93,37 +95,36 @@ x1 x2 x3 x4 x5 x6 x7 x8 x9
 The \texttt{resid()} or \texttt{residuals()} functions return
 (unstandardized) residuals of a fitted model. This is simply the
 difference between the observed and implied covariance matrix and mean
-vector. If the estimator is maximum likelihood, it is also possible to
-obtain the normalized and the standardized residuals (note: you may
-observe several \texttt{NA} values, but they can be safely ignored)
+vector.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
-\KeywordTok{resid}\NormalTok{(fit, }\DataTypeTok{type=}\StringTok{"standardized"}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
+\FunctionTok{resid}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 $type
-[1] "standardized"
+[1] "raw"
 
 $cov
    x1     x2     x3     x4     x5     x6     x7     x8     x9    
-x1     NA                                                        
-x2 -2.196  0.000                                                 
-x3 -1.199  2.692  0.000                                          
-x4  2.465 -0.283 -1.948  0.000                                   
-x5 -0.362 -0.610 -4.443  0.856  0.000                            
-x6  2.032  0.661 -0.701     NA  0.633  0.000                     
-x7 -3.787 -3.800 -1.882  0.839 -0.837 -0.321  0.000              
-x8 -1.456 -1.137 -0.305 -2.049 -1.100 -0.635  3.804  0.000       
-x9  4.062  1.517  3.328  1.237  1.723  1.436 -2.771     NA  0.000
-
-$mean
-x1 x2 x3 x4 x5 x6 x7 x8 x9 
- 0  0  0  0  0  0  0  0  0 
+x1  0.000                                                        
+x2 -0.041  0.000                                                 
+x3 -0.010  0.124  0.000                                          
+x4  0.097 -0.017 -0.090  0.000                                   
+x5 -0.014 -0.040 -0.219  0.008  0.000                            
+x6  0.077  0.038 -0.032 -0.012  0.005  0.000                     
+x7 -0.177 -0.242 -0.103  0.046 -0.050 -0.017  0.000              
+x8 -0.046 -0.062 -0.013 -0.079 -0.047 -0.024  0.082  0.000       
+x9  0.175  0.087  0.167  0.056  0.086  0.062 -0.042 -0.032  0.000
 \end{verbatim}
+
+The \texttt{lavResiduals()} gives more extensive information about the
+residuals. Per default, it will print both raw and standardized
+residuals, as well as several summary statistics (including the SRMR and
+the unbiased SRMR).
 
 \hypertarget{vcov}{%
 \paragraph{vcov}\label{vcov}}
@@ -145,40 +146,34 @@ computed by lavaan as a named numeric vector.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
-\KeywordTok{fitMeasures}\NormalTok{(fit)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data=}\NormalTok{HolzingerSwineford1939)}
+\FunctionTok{fitMeasures}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-               npar                fmin               chisq 
-             21.000               0.142              85.306 
-                 df              pvalue      baseline.chisq 
-             24.000               0.000             918.852 
-        baseline.df     baseline.pvalue                 cfi 
-             36.000               0.000               0.931 
-                tli                nnfi                 rfi 
-              0.896               0.896               0.861 
-                nfi                pnfi                 ifi 
-              0.907               0.605               0.931 
-                rni                logl   unrestricted.logl 
-              0.931           -3737.745           -3695.092 
-                aic                 bic              ntotal 
-           7517.490            7595.339             301.000 
-               bic2               rmsea      rmsea.ci.lower 
-           7528.739               0.092               0.071 
-     rmsea.ci.upper        rmsea.pvalue                 rmr 
-              0.114               0.001               0.082 
-         rmr_nomean                srmr        srmr_bentler 
-              0.082               0.065               0.065 
-srmr_bentler_nomean         srmr_bollen  srmr_bollen_nomean 
-              0.065               0.065               0.065 
-         srmr_mplus   srmr_mplus_nomean               cn_05 
-              0.065               0.065             129.490 
-              cn_01                 gfi                agfi 
-            152.654               0.943               0.894 
-               pgfi                 mfi                ecvi 
-              0.503               0.903               0.423 
+               npar                fmin               chisq                  df 
+             21.000               0.142              85.306              24.000 
+             pvalue      baseline.chisq         baseline.df     baseline.pvalue 
+              0.000             918.852              36.000               0.000 
+                cfi                 tli                nnfi                 rfi 
+              0.931               0.896               0.896               0.861 
+                nfi                pnfi                 ifi                 rni 
+              0.907               0.605               0.931               0.931 
+               logl   unrestricted.logl                 aic                 bic 
+          -3737.745           -3695.092            7517.490            7595.339 
+             ntotal                bic2               rmsea      rmsea.ci.lower 
+            301.000            7528.739               0.092               0.071 
+     rmsea.ci.upper        rmsea.pvalue                 rmr          rmr_nomean 
+              0.114               0.001               0.082               0.082 
+               srmr        srmr_bentler srmr_bentler_nomean                crmr 
+              0.065               0.065               0.065               0.073 
+        crmr_nomean          srmr_mplus   srmr_mplus_nomean               cn_05 
+              0.073               0.065               0.065             129.490 
+              cn_01                 gfi                agfi                pgfi 
+            152.654               0.943               0.894               0.503 
+                mfi                ecvi 
+              0.903               0.423 
 \end{verbatim}
 
 If you only want the value of a single fit measure, say, the CFI, you
@@ -186,8 +181,8 @@ give the name (in lower case) as the second argument:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
-\KeywordTok{fitMeasures}\NormalTok{(fit, }\StringTok{"cfi"}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data=}\NormalTok{HolzingerSwineford1939)}
+\FunctionTok{fitMeasures}\NormalTok{(fit, }\StringTok{"cfi"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -200,7 +195,7 @@ Or you can provide a vector of fit measures, as in
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{fitMeasures}\NormalTok{(fit, }\KeywordTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{,}\StringTok{"rmsea"}\NormalTok{,}\StringTok{"srmr"}\NormalTok{))}
+\FunctionTok{fitMeasures}\NormalTok{(fit, }\FunctionTok{c}\NormalTok{(}\StringTok{"cfi"}\NormalTok{,}\StringTok{"rmsea"}\NormalTok{,}\StringTok{"srmr"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -209,21 +204,21 @@ Or you can provide a vector of fit measures, as in
 0.931 0.092 0.065 
 \end{verbatim}
 
-\hypertarget{inspect}{%
-\paragraph{inspect}\label{inspect}}
+\hypertarget{lavinspect}{%
+\paragraph{lavInspect}\label{lavinspect}}
 
 If you want to peek inside a fitted lavaan object (the object that is
 returned by a call to \texttt{cfa()}, \texttt{sem()}or
-\texttt{growth()}), you can use the \texttt{inspect()} function, with a
-variety of options. By default, calling \texttt{inspect()} on a fitted
-lavaan object returns a list of the model matrices that are used
+\texttt{growth()}), you can use the \texttt{lavInspect()} function, with
+a variety of options. By default, calling \texttt{lavInspect()} on a
+fitted lavaan object returns a list of the model matrices that are used
 internally to represent the model. The free parameters are nonzero
 integers.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
-\KeywordTok{inspect}\NormalTok{(fit)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data=}\NormalTok{HolzingerSwineford1939)}
+\FunctionTok{lavInspect}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -263,7 +258,7 @@ To see the starting values of parameters in each model matrix, type
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{inspect}\NormalTok{(fit, }\DataTypeTok{what=}\StringTok{"start"}\NormalTok{)}
+\FunctionTok{lavInspect}\NormalTok{(fit, }\AttributeTok{what =} \StringTok{"start"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -303,72 +298,70 @@ To see how lavaan internally represents a model, you can type
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{inspect}\NormalTok{(fit, }\DataTypeTok{what=}\StringTok{"list"}\NormalTok{)}
+\FunctionTok{lavInspect}\NormalTok{(fit, }\AttributeTok{what =} \StringTok{"list"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-   id     lhs op     rhs user block group free ustart exo label plabel
-1   1  visual =~      x1    1     1     1    0      1   0         .p1.
-2   2  visual =~      x2    1     1     1    1     NA   0         .p2.
-3   3  visual =~      x3    1     1     1    2     NA   0         .p3.
-4   4 textual =~      x4    1     1     1    0      1   0         .p4.
-5   5 textual =~      x5    1     1     1    3     NA   0         .p5.
-6   6 textual =~      x6    1     1     1    4     NA   0         .p6.
-7   7   speed =~      x7    1     1     1    0      1   0         .p7.
-8   8   speed =~      x8    1     1     1    5     NA   0         .p8.
-9   9   speed =~      x9    1     1     1    6     NA   0         .p9.
-10 10      x1 ~~      x1    0     1     1    7     NA   0        .p10.
-11 11      x2 ~~      x2    0     1     1    8     NA   0        .p11.
-12 12      x3 ~~      x3    0     1     1    9     NA   0        .p12.
-13 13      x4 ~~      x4    0     1     1   10     NA   0        .p13.
-14 14      x5 ~~      x5    0     1     1   11     NA   0        .p14.
-15 15      x6 ~~      x6    0     1     1   12     NA   0        .p15.
-16 16      x7 ~~      x7    0     1     1   13     NA   0        .p16.
-17 17      x8 ~~      x8    0     1     1   14     NA   0        .p17.
-18 18      x9 ~~      x9    0     1     1   15     NA   0        .p18.
-19 19  visual ~~  visual    0     1     1   16     NA   0        .p19.
-20 20 textual ~~ textual    0     1     1   17     NA   0        .p20.
-21 21   speed ~~   speed    0     1     1   18     NA   0        .p21.
-22 22  visual ~~ textual    0     1     1   19     NA   0        .p22.
-23 23  visual ~~   speed    0     1     1   20     NA   0        .p23.
-24 24 textual ~~   speed    0     1     1   21     NA   0        .p24.
-   start   est    se
-1  1.000 1.000 0.000
-2  0.778 0.554 0.100
-3  1.107 0.729 0.109
-4  1.000 1.000 0.000
-5  1.133 1.113 0.065
-6  0.924 0.926 0.055
-7  1.000 1.000 0.000
-8  1.225 1.180 0.165
-9  0.854 1.082 0.151
-10 0.679 0.549 0.114
-11 0.691 1.134 0.102
-12 0.637 0.844 0.091
-13 0.675 0.371 0.048
-14 0.830 0.446 0.058
-15 0.598 0.356 0.043
-16 0.592 0.799 0.081
-17 0.511 0.488 0.074
-18 0.508 0.566 0.071
-19 0.050 0.809 0.145
-20 0.050 0.979 0.112
-21 0.050 0.384 0.086
-22 0.000 0.408 0.074
-23 0.000 0.262 0.056
-24 0.000 0.173 0.049
+   id     lhs op     rhs user block group free ustart exo label plabel start
+1   1  visual =~      x1    1     1     1    0      1   0         .p1. 1.000
+2   2  visual =~      x2    1     1     1    1     NA   0         .p2. 0.778
+3   3  visual =~      x3    1     1     1    2     NA   0         .p3. 1.107
+4   4 textual =~      x4    1     1     1    0      1   0         .p4. 1.000
+5   5 textual =~      x5    1     1     1    3     NA   0         .p5. 1.133
+6   6 textual =~      x6    1     1     1    4     NA   0         .p6. 0.924
+7   7   speed =~      x7    1     1     1    0      1   0         .p7. 1.000
+8   8   speed =~      x8    1     1     1    5     NA   0         .p8. 1.225
+9   9   speed =~      x9    1     1     1    6     NA   0         .p9. 0.854
+10 10      x1 ~~      x1    0     1     1    7     NA   0        .p10. 0.679
+11 11      x2 ~~      x2    0     1     1    8     NA   0        .p11. 0.691
+12 12      x3 ~~      x3    0     1     1    9     NA   0        .p12. 0.637
+13 13      x4 ~~      x4    0     1     1   10     NA   0        .p13. 0.675
+14 14      x5 ~~      x5    0     1     1   11     NA   0        .p14. 0.830
+15 15      x6 ~~      x6    0     1     1   12     NA   0        .p15. 0.598
+16 16      x7 ~~      x7    0     1     1   13     NA   0        .p16. 0.592
+17 17      x8 ~~      x8    0     1     1   14     NA   0        .p17. 0.511
+18 18      x9 ~~      x9    0     1     1   15     NA   0        .p18. 0.508
+19 19  visual ~~  visual    0     1     1   16     NA   0        .p19. 0.050
+20 20 textual ~~ textual    0     1     1   17     NA   0        .p20. 0.050
+21 21   speed ~~   speed    0     1     1   18     NA   0        .p21. 0.050
+22 22  visual ~~ textual    0     1     1   19     NA   0        .p22. 0.000
+23 23  visual ~~   speed    0     1     1   20     NA   0        .p23. 0.000
+24 24 textual ~~   speed    0     1     1   21     NA   0        .p24. 0.000
+     est    se
+1  1.000 0.000
+2  0.554 0.100
+3  0.729 0.109
+4  1.000 0.000
+5  1.113 0.065
+6  0.926 0.055
+7  1.000 0.000
+8  1.180 0.165
+9  1.082 0.151
+10 0.549 0.114
+11 1.134 0.102
+12 0.844 0.091
+13 0.371 0.048
+14 0.446 0.058
+15 0.356 0.043
+16 0.799 0.081
+17 0.488 0.074
+18 0.566 0.071
+19 0.809 0.145
+20 0.979 0.112
+21 0.384 0.086
+22 0.408 0.074
+23 0.262 0.056
+24 0.173 0.049
 \end{verbatim}
 
 This is equivalent to the \texttt{parTable(fit)} function. The table
 that is returned here is called the `parameter table'.
 
-For more inspect options, see the help page for the lavaan class which
-you can find by typing the following:
+For more lavInspect options, see the help page:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{class?lavaan}
+\NormalTok{?lavInspect}
 \end{Highlighting}
 \end{Shaded}
-

@@ -16,6 +16,10 @@ estimators available in lavaan are:
   \texttt{"DWLS"}: diagonally weighted least squares
 \item
   \texttt{"ULS"}: unweighted least squares
+\item
+  \texttt{"DLS"}: distributionally-weighted least squares
+\item
+  \texttt{"PML"}: pairwise maximum likelihood
 \end{itemize}
 
 Many estimators have `robust' variants, meaning that they provide robust
@@ -62,31 +66,35 @@ Normal}\label{ml-estimation-wishart-versus-normal}}
 If maximum likelihood estimation is used (\texttt{"ML"} or any of its
 robusts variants), the default behavior of lavaan is to base the
 analysis on the so-called \emph{biased} sample covariance matrix, where
-the elements are divided by \(n\) instead of \(n-1\). This is done
-internally, and should not be done by the user. In addition, the
-chi-square statistic is computed by multiplying the minimum function
-value with a factor \(n\) (instead of \(n-1\)). This is similar to the
-Mplus program. If you prefer to use an unbiased covariance, and \(n-1\)
-as the multiplier to compute the chi-square statistic, you need to
-specify the \texttt{likelihood\ =\ "wishart"} argument when calling the
-fitting functions. For example:
+the elements are divided by N instead of N-1. This is done internally,
+and should not be done by the user. In addition, the chi-square
+statistic is computed by multiplying the minimum function value with a
+factor N (instead of N-1). If you prefer to use an unbiased covariance
+matrix, and \(N-1\) as the multiplier to compute the chi-square
+statistic, you need to specify the \texttt{likelihood\ =\ "wishart"}
+argument when calling the fitting functions. For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-           \DataTypeTok{likelihood =} \StringTok{"wishart"}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+           \AttributeTok{likelihood =} \StringTok{"wishart"}\NormalTok{)}
 \NormalTok{fit}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  35 iterations
-
-  Number of observations                           301
+lavaan 0.6-11 ended normally after 35 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                      85.022
+  Optimization method                           NLMINB
+  Number of model parameters                        21
+                                                      
+  Number of observations                           301
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                                85.022
   Degrees of freedom                                24
   P-value (Chi-square)                           0.000
 \end{verbatim}
@@ -116,18 +124,18 @@ Standard errors are (by default) based on the expected information
 matrix. The only exception is when data are missing and full information
 ML is used (via \texttt{missing\ =\ "ML"}). In this case, the observed
 information matrix is used to compute the standard errors. The user can
-change this behavior by using the \texttt{information} argument, which
-can be set to \texttt{"expected"} or \texttt{"observed"}.
+change this behavior by using the \texttt{information} argument.
 
-If the estimator is simply \texttt{"ML"}, you can request robust
-standard errors by using the \texttt{se} argument, which can be set to
-\texttt{"robust.sem"}, \texttt{"robust.huber.white"} ,
-\texttt{"first.order"} or \texttt{"bootstrap"}.\\
-Or simply to \texttt{"none"} if you don't need them. This will not
-affect the test statistic. In fact, you can choose the test statistic
-independently by using the \texttt{test} argument, which can be set to
-\texttt{"standard"}, \texttt{"Satorra-Bentler"}, \texttt{"Yuan-Bentler"}
-or \texttt{"bootstrap"}.
+Robust standard errors can be requested explicitly by using
+\texttt{se\ =\ "robust"}. Similarly, robust test statistics can be
+requested explicitly by using \texttt{test\ =\ "robust"}. Many more
+options are possible. See the help page:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?lavOptions}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{bootstrapping}{%
 \paragraph{Bootstrapping}\label{bootstrapping}}

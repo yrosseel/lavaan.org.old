@@ -9,16 +9,16 @@ diagonal):
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lower <-}\StringTok{ '}
+\NormalTok{lower }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
 \StringTok{ 11.834}
 \StringTok{  6.947   9.364}
 \StringTok{  6.819   5.091  12.532}
 \StringTok{  4.783   5.028   7.495   9.986}
-\StringTok{ -3.839  -3.889  -3.841  -3.625  9.610}
-\StringTok{-21.899 -18.831 -21.748 -18.775 35.522 450.288 '}
+\StringTok{ {-}3.839  {-}3.889  {-}3.841  {-}3.625  9.610}
+\StringTok{{-}21.899 {-}18.831 {-}21.748 {-}18.775 35.522 450.288 \textquotesingle{}}
 
-\NormalTok{wheaton.cov <-}\StringTok{ }
-\StringTok{    }\KeywordTok{getCov}\NormalTok{(lower, }\DataTypeTok{names =} \KeywordTok{c}\NormalTok{(}\StringTok{"anomia67"}\NormalTok{, }\StringTok{"powerless67"}\NormalTok{, }
+\NormalTok{wheaton.cov }\OtherTok{\textless{}{-}} 
+    \FunctionTok{getCov}\NormalTok{(lower, }\AttributeTok{names =} \FunctionTok{c}\NormalTok{(}\StringTok{"anomia67"}\NormalTok{, }\StringTok{"powerless67"}\NormalTok{, }
                             \StringTok{"anomia71"}\NormalTok{, }\StringTok{"powerless71"}\NormalTok{,}
                             \StringTok{"education"}\NormalTok{, }\StringTok{"sei"}\NormalTok{))}
 \end{Highlighting}
@@ -38,41 +38,46 @@ the results:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# classic wheaton et al model}
-\NormalTok{wheaton.model <-}\StringTok{ '}
-\StringTok{  # latent variables}
-\StringTok{    ses     =~ education + sei}
-\StringTok{    alien67 =~ anomia67 + powerless67}
-\StringTok{    alien71 =~ anomia71 + powerless71}
-\StringTok{  # regressions}
-\StringTok{    alien71 ~ alien67 + ses}
-\StringTok{    alien67 ~ ses}
-\StringTok{  # correlated residuals}
-\StringTok{    anomia67 ~~ anomia71}
-\StringTok{    powerless67 ~~ powerless71}
-\StringTok{'}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(wheaton.model, }
-           \DataTypeTok{sample.cov =}\NormalTok{ wheaton.cov, }
-           \DataTypeTok{sample.nobs =} \DecValTok{932}\NormalTok{)}
-\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{standardized =} \OtherTok{TRUE}\NormalTok{)}
+\CommentTok{\# classic wheaton et al. model}
+\NormalTok{wheaton.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  \# latent variables}
+\StringTok{    ses     =\textasciitilde{} education + sei}
+\StringTok{    alien67 =\textasciitilde{} anomia67 + powerless67}
+\StringTok{    alien71 =\textasciitilde{} anomia71 + powerless71}
+\StringTok{  \# regressions}
+\StringTok{    alien71 \textasciitilde{} alien67 + ses}
+\StringTok{    alien67 \textasciitilde{} ses}
+\StringTok{  \# correlated residuals}
+\StringTok{    anomia67 \textasciitilde{}\textasciitilde{} anomia71}
+\StringTok{    powerless67 \textasciitilde{}\textasciitilde{} powerless71}
+\StringTok{\textquotesingle{}}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(wheaton.model, }
+           \AttributeTok{sample.cov =}\NormalTok{ wheaton.cov, }
+           \AttributeTok{sample.nobs =} \DecValTok{932}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(fit, }\AttributeTok{standardized =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  73 iterations
-
-  Number of observations                           932
+lavaan 0.6-11 ended normally after 84 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                       4.735
+  Optimization method                           NLMINB
+  Number of model parameters                        17
+                                                      
+  Number of observations                           932
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                                 4.735
   Degrees of freedom                                 4
   P-value (Chi-square)                           0.316
 
 Parameter Estimates:
 
+  Standard errors                             Standard
   Information                                 Expected
   Information saturated (h1) model          Structured
-  Standard Errors                             Standard
 
 Latent Variables:
                    Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
@@ -113,6 +118,21 @@ Variances:
    .alien67           4.841    0.467   10.359    0.000    0.683    0.683
    .alien71           4.083    0.404   10.104    0.000    0.503    0.503
 \end{verbatim}
+
+\hypertarget{the-sample.cov.rescale-argument}{%
+\paragraph{\texorpdfstring{The \texttt{sample.cov.rescale}
+argument}{The sample.cov.rescale argument}}\label{the-sample.cov.rescale-argument}}
+
+If the estimator is \texttt{ML} (the default), then the sample
+variance-covariance matrix will be rescaled by a factor (N-1)/N. The
+reasoning is the following: the elements in a sample variance-covariance
+matrix have (usually) been divided by N-1. But the (normal-based) ML
+estimator would divide the elements by N. Therefore, we need to rescale.
+If you don't want this to happen (for example in a simulation study),
+you can provide the argument \texttt{sample.cov.rescale\ =\ FALSE}.
+
+\hypertarget{multiple-groups}{%
+\paragraph{Multiple groups}\label{multiple-groups}}
 
 If you have multiple groups, the \texttt{sample.cov} argument must be a
 list containing the sample variance-covariance matrix of each group as a

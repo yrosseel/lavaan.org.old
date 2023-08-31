@@ -117,7 +117,8 @@ believed that the two variables have something in common that is not captured
 by the latent variables. In this case, the two variables refer to identical
 scores, but measured in two different years (1960 and 1965, respectively). Note
 that the two expressions `y2 ~~ y4` and `y2 ~~ y6`, can be combined into the
-expression `y2 ~~ y4 + y6`. This is just a shorthand notation.
+expression `y2 ~~ y4 + y6`, because the variable on the left of the `~~` 
+operator (`y2`) is the same. This is just a shorthand notation.
 
 We enter the model syntax as follows:
 
@@ -142,18 +143,18 @@ model <- '
 To fit the model and see the results we can type:
 
 ```{r, comment=""}
-fit <- sem(model, data=PoliticalDemocracy)
-summary(fit, standardized=TRUE)
+fit <- sem(model, data = PoliticalDemocracy)
+summary(fit, standardized = TRUE)
 ```
 
 The function `sem()` is very similar to the function `cfa()`.  In fact, the two
 functions are currently almost identical, but this may change in the future. In
-the `summary()` function, we omitted the `fit.measures=TRUE` argument.
+the `summary()` function, we omitted the `fit.measures = TRUE` argument.
 Therefore, you only get the basic chi-square test statistic. The argument
-`standardized=TRUE` augments the output with standardized parameter values. Two
-extra columns of standardized parameter values are printed. In the first column
-(labeled `Std.lv`), only the latent variables are standardized. In the second
-column (labeled `Std.all`), both latent and observed variables are
+`standardized = TRUE` augments the output with standardized parameter values.
+Two extra columns of standardized parameter values are printed. In the first
+column (labeled `Std.lv`), only the latent variables are standardized. In the
+second column (labeled `Std.all`), both latent and observed variables are
 standardized. The latter is often called the 'completely standardized
 solution'.
 

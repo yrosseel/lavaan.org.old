@@ -21,6 +21,8 @@ lavaan are:
     complete data only.
 - `"DWLS"`: diagonally weighted least squares
 - `"ULS"`: unweighted least squares
+- `"DLS"`: distributionally-weighted least squares 
+- `"PML"`: pairwise maximum likelihood
 
 Many estimators have 'robust' variants, meaning that they provide
 robust standard errors and a scaled test statistic. For example,
@@ -53,12 +55,12 @@ errors and to compute the test statistic.
 If maximum likelihood estimation is used (`"ML"` or any of its
 robusts variants), the default behavior
 of lavaan is to base the analysis on the so-called *biased* sample
-covariance matrix, where the elements are divided by $n$ instead of
-$n-1$. This is done internally, and should not be done by the user. In
+covariance matrix, where the elements are divided by N instead of
+N-1. This is done internally, and should not be done by the user. In
 addition, the chi-square statistic is computed by multiplying the
-minimum function value with a factor $n$ (instead of $n-1$). This is
-similar to the Mplus program. If you prefer to use an unbiased
-covariance, and $n-1$ as the multiplier to compute the chi-square
+minimum function value with a factor N (instead of N-1).
+If you prefer to use an unbiased
+covariance matrix, and $N-1$ as the multiplier to compute the chi-square
 statistic, you need to specify the `likelihood = "wishart"` 
 argument when calling the fitting functions. For example:
 
@@ -76,28 +78,30 @@ on the other hand, uses the 'normal' approach to maximum likelihood
 estimation.
 
 #### Missing values ####
+
 If the data contain missing values, the default behavior is listwise deletion.
 If the missing mechanism is MCAR (missing completely at random) or MAR (missing
 at random), the lavaan package provides case-wise (or 'full information')
 maximum likelihood estimation. You can turn this feature on, by using the
-argument `missing = "ML"` when calling the fitting function. An unrestricted
+argument `missing = "ML"` when calling the fitting function.  An unrestricted
 (h1) model will automatically be estimated, so that all common fit indices are
 available.
 
 #### Standard errors ####
+
 Standard errors are (by default) based on the expected information matrix. The
 only exception is when data are missing and full information ML is used (via
 `missing = "ML"`). In this case, the observed information matrix is used to
 compute the standard errors. The user can change this behavior by using the
-`information` argument, which can be set to `"expected"` or `"observed"`. 
+`information` argument.
 
-If the estimator is simply `"ML"`, you can request robust standard errors by
-using the `se` argument, which can be set to `"robust.sem"`,
-`"robust.huber.white"` , `"first.order"` or `"bootstrap"`.  
-Or simply to `"none"` if you don't
-need them. This will not affect the test statistic. In fact, you can choose the
-test statistic independently by using the `test` argument, which can be set to
-`"standard"`, `"Satorra-Bentler"`, `"Yuan-Bentler"` or `"bootstrap"`.
+Robust standard errors can be requested explicitly by using `se = "robust"`.
+Similarly, robust test statistics can be requested explicitly by using
+`test = "robust"`. Many more options are possible. See the help page:
+
+```{r eval=FALSE}
+?lavOptions
+```
 
 #### Bootstrapping ####
 There are two ways for using the bootstrap in lavaan. Either you can set `se =

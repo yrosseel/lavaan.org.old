@@ -1,17 +1,16 @@
 # VARIABLES
 # ---------
 title: latent variable analysis
-copyright: "Copyright 2010-2019, Yves Rosseel."
+copyright: "Copyright 2010-2022, Yves Rosseel."
 
 # YEKYLL
 # ------
-highlighter: pigments
 exclude: ['README.YR']
 exclude: ['Makefile']
 exclude: ['tutorial.src']
 
 # must be redcarpet, for github style fenced code blocks (```r)
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
-permalink: /:year/:month/:day/:title
+#markdown: redcarpet
+#redcarpet:
+#  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
+# permalink: /:year/:month/:day/:title

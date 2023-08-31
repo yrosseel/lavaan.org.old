@@ -20,7 +20,7 @@ using lavaan.
     <li>book chapter title: Modelagem de equa&ccedil;&otilde;es estruturais: uma vis&atilde;o aplicada para a engenharia</li>
     <li>book chapter author: Di&oacute;genes Bido</li>
     <li>book title: Metodologia Cient&iacute;fica para Engenharia</li>
-    <li>book publisher: <a href="https://www.loja.elsevier.com.br/metodologia-cientifica-para-engenharia-9788535290707.html">Elsevier</a></li>
+    <li>book publisher: <a href="https://www.grupogen.com.br/metodologia-cientifica-para-engenharia">Elsevier</a></li>
   </ul>
   </div>
 </div>

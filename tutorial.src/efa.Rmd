@@ -1,0 +1,133 @@
+---
+layout: default
+title: Tutorial
+published: true
+submenu: tutorial
+---
+
+If a measurement model contains multiple latent variables (factors), we usually
+know which indicators belong to each factor. We call this the factor structure.
+Confirmatory factor analysis can be used to check if this a priori factor
+structure holds in the data. There are settings, however, where the factor
+structure is unclear, and we wish to rotate the solution in order to find a
+suitable structure in a given model. When the model also includes a structural
+part (i.e., regressions among the latent variables), this is referred to as
+exploratory structural equation modeling or ESEM. If there is only a
+measurement part, this is called exploratory factor analysis (EFA). What they
+have in common is that the factor structure (for one or more blocks) is found
+by means of rotation.
+
+```{r echo=FALSE, message=FALSE}
+library(lavaan)
+```
+
+
+#### ESEM ####
+
+To illustrate how ESEM works in lavaan, consider the following syntax:
+
+```{r eval=TRUE, tidy=FALSE}
+model <- '
+    # efa block 1
+    efa("efa1")*f1 + 
+    efa("efa1")*f2 =~ x1 + x2 + x3 + x4 + x5 + x6
+
+    # efa block 2
+    efa("efa2")*f3 + 
+    efa("efa2")*f4 =~ y1 + y2 + y3 + y4 + y5 + y6
+
+    # cfa block
+    f5 =~ z7 + z8 + z9
+    f6 =~ z10 + z11 + z12
+
+    # regressions
+    f3 ~ f1 + f2
+    f4 ~ f3
+'
+```
+This model syntax defines six latent variables (or factors).  For f5 and f6,
+the factor structure is known, and they belong to a regular CFA block. But for
+f1 and f2, the factor structure is not known, and we will use a rotation method
+to find an appropiate structure. The f1 and f2 factors belong together in an
+EFA block that is (arbitrarily) named `efa1`. The `efa("efa1")*` modifier just
+before f1 and f2 is used to alert lavaan that these two factors belong to the
+same EFA block. The factors f3 and f4 belong to a different EFA block
+(named `efa2`) and will be rotated independently. The structural part of the
+model is given as usual. To fit this model, we could call the `sem()` function
+as follows:
+
+
+```{r eval=FALSE, tidy=FALSE}
+fit <- sem(model = model, data = myData, rotation = "geomin")
+```
+
+Different rotation criteria are available, and many rotation options can 
+be provided (see the manual page for the `efa()` function for an overview).
+
+To illustrate ESEM, we will borrow an example from the Mplus User's Guide
+(example 5.25). First we read in the data:
+
+```{r eval=TRUE, tidy=FALSE}
+ex5_25 <- read.table("http://statmodel.com/usersguide/chap5/ex5.25.dat")
+names(ex5_25) = paste0("y",1:12)
+```
+
+The model syntax contains a single EFA block (`efa1` for factors f1 and f2)
+and single CFA block (for f3 and f4):
+
+```{r eval=TRUE, tidy=FALSE}
+model <- '
+    # efa block 
+    efa("efa1")*f1 + 
+    efa("efa1")*f2 =~ y1 + y2 + y3 + y4 + y5 + y6
+
+    # cfa block
+    f3 =~ y7 + y8 + y9
+    f4 =~ y10 + y11 + y12
+
+    # regressions
+    f3 ~ f1 + f2
+    f4 ~ f3
+'
+```
+
+The following command illustrates the use of various rotation arguments:
+
+```{r eval=TRUE, tidy=FALSE, comment = ""}
+fit <- sem(model = model, data = ex5_25, rotation = "geomin",
+           # mimic Mplus
+           information = "observed",
+           rotation.args = list(rstarts = 30, row.weights = "none",
+                                algorithm = "gpa", std.ov = TRUE,
+                                geomin.epsilon = 0.0001))
+summary(fit)
+```
+
+#### Exploratory factor analysis (EFA) ####
+
+When there is no structural part (i.e., no regressions among the latent
+variables) and there is only a single EFA block, then ESEM reduces to
+exploratory factor analysis (EFA). Using the Holzinger and Swineford data,
+we could specify an EFA with three factors as follows:
+
+```{r eval=TRUE, tidy=FALSE, comment = ""}
+efa.model <- '
+    efa("efa")*f1 + 
+    efa("efa")*f2 + 
+    efa("efa")*f3 =~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+'
+fit <- cfa(efa.model, data = HolzingerSwineford1939)
+summary(fit, standardized = TRUE)
+```
+
+In version 0.6-13, we added added the `efa()` function to simplify the
+input, and to produce output that is more in line with traditional
+EFA software in R. There is no need to create a model syntax. You 
+only need to provide the data, and the number of factors. Instead
+of a single number, you can also specify a range of numbers. For example:
+
+```{r eval=TRUE, tidy=FALSE, comment = ""}
+var.names <- paste("x", 1:9, sep = "")
+fit <- efa(data = HolzingerSwineford1939[,var.names], nfactors = 1:3)
+summary(fit)
+```

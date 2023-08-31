@@ -7,7 +7,9 @@ submenu: tutorial
 
 #### Overview ####
 
-A pdf version of this tutorial is available here: [PDF](/tutorial/tutorial.pdf)
+A pdf version of this tutorial is available here: [PDF](/tutorial/tutorial.pdf).
+The R code used in this tutorial (not cleaned up) is available here:
+[R](/tutorial/tutorial.R).
 
 If you are new to lavaan, this is the place to start. In this tutorial, we
 introduce the basic components of lavaan: the model syntax, the fitting

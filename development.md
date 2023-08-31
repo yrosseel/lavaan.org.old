@@ -7,10 +7,12 @@ submenu: lavaan
 
 #### Installing the development version of lavaan ####
 
-To install the latest development version of lavaan, start up R and
-type
+If you have not installed lavaan before, first install the current version
+of lavaan and all of its dependencies. Then, to install the latest development 
+version of lavaan, you can type at the R prompt:
    
-    install.packages("lavaan", repos = "http://www.da.ugent.be", type = "source")
+    library(remotes)
+    remotes::install_github("yrosseel/lavaan")
 
 To make sure you are using the newly installed version of lavaan, restart your
 R session.  If you want to revert to the official (CRAN) version of lavaan
@@ -21,7 +23,7 @@ again, simply type
 and you will back to the official version. Again, you may need to restart
 your R session.
 
-#### GitHub ####
+#### lavaan source code ####
 
 All development of lavaan happens on [GitHub](http://github.com). If
 you want to download (or clone) the lavaan source code, or if you
@@ -50,20 +52,16 @@ a feature will be ready. I have no idea.
 
 Features that are planned for future updates within the 0.6 series:
 
+- exploratory SEM (ESEM) and exploratory factor analysis (EFA) (available in 0.6-8)
 - two-level SEM with random slopes
-- fiml for two-level SEM (to handle missing values)
+- fiml for two-level SEM (to handle missing values) (available in 0.6-9)
 - accelerated EM
-- multilevel SEM with categorical data (using adaptive quadrature)
-- analysis of clustered data using design-based approaches (with cluster-robust
-standard errors, similar to lavaan.survey)
-- technical documentation
+- structural after measurement (SAM) estimation strategies (available in 0.6-9)
 
 Other plans for future releases:
 
-- support for three-level and many-level models
-- support for sampling weights and other survey-related features
-- better handling of models without latent variables
-- small sample inference
+- better support for models with NO latent variables
+- non-iterative estimators, James-Stein type shrinkage estimators
+- improved small sample inference
+- multilevel SEM with categorical data (using adaptive quadrature)
 - support for discrete latent variables (aka mixture modeling, latent class analysis)
-- C++ engine for the core computations
-- interfaces for other languages (Python, Matlab, ...)

@@ -60,15 +60,15 @@ summarized in the table below.
 
 \begin{longtable}[]{@{}lll@{}}
 \toprule
-formula type & operator & mnemonic\tabularnewline
+formula type & operator & mnemonic \\
 \midrule
 \endhead
 latent variable definition & \texttt{=\textasciitilde{}} & is measured
-by\tabularnewline
-regression & \texttt{\textasciitilde{}} & is regressed on\tabularnewline
+by \\
+regression & \texttt{\textasciitilde{}} & is regressed on \\
 (residual) (co)variance & \texttt{\textasciitilde{}\textasciitilde{}} &
-is correlated with\tabularnewline
-intercept & \texttt{\textasciitilde{}\ 1} & intercept\tabularnewline
+is correlated with \\
+intercept & \texttt{\textasciitilde{}\ 1} & intercept \\
 \bottomrule
 \end{longtable}
 
@@ -77,27 +77,31 @@ types, enclosed between \emph{single} quotes. For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{myModel <-}\StringTok{ ' # regressions}
-\StringTok{             y1 + y2 ~ f1 + f2 + x1 + x2}
-\StringTok{                  f1 ~ f2 + f3}
-\StringTok{                  f2 ~ f3 + x1 + x2}
+\NormalTok{myModel }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} \# regressions}
+\StringTok{             y1 + y2 \textasciitilde{} f1 + f2 + x1 + x2}
+\StringTok{                  f1 \textasciitilde{} f2 + f3}
+\StringTok{                  f2 \textasciitilde{} f3 + x1 + x2}
 
-\StringTok{             # latent variable definitions }
-\StringTok{               f1 =~ y1 + y2 + y3 }
-\StringTok{               f2 =~ y4 + y5 + y6 }
-\StringTok{               f3 =~ y7 + y8 + y9 + y10}
+\StringTok{             \# latent variable definitions }
+\StringTok{               f1 =\textasciitilde{} y1 + y2 + y3 }
+\StringTok{               f2 =\textasciitilde{} y4 + y5 + y6 }
+\StringTok{               f3 =\textasciitilde{} y7 + y8 + y9 + y10}
 
-\StringTok{             # variances and covariances }
-\StringTok{               y1 ~~ y1 }
-\StringTok{               y1 ~~ y2 }
-\StringTok{               f1 ~~ f2}
+\StringTok{             \# variances and covariances }
+\StringTok{               y1 \textasciitilde{}\textasciitilde{} y1 }
+\StringTok{               y1 \textasciitilde{}\textasciitilde{} y2 }
+\StringTok{               f1 \textasciitilde{}\textasciitilde{} f2}
 
-\StringTok{             # intercepts }
-\StringTok{               y1 ~ 1 }
-\StringTok{               f1 ~ 1}
-\StringTok{           '}
+\StringTok{             \# intercepts }
+\StringTok{               y1 \textasciitilde{} 1 }
+\StringTok{               f1 \textasciitilde{} 1}
+\StringTok{           \textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
+
+There reason why you should use single quotes is that this is the only
+way (in R) to allow for double quotes inside a string. See
+\texttt{?Quotes} in R for more information.
 
 You can type this syntax interactively at the R prompt, but it is much
 more convenient to type the whole model syntax first in an external text
@@ -114,18 +118,26 @@ split over multiple lines, and you can use comments (starting with the
 \texttt{\#} character) and blank lines within the single quotes to
 improve the readability of the model syntax.
 
-If your model syntax is rather long, or you need to reuse the model
-syntax over and over again, you may prefer to store it in a separate
-text file called, say, \texttt{myModel.lav}. This text file should be in
-a human readable format (not a Word document). Within R, you can then
-read the model syntax from the file as follows:
+You may split your model syntax is multiple parts. For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    myModel <-}\StringTok{ }\KeywordTok{readLines}\NormalTok{(}\StringTok{"/mydirectory/myModel.lav"}\NormalTok{)}
+\NormalTok{part1 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}   \# latent variable definitions }
+\StringTok{               f1 =\textasciitilde{} y1 + y2 + y3 }
+\StringTok{               f2 =\textasciitilde{} y4 + y5 + y6 }
+\StringTok{               f3 =\textasciitilde{} y7 + y8 + y9 + y10 }
+\StringTok{         \textquotesingle{}}
+\NormalTok{part2 }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}   \# fix covariance between f1 and f2 to zero}
+\StringTok{               f1 \textasciitilde{}\textasciitilde{} 0*f2}
+\StringTok{         \textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
-The argument of \texttt{readLines} is the full path to the file
-containing the model syntax. Again, the model syntax object can be used
-later to fit this model given a dataset.
+When fitting the model, you may then simply concatenate the multiple
+parts together as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(}\AttributeTok{model =} \FunctionTok{c}\NormalTok{(part1, part2), }\AttributeTok{data =}\NormalTok{ myData)}
+\end{Highlighting}
+\end{Shaded}

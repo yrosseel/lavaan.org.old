@@ -1,17 +1,48 @@
 Modification indices can be requested by adding the argument
 \texttt{modindices\ =\ TRUE} in the \texttt{summary()} call, or by
-calling the function \texttt{modindices()} directly. The
-\texttt{modindices()} function returns a data frame, which you can sort
-or filter to extract what you want. For example, to see only the
+calling the function \texttt{modindices()} directly. By default,
+modification indices are printed out for each nonfree (or fixed-to-zero)
+parameter. The modification indices are supplemented by the expected
+parameter change (EPC) values (column \texttt{epc}). The last three
+columns contain the standardized EPC values (\texttt{sepc.lv}: only
+standardizing the latent variables; \texttt{sepc.all}: standardizing all
+variables; \texttt{sepc.nox}: standardizing all but exogenous observed
+variables).
+
+A typical use of the \texttt{modindices()} function is as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model,}
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
+\FunctionTok{modindices}\NormalTok{(fit, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{maximum.number =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       lhs op rhs     mi    epc sepc.lv sepc.all sepc.nox
+30  visual =~  x9 36.411  0.577   0.519    0.515    0.515
+76      x7 ~~  x8 34.145  0.536   0.536    0.859    0.859
+28  visual =~  x7 18.631 -0.422  -0.380   -0.349   -0.349
+78      x8 ~~  x9 14.946 -0.423  -0.423   -0.805   -0.805
+33 textual =~  x3  9.151 -0.272  -0.269   -0.238   -0.238
+\end{verbatim}
+
+This will print out the top 5 parameters (that can be added to the
+model) that result in the largest modification index, sorted from high
+to low.
+
+The \texttt{modindices()} function returns a data frame, which you can
+sort or filter to extract what you want. For example, to see only the
 modification indices for the factor loadings, you can use something like
 this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939)}
-\NormalTok{mi <-}\StringTok{ }\KeywordTok{modindices}\NormalTok{(fit)}
-\NormalTok{mi[mi}\OperatorTok{$}\NormalTok{op }\OperatorTok{==}\StringTok{ "=~"}\NormalTok{,]}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
+\NormalTok{mi }\OtherTok{\textless{}{-}} \FunctionTok{modindices}\NormalTok{(fit)}
+\NormalTok{mi[mi}\SpecialCharTok{$}\NormalTok{op }\SpecialCharTok{==} \StringTok{"=\textasciitilde{}"}\NormalTok{,]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -37,10 +68,8 @@ this:
 42   speed =~  x6  0.273  0.044   0.027    0.025    0.025
 \end{verbatim}
 
-Modification indices are printed out for each nonfree (or nonredundant)
-parameter. The modification indices are supplemented by the expected
-parameter change (EPC) values (column \texttt{epc}). The last three
-columns contain the standardized EPC values (\texttt{sepc.lv}: only
-standardizing the latent variables; \texttt{sepc.all}: standardizing all
-variables; \texttt{sepc.nox}: standardizing all but exogenous observed
-variables)
+It is important to realize that the \texttt{modindices()} function will
+only consider fixed-to-zero parameters. If you have equality constraints
+in the model, and you wish to examine what happens if you release all
+(or some) of these equality constraints, use the \texttt{lavTestScore()}
+function.

@@ -7,38 +7,43 @@ Grant-White).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + x3}
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{)}
-\KeywordTok{summary}\NormalTok{(fit)}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3}
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
+
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+           \AttributeTok{group =} \StringTok{"school"}\NormalTok{)}
+
+\FunctionTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  57 iterations
-
-  Number of observations per group         
-  Pasteur                                          156
-  Grant-White                                      145
+lavaan 0.6-11 ended normally after 57 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                     115.851
+  Optimization method                           NLMINB
+  Number of model parameters                        60
+                                                      
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                               115.851
   Degrees of freedom                                48
   P-value (Chi-square)                           0.000
-
-Chi-square for each group:
-
-  Pasteur                                       64.309
-  Grant-White                                   51.542
+  Test statistic for each group:
+    Pasteur                                     64.309
+    Grant-White                                 51.542
 
 Parameter Estimates:
 
+  Standard errors                             Standard
   Information                                 Expected
   Information saturated (h1) model          Structured
-  Standard Errors                             Standard
 
 
 Group 1 [Pasteur]:
@@ -156,15 +161,16 @@ Variances:
 If you want to fix parameters, or provide starting values, you can use
 the same pre-multiplication techniques, but the single argument is now
 replaced by a \emph{vector} of arguments, one for each group. If you use
-a single element instead of a vector, that element will be applied for
-all groups (note: this is NOT true for labels, since this would imply
-equality constraints). For example:
+a single element instead of a vector (which is not recommended), that
+element will be applied for all groups. If you specify a single label,
+this will generate a warning as this would imply equality constraints
+across groups. For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + 0.5*x2 + c(0.6, 0.8)*x3}
-\StringTok{              textual =~ x4 + start(c(1.2, 0.6))*x5 + a*x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + 0.5*x2 + c(0.6, 0.8)*x3}
+\StringTok{              textual =\textasciitilde{} x4 + start(c(1.2, 0.6))*x5 + c(a1, a2)*x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -175,45 +181,51 @@ factor loading of the indicator \texttt{x2} is fixed to the value `0.5'
 in both groups. In the definition of the \texttt{textual} factor, two
 different starting values are provided for the \texttt{x5} indicator;
 one for each group. In addition, we have labeled the factor loading of
-the \texttt{x6} indicator as `a', but this label is only given to the
-parameter of the first group. If you want to provide labels to each of
-the two groups, you can write something like \texttt{c(a1,a2)*x6}. Be
-careful: if you write \texttt{c(a,a)*x6}, both parameters (in the first
-and second group) will get the same label, and hence they will be
-treated as a single parameter. To verify the effects of these modifiers,
-we refit the model:
+the \texttt{x6} indicator as \texttt{a1} in the first group, and
+\texttt{a2} in the second group. It may be tempting to write
+\texttt{a*x6}. But using a single label in a multiple group setting has
+a double effect: it gives the label \texttt{a} to the factor loading of
+\texttt{x6} in both groups, and as a result, those two parameters are
+now constrained to be equal. Because this may unintended, lavaan will
+produce a warning message about this. If this is really intended, it is
+much better to use a vector of labels: \texttt{c(a,\ a)*x6}.
+
+To verify the effects of our modifiers, we refit the model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{)}
- \KeywordTok{summary}\NormalTok{(fit)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+           \AttributeTok{group =} \StringTok{"school"}\NormalTok{)}
+ \FunctionTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  48 iterations
-
-  Number of observations per group         
-  Pasteur                                          156
-  Grant-White                                      145
+lavaan 0.6-11 ended normally after 45 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                     118.976
+  Optimization method                           NLMINB
+  Number of model parameters                        56
+                                                      
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                               118.976
   Degrees of freedom                                52
   P-value (Chi-square)                           0.000
-
-Chi-square for each group:
-
-  Pasteur                                       64.901
-  Grant-White                                   54.075
+  Test statistic for each group:
+    Pasteur                                     64.901
+    Grant-White                                 54.075
 
 Parameter Estimates:
 
+  Standard errors                             Standard
   Information                                 Expected
   Information saturated (h1) model          Structured
-  Standard Errors                             Standard
 
 
 Group 1 [Pasteur]:
@@ -227,7 +239,7 @@ Latent Variables:
   textual =~                                          
     x4                1.000                           
     x5                1.185    0.102   11.598    0.000
-    x6         (a)    0.876    0.077   11.409    0.000
+    x6        (a1)    0.876    0.077   11.409    0.000
   speed =~                                            
     x7                1.000                           
     x8                1.129    0.279    4.055    0.000
@@ -248,7 +260,7 @@ Intercepts:
    .x3                2.487    0.092   26.983    0.000
    .x4                2.823    0.092   30.689    0.000
    .x5                3.995    0.105   38.183    0.000
-   .x6                1.922    0.079   24.321    0.000
+   .x6                1.922    0.079   24.320    0.000
    .x7                4.432    0.087   51.181    0.000
    .x8                5.563    0.078   71.214    0.000
    .x9                5.418    0.079   68.440    0.000
@@ -283,7 +295,7 @@ Latent Variables:
   textual =~                                          
     x4                1.000                           
     x5                0.990    0.087   11.425    0.000
-    x6                0.963    0.085   11.374    0.000
+    x6        (a2)    0.963    0.085   11.374    0.000
   speed =~                                            
     x7                1.000                           
     x8                1.228    0.188    6.539    0.000
@@ -324,7 +336,7 @@ Variances:
    .x8                0.411    0.094    4.385    0.000
    .x9                0.522    0.089    5.887    0.000
     visual            0.735    0.132    5.544    0.000
-    textual           0.942    0.152    6.176    0.000
+    textual           0.942    0.152    6.177    0.000
     speed             0.453    0.117    3.871    0.000
 \end{verbatim}
 
@@ -344,7 +356,7 @@ second group. We can write something like
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{f =}\ErrorTok{~}\StringTok{ }\NormalTok{item1 }\OperatorTok{+}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\OtherTok{NA}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}\OperatorTok{*}\NormalTok{item2 }\OperatorTok{+}\StringTok{ }\NormalTok{item3}
+\NormalTok{f }\OtherTok{=}\ErrorTok{\textasciitilde{}}\NormalTok{ item1 }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\ConstantTok{NA}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{item2 }\SpecialCharTok{+}\NormalTok{ item3}
 \end{Highlighting}
 \end{Shaded}
 
@@ -359,9 +371,9 @@ groups, you can write:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + c(v3,v3)*x3}
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + c(v3,v3)*x3}
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -383,39 +395,43 @@ groups, you can proceed as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + x3}
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{,}
-           \DataTypeTok{group.equal =} \KeywordTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{))}
-\KeywordTok{summary}\NormalTok{(fit)}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3}
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+           \AttributeTok{group =} \StringTok{"school"}\NormalTok{,}
+           \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  42 iterations
-
-  Number of observations per group         
-  Pasteur                                          156
-  Grant-White                                      145
+lavaan 0.6-11 ended normally after 42 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                     124.044
+  Optimization method                           NLMINB
+  Number of model parameters                        60
+  Number of equality constraints                     6
+                                                      
+  Number of observations per group:                   
+    Pasteur                                        156
+    Grant-White                                    145
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                               124.044
   Degrees of freedom                                54
   P-value (Chi-square)                           0.000
-
-Chi-square for each group:
-
-  Pasteur                                       68.825
-  Grant-White                                   55.219
+  Test statistic for each group:
+    Pasteur                                     68.825
+    Grant-White                                 55.219
 
 Parameter Estimates:
 
+  Standard errors                             Standard
   Information                                 Expected
   Information saturated (h1) model          Structured
-  Standard Errors                             Standard
 
 
 Group 1 [Pasteur]:
@@ -530,8 +546,10 @@ Variances:
     speed             0.475    0.109    4.347    0.000
 \end{verbatim}
 
-More `group equality constraints' can be added. In addition to the
-factor loadings, the following keywords are supported in the
+The \texttt{.p2.}, \texttt{.p3.}, \texttt{.p5}, \ldots{} labels which
+appear in the output have been auto-generated to impose the equality
+constraints. More `group equality constraints' can be added. In addition
+to the factor loadings, the following keywords are supported in the
 \texttt{group.equal} argument:
 
 \begin{itemize}
@@ -566,69 +584,77 @@ those parameters that need to remain free. For example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-           \DataTypeTok{group =} \StringTok{"school"}\NormalTok{,}
-           \DataTypeTok{group.equal =} \KeywordTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{, }\StringTok{"intercepts"}\NormalTok{),}
-           \DataTypeTok{group.partial =} \KeywordTok{c}\NormalTok{(}\StringTok{"visual=~x2"}\NormalTok{, }\StringTok{"x7~1"}\NormalTok{))}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+           \AttributeTok{group =} \StringTok{"school"}\NormalTok{,}
+           \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"loadings"}\NormalTok{, }\StringTok{"intercepts"}\NormalTok{),}
+           \AttributeTok{group.partial =} \FunctionTok{c}\NormalTok{(}\StringTok{"visual=\textasciitilde{}x2"}\NormalTok{, }\StringTok{"x7\textasciitilde{}1"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{measurement-invariance}{%
-\paragraph{Measurement Invariance}\label{measurement-invariance}}
+\hypertarget{measurement-invariance-testing}{%
+\paragraph{Measurement invariance
+testing}\label{measurement-invariance-testing}}
 
-If you are interested in testing the measurement invariance of a CFA
-model across several groups, you can use the function
-\texttt{measurementInvariance()} which performs a number of multiple
-group analyses in a particular sequence, with increasingly more
-restrictions on the parameters. (Note: from the 0.5 series onwards, the
-\texttt{measurementInvariance()} function has been moved to the
-\texttt{semTools} package.) Each model is compared to the baseline model
-and the previous model using chi-square difference tests. In addition,
-the difference in the fit measure is also shown. Although the current
-implementation of the function is still a bit primitive, it does
-illustrate how the various components of the lavaan package can be used
-as building blocks for constructing higher level functions (such as the
-\texttt{measurementInvariance()} function), something that is often very
-hard to accomplish with commercial software.
+Before we compare, say, the values of latent means across multiple
+groups, we first need to establish measurement invariance. When data is
+continuous, testing for measurement invariance involves a fixed sequence
+of model comparison tests. A typical sequence involves three models:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Model 1: configural invariance. The same factor structure is imposed
+  on all groups.
+\item
+  Model 2: weak invariance. The factor loadings are constrained to be
+  equal across groups.
+\item
+  Model 3: strong invariance. The factor loadings and intercepts are
+  constrained to be equal across groups.
+\end{enumerate}
+
+In lavaan, we can proceed as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(semTools)}
-\KeywordTok{measurementInvariance}\NormalTok{(HS.model, }
-                      \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-                      \DataTypeTok{group =} \StringTok{"school"}\NormalTok{)}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3}
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
+
+\CommentTok{\# configural invariance}
+\NormalTok{fit1 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }\AttributeTok{group =} \StringTok{"school"}\NormalTok{)}
+
+\CommentTok{\# weak invariance}
+\NormalTok{fit2 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }\AttributeTok{group =} \StringTok{"school"}\NormalTok{,}
+            \AttributeTok{group.equal =} \StringTok{"loadings"}\NormalTok{)}
+
+\CommentTok{\# strong invariance}
+\NormalTok{fit3 }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }\AttributeTok{group =} \StringTok{"school"}\NormalTok{,}
+            \AttributeTok{group.equal =} \FunctionTok{c}\NormalTok{(}\StringTok{"intercepts"}\NormalTok{, }\StringTok{"loadings"}\NormalTok{))}
+
+\CommentTok{\# model comparison tests}
+\FunctionTok{lavTestLRT}\NormalTok{(fit1, fit2, fit3)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
+Chi-Squared Difference Test
 
-Measurement invariance models:
-
-Model 1 : fit.configural
-Model 2 : fit.loadings
-Model 3 : fit.intercepts
-Model 4 : fit.means
-
-Chi Square Difference Test
-
-               Df    AIC    BIC  Chisq Chisq diff Df diff Pr(>Chisq)    
-fit.configural 48 7484.4 7706.8 115.85                                  
-fit.loadings   54 7480.6 7680.8 124.04      8.192       6     0.2244    
-fit.intercepts 60 7508.6 7686.6 164.10     40.059       6  4.435e-07 ***
-fit.means      63 7543.1 7710.0 204.61     40.502       3  8.338e-09 ***
+     Df    AIC    BIC  Chisq Chisq diff Df diff Pr(>Chisq)    
+fit1 48 7484.4 7706.8 115.85                                  
+fit2 54 7480.6 7680.8 124.04      8.192       6     0.2244    
+fit3 60 7508.6 7686.6 164.10     40.059       6  4.435e-07 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-
-Fit measures:
-
-                 cfi rmsea cfi.delta rmsea.delta
-fit.configural 0.923 0.097        NA          NA
-fit.loadings   0.921 0.093     0.002       0.004
-fit.intercepts 0.882 0.107     0.038       0.015
-fit.means      0.840 0.122     0.042       0.015
 \end{verbatim}
 
-By adding the \texttt{group.partial} argument, you can test for partial
-measurement invariance by allowing a few parameters to remain free.
+The \texttt{lavTestLRT()} function can be used for model comparison
+tests. Because we provided three model fits, it will produce two tests:
+the first test compares the first model versus the second model, while
+the second test compares the second model versus the third model.
+Because the first p-value is non-significant, we may conclude that weak
+invariance (equal factor loadings) is supported in this dataset.
+However, because the second p-value is significant, strong invariance is
+not. Therefore, it is unwise to directly compare the values of the
+latent means across the two groups.

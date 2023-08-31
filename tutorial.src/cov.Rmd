@@ -44,7 +44,7 @@ Next, we can specify our model, estimate it, and request a summary
 of the results:
 
 ```{r tidy=FALSE, comment=""}
-# classic wheaton et al model
+# classic wheaton et al. model
 wheaton.model <- '
   # latent variables
     ses     =~ education + sei
@@ -63,10 +63,24 @@ fit <- sem(wheaton.model,
 summary(fit, standardized = TRUE)
 ```
 
+#### The `sample.cov.rescale` argument ####
+
+If the estimator is `ML` (the default), then the sample variance-covariance
+matrix will be rescaled by a factor (N-1)/N. The reasoning is the following:
+the elements in a sample variance-covariance matrix have (usually) been
+divided by N-1. But the (normal-based) ML estimator would divide the elements
+by N. Therefore, we need to rescale. If you don't want this to happen (for
+example in a simulation study), you can
+provide the argument `sample.cov.rescale = FALSE`.
+
+#### Multiple groups ####
+
 If you have multiple groups, the `sample.cov` argument must be a list
 containing the sample variance-covariance matrix of each group as a separate
 element in the list. If a mean structure is needed, the `sample.mean` argument
 must be a list containing the sample means of each group. Finally, the
 `sample.nobs` argument can be either a list or an integer vector containing the
 number of observations for each group.
+
+
 

@@ -4,7 +4,7 @@
 Consider a simple one-factor model with 4 indicators. By default, lavaan
 will always fix the factor loading of the first indicator to 1. The
 other three factor loadings are free, and their values are estimated by
-the model. But suppose that you have good reasons the fix all the factor
+the model. But suppose that you have good reasons to fix all the factor
 loadings to 1. The syntax below illustrates how this can be done:
 
 \begin{verbatim}
@@ -26,7 +26,8 @@ zero. In addition, we fix the variance of the factor \texttt{speed} to
 unity. Therefore, there is no need anymore to set the factor loading of
 its first indicator (\texttt{x7}) equal to one. To force this factor
 loading to be free, we pre-multiply it with \texttt{NA}, as a hint to
-lavaan that the value of this parameter is still unknown.
+lavaan that the value of this parameter is `missing' and therefore still
+unknown.
 
 \begin{verbatim}
 # three-factor model
@@ -43,50 +44,52 @@ lavaan that the value of this parameter is still unknown.
 If you need to constrain all covariances of the latent variables in a
 CFA model to be orthogonal, there is a shortcut. You can omit the
 covariance formulas in the model syntax and simply add an argument
-\texttt{orthogonal=TRUE} to the function call:
+\texttt{orthogonal\ =\ TRUE} to the function call:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ '  visual =~ x1 + x2 + x3}
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3}
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
 
-\NormalTok{fit.HS.ortho <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-                    \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-                    \DataTypeTok{orthogonal =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{fit.HS.ortho }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+                    \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+                    \AttributeTok{orthogonal =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 Similarly, if you want to fix the variances of \emph{all} the latent
 variables in a CFA model to unity, there is again a shortcut. Simply add
-the argument \texttt{std.lv=TRUE} to the function call:
+the argument \texttt{std.lv\ =\ TRUE} to the function call:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ ' visual  =~ x1 + x2 + x3}
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }
-           \DataTypeTok{data =}\NormalTok{ HolzingerSwineford1939, }
-           \DataTypeTok{std.lv =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3}
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
+
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }
+           \AttributeTok{data =}\NormalTok{ HolzingerSwineford1939, }
+           \AttributeTok{std.lv =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-If the argument \texttt{std.lv=TRUE} is used, the factor loadings of the
-first indicator of each latent variable will no longer be fixed to 1.
+If the argument \texttt{std.lv\ =\ TRUE} is used, the factor loadings of
+the first indicator of each latent variable will no longer be fixed to
+1.
 
 \hypertarget{starting-values}{%
 \paragraph{Starting Values}\label{starting-values}}
 
 The lavaan package automatically generates starting values for all free
-parameters. Normally, this works fine. But if you must provide your own
-starting values, you are free to do so. The way it works is based on the
-pre-multiplication mechanism that we discussed before. But the numeric
-constant is now the argument of a special function \texttt{start()}. An
-example will make this clear:
+parameters. Normally, this works fine. But if you prefer to provide your
+own starting values, you are free to do so. The way it works is based on
+the pre-multiplication mechanism that we discussed before. But the
+numeric constant is now the argument of a special function
+\texttt{start()}. An example will make this clear:
 
 \begin{verbatim}
- visual =~ x1 + start(0.8)*x2 + start(1.2)*x3
+visual  =~ x1 + start(0.8)*x2 + start(1.2)*x3
 textual =~ x4 + start(0.5)*x5 + start(1.0)*x6
 speed   =~ x7 + start(0.7)*x8 + start(1.8)*x9
 \end{verbatim}
@@ -102,40 +105,40 @@ model that we used for the Politcal Democracy data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model <-}\StringTok{ '}
-\StringTok{  # latent variable definitions}
-\StringTok{    ind60 =~ x1 + x2 + x3}
-\StringTok{    dem60 =~ y1 + y2 + y3 + y4}
-\StringTok{    dem65 =~ y5 + y6 + y7 + y8}
-\StringTok{  # regressions}
-\StringTok{    dem60 ~ ind60}
-\StringTok{    dem65 ~ ind60 + dem60}
-\StringTok{  # residual (co)variances}
-\StringTok{    y1 ~~ y5}
-\StringTok{    y2 ~~ y4 + y6}
-\StringTok{    y3 ~~ y7}
-\StringTok{    y4 ~~ y8}
-\StringTok{    y6 ~~ y8}
-\StringTok{'}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }
-           \DataTypeTok{data =}\NormalTok{ PoliticalDemocracy)}
-\KeywordTok{coef}\NormalTok{(fit)}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  \# latent variable definitions}
+\StringTok{    ind60 =\textasciitilde{} x1 + x2 + x3}
+\StringTok{    dem60 =\textasciitilde{} y1 + y2 + y3 + y4}
+\StringTok{    dem65 =\textasciitilde{} y5 + y6 + y7 + y8}
+\StringTok{  \# regressions}
+\StringTok{    dem60 \textasciitilde{} ind60}
+\StringTok{    dem65 \textasciitilde{} ind60 + dem60}
+\StringTok{  \# residual (co)variances}
+\StringTok{    y1 \textasciitilde{}\textasciitilde{} y5}
+\StringTok{    y2 \textasciitilde{}\textasciitilde{} y4 + y6}
+\StringTok{    y3 \textasciitilde{}\textasciitilde{} y7}
+\StringTok{    y4 \textasciitilde{}\textasciitilde{} y8}
+\StringTok{    y6 \textasciitilde{}\textasciitilde{} y8}
+\StringTok{\textquotesingle{}}
+
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(model, }
+           \AttributeTok{data =}\NormalTok{ PoliticalDemocracy)}
+
+\FunctionTok{coef}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-   ind60=~x2    ind60=~x3    dem60=~y2    dem60=~y3    dem60=~y4 
-       2.180        1.819        1.257        1.058        1.265 
-   dem65=~y6    dem65=~y7    dem65=~y8  dem60~ind60  dem65~ind60 
-       1.186        1.280        1.266        1.483        0.572 
- dem65~dem60       y1~~y5       y2~~y4       y2~~y6       y3~~y7 
-       0.837        0.624        1.313        2.153        0.795 
-      y4~~y8       y6~~y8       x1~~x1       x2~~x2       x3~~x3 
-       0.348        1.356        0.082        0.120        0.467 
-      y1~~y1       y2~~y2       y3~~y3       y4~~y4       y5~~y5 
-       1.891        7.373        5.067        3.148        2.351 
-      y6~~y6       y7~~y7       y8~~y8 ind60~~ind60 dem60~~dem60 
-       4.954        3.431        3.254        0.448        3.956 
+   ind60=~x2    ind60=~x3    dem60=~y2    dem60=~y3    dem60=~y4    dem65=~y6 
+       2.180        1.819        1.257        1.058        1.265        1.186 
+   dem65=~y7    dem65=~y8  dem60~ind60  dem65~ind60  dem65~dem60       y1~~y5 
+       1.280        1.266        1.483        0.572        0.837        0.624 
+      y2~~y4       y2~~y6       y3~~y7       y4~~y8       y6~~y8       x1~~x1 
+       1.313        2.153        0.795        0.348        1.356        0.082 
+      x2~~x2       x3~~x3       y1~~y1       y2~~y2       y3~~y3       y4~~y4 
+       0.120        0.467        1.891        7.373        5.067        3.148 
+      y5~~y5       y6~~y6       y7~~y7       y8~~y8 ind60~~ind60 dem60~~dem60 
+       2.351        4.954        3.431        3.254        0.448        3.956 
 dem65~~dem65 
        0.172 
 \end{verbatim}
@@ -144,9 +147,10 @@ The function \texttt{coef()} extracts the estimated values of the free
 parameters in the model, together with their names. Each name consists
 of three parts and reflects the part of the formula where the parameter
 was involved. The first part is the variable name that appears on the
-left-hand side of the formula. The middle part is the operator type of
-the formula, and the third part is the variable in the right-hand side
-of the formula that corresponds with the parameter.
+left-hand side (lhs) of the formula. The middle part is the operator
+type (op) of the formula, and the third part is the variable in the
+right-hand side (rhs) of the formula that corresponds with the
+parameter.
 
 Often, it is convenient to choose your own labels for specific
 parameters. The way this works is similar to fixing a parameter. But
@@ -156,32 +160,31 @@ loading of the \texttt{x3} indicator with the label \texttt{myLabel}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model <-}\StringTok{ '}
-\StringTok{  # latent variable definitions}
-\StringTok{    ind60 =~ x1 + x2 + myLabel*x3}
-\StringTok{    dem60 =~ y1 + y2 + y3 + y4}
-\StringTok{    dem65 =~ y5 + y6 + y7 + y8}
-\StringTok{  # regressions}
-\StringTok{    dem60 ~ ind60}
-\StringTok{    dem65 ~ ind60 + dem60}
-\StringTok{  # residual (co)variances}
-\StringTok{    y1 ~~ y5}
-\StringTok{    y2 ~~ y4 + y6}
-\StringTok{    y3 ~~ y7}
-\StringTok{    y4 ~~ y8}
-\StringTok{    y6 ~~ y8}
-\StringTok{'}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{  \# latent variable definitions}
+\StringTok{    ind60 =\textasciitilde{} x1 + x2 + myLabel*x3}
+\StringTok{    dem60 =\textasciitilde{} y1 + y2 + y3 + y4}
+\StringTok{    dem65 =\textasciitilde{} y5 + y6 + y7 + y8}
+\StringTok{  \# regressions}
+\StringTok{    dem60 \textasciitilde{} ind60}
+\StringTok{    dem65 \textasciitilde{} ind60 + dem60}
+\StringTok{  \# residual (co)variances}
+\StringTok{    y1 \textasciitilde{}\textasciitilde{} y5}
+\StringTok{    y2 \textasciitilde{}\textasciitilde{} y4 + y6}
+\StringTok{    y3 \textasciitilde{}\textasciitilde{} y7}
+\StringTok{    y4 \textasciitilde{}\textasciitilde{} y8}
+\StringTok{    y6 \textasciitilde{}\textasciitilde{} y8}
+\StringTok{\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
 It is important that labels start with a letter (a-zA-Z), and certainly
 not with a digit. For example `13bis' is not a valid label, and will
-confuse the lavaan syntax parser. Note: before version 0.4-8, it was
+confuse the lavaan syntax parser. (Note: before version 0.4-8, it was
 necessary to use the modifier \texttt{label()} to specify a custom
 label. Although it is still supported, it is not recommended anymore.
 The only reason why it should be used in new syntax is if the label
-contains an operator like ``\texttt{\textasciitilde{}}'' or
-``\texttt{=\textasciitilde{}}''.
+contains an operator like ``\texttt{=\textasciitilde{}}''.)
 
 \hypertarget{modifiers}{%
 \paragraph{Modifiers}\label{modifiers}}
@@ -193,7 +196,7 @@ as \emph{modifiers}, because they modify some properties of certain
 model parameters. More modifiers will be introduced later.
 
 Each term on the right hand side in a formula can have one modifier
-only. If you must specify more modifiers for the same parameter, you
+only. If you want to specify more modifiers for the same parameter, you
 need to list the term multiple times in the same formula. For example:
 
 \begin{verbatim}
@@ -220,7 +223,7 @@ label, they will be considered to be the same, and only one value will
 be computed for them. This is illustrated in the following syntax:
 
 \begin{verbatim}
- visual =~ x1 + v2*x2 + v2*x3
+visual  =~ x1 + v2*x2 + v2*x3
 textual =~ x4 + x5 + x6
 speed   =~ x7 + x8 + x9
 \end{verbatim}
@@ -233,7 +236,7 @@ useful if no custom label has been specified, and one needs to refer to
 the automatically generated label. For example:
 
 \begin{verbatim}
- visual =~ x1 + x2 + equal("visual=~x2")*x3
+visual  =~ x1 + x2 + equal("visual=~x2")*x3
 textual =~ x4 + x5 + x6
 speed   =~ x7 + x8 + x9
 \end{verbatim}
@@ -254,14 +257,14 @@ containing these four variables and fit the regression model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{Data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }
-                   \DataTypeTok{x1 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }
-                   \DataTypeTok{x2 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{),}
-                   \DataTypeTok{x3 =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{))}
-\NormalTok{model <-}\StringTok{ ' y ~ b1*x1 + b2*x2 + b3*x3 '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }\DataTypeTok{data=}\NormalTok{Data)}
-\KeywordTok{coef}\NormalTok{(fit)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{Data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y  =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }
+                   \AttributeTok{x1 =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }
+                   \AttributeTok{x2 =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{),}
+                   \AttributeTok{x3 =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{))}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} y \textasciitilde{} b1*x1 + b2*x2 + b3*x3 \textquotesingle{}}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(model, }\AttributeTok{data =}\NormalTok{ Data)}
+\FunctionTok{coef}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -278,11 +281,11 @@ syntax:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model.constr <-}\StringTok{ ' # model with labeled parameters}
-\StringTok{                    y ~ b1*x1 + b2*x2 + b3*x3}
-\StringTok{                  # constraints}
-\StringTok{                    b1 == (b2 + b3)^2}
-\StringTok{                    b1 > exp(b2 + b3) '}
+\NormalTok{model.constr }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} \# model with labeled parameters}
+\StringTok{                    y \textasciitilde{} b1*x1 + b2*x2 + b3*x3}
+\StringTok{                  \# constraints}
+\StringTok{                    b1 == (b2 + b3)\^{}2}
+\StringTok{                    b1 \textgreater{} exp(b2 + b3) \textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -290,13 +293,13 @@ To see the effect of the constraints, we refit the model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{model.constr <-}\StringTok{ ' # model with labeled parameters}
-\StringTok{                    y ~ b1*x1 + b2*x2 + b3*x3}
-\StringTok{                  # constraints}
-\StringTok{                    b1 == (b2 + b3)^2}
-\StringTok{                    b1 > exp(b2 + b3) '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model.constr, }\DataTypeTok{data=}\NormalTok{Data)}
-\KeywordTok{coef}\NormalTok{(fit)}
+\NormalTok{model.constr }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} \# model with labeled parameters}
+\StringTok{                    y \textasciitilde{} b1*x1 + b2*x2 + b3*x3}
+\StringTok{                  \# constraints}
+\StringTok{                    b1 == (b2 + b3)\^{}2}
+\StringTok{                    b1 \textgreater{} exp(b2 + b3) \textquotesingle{}}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(model.constr, }\AttributeTok{data =}\NormalTok{ Data)}
+\FunctionTok{coef}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 

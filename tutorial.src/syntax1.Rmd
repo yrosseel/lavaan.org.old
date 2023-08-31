@@ -86,6 +86,10 @@ myModel <- ' # regressions
            '
 ```
 
+There reason why you should use single quotes is that this is the only
+way (in R) to allow for double quotes inside a string. See `?Quotes` 
+in R for more information.
+
 You can type this syntax interactively at the R prompt, but it is much more
 convenient to type the whole model syntax first in an external text editor.
 And when you are done, you can copy/paste it to the R console. If you are
@@ -99,16 +103,21 @@ given a dataset. Note that formulas can be split over multiple lines, and you
 can use comments (starting with the `#` character) and blank lines within the
 single quotes to improve the readability of the model syntax.
 
-If your model syntax is rather long, or you need to reuse the model syntax over
-and over again, you may prefer to store it in a separate text file called, say,
-`myModel.lav`. This text file should be in a human readable format (not a Word
-document). Within R, you can then read the model syntax from the file as
-follows:
+You may split your model syntax is multiple parts. For example:
 
-```{r eval=FALSE}
-    myModel <- readLines("/mydirectory/myModel.lav")
+```{r eval=FALSE, tidy=FALSE}
+part1 <- '   # latent variable definitions 
+               f1 =~ y1 + y2 + y3 
+               f2 =~ y4 + y5 + y6 
+               f3 =~ y7 + y8 + y9 + y10 
+         '
+part2 <- '   # fix covariance between f1 and f2 to zero
+               f1 ~~ 0*f2
+         '
 ```
+When fitting the model, you may then simply concatenate the multiple 
+parts together as follows:
 
-The argument of `readLines` is the full path to the file containing the model
-syntax. Again, the model syntax object can be used later to fit this model
-given a dataset.
+```{r eval=FALSE, tidy=FALSE}
+fit <- cfa(model = c(part1, part2), data = myData)
+```

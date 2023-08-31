@@ -12,4 +12,4 @@ push: build
 	umount.lavaan
 
 server: clean
-	jekyll --server
+	jekyll serve

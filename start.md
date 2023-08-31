@@ -7,7 +7,7 @@ submenu: lavaan
 
 #### Install R ####
 lavaan is implemented as an R package. This means that before installing
-lavaan, you should have installed a recent version (>= 3.0.0) of R. You can
+lavaan, you should have installed a recent version (>= 4.0.0) of R. You can
 download the latest version of R from the 
 [R-project website](http://www.r-project.org). 
 

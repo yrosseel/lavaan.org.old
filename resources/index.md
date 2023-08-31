@@ -25,5 +25,3 @@ using or based on lavaan
 tutorials on specific topics (for example on the Pairwise Likelihood estimator)
 including R scripts
 
-- the [Related Projects](/resources/related.html) section provides links to
-external projects connected to lavaan

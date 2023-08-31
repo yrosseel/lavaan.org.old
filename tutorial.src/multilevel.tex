@@ -2,8 +2,7 @@ If the data is clustered, one way to handle the clustering is to use a
 multilevel modeling approach. In the SEM framework, this leads to
 multilevel SEM. The multilevel capabilities of lavaan are still limited,
 but you can fit a two-level SEM with random intercepts (note: only when
-all data is continuous and complete; listwise deletion is currently used
-for cases with missing values).
+all data is continuous).
 
 \hypertarget{multilevel-sem-model-syntax}{%
 \paragraph{Multilevel SEM model
@@ -14,14 +13,14 @@ follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    model <-}\StringTok{ '}
-\StringTok{        level: 1}
-\StringTok{            fw =~ y1 + y2 + y3}
-\StringTok{            fw ~ x1 + x2 + x3}
-\StringTok{        level: 2}
-\StringTok{            fb =~ y1 + y2 + y3}
-\StringTok{            fb ~ w1 + w2}
-\StringTok{    '}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{    level: 1}
+\StringTok{        fw =\textasciitilde{} y1 + y2 + y3}
+\StringTok{        fw \textasciitilde{} x1 + x2 + x3}
+\StringTok{    level: 2}
+\StringTok{        fb =\textasciitilde{} y1 + y2 + y3}
+\StringTok{        fb \textasciitilde{} w1 + w2}
+\StringTok{\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -33,7 +32,7 @@ add the \texttt{cluster=} argument to the sem/lavaan function call:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model, }\DataTypeTok{data =}\NormalTok{ Demo.twolevel, }\DataTypeTok{cluster =} \StringTok{"cluster"}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(}\AttributeTok{model =}\NormalTok{ model, }\AttributeTok{data =}\NormalTok{ Demo.twolevel, }\AttributeTok{cluster =} \StringTok{"cluster"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -42,100 +41,105 @@ groups are now the within and the between level respectively.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-    \KeywordTok{summary}\NormalTok{(fit)}
+\FunctionTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## lavaan (0.6-1) converged normally after  36 iterations
-## 
-##   Number of observations                          2500
-##   Number of clusters [cluster]                     200
-## 
-##   Estimator                                         ML
-##   Model Fit Test Statistic                       8.092
-##   Degrees of freedom                                10
-##   P-value (Chi-square)                           0.620
-## 
-## Parameter Estimates:
-## 
-##   Information                                 Observed
-##   Observed information based on                Hessian
-##   Standard Errors                             Standard
-## 
-## 
-## Level 1 [within]:
-## 
-## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##   fw =~                                               
-##     y1                1.000                           
-##     y2                0.774    0.034   22.671    0.000
-##     y3                0.734    0.033   22.355    0.000
-## 
-## Regressions:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##   fw ~                                                
-##     x1                0.510    0.023   22.037    0.000
-##     x2                0.407    0.022   18.273    0.000
-##     x3                0.205    0.021    9.740    0.000
-## 
-## Intercepts:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##    .y1                0.000                           
-##    .y2                0.000                           
-##    .y3                0.000                           
-##    .fw                0.000                           
-## 
-## Variances:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##    .y1                0.986    0.046   21.591    0.000
-##    .y2                1.066    0.039   27.271    0.000
-##    .y3                1.011    0.037   27.662    0.000
-##    .fw                0.546    0.040   13.539    0.000
-## 
-## 
-## Level 2 [cluster]:
-## 
-## Latent Variables:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##   fb =~                                               
-##     y1                1.000                           
-##     y2                0.717    0.052   13.824    0.000
-##     y3                0.587    0.048   12.329    0.000
-## 
-## Regressions:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##   fb ~                                                
-##     w1                0.165    0.079    2.093    0.036
-##     w2                0.131    0.076    1.715    0.086
-## 
-## Intercepts:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##    .y1                0.024    0.075    0.327    0.743
-##    .y2               -0.016    0.060   -0.269    0.788
-##    .y3               -0.042    0.054   -0.777    0.437
-##    .fb                0.000                           
-## 
-## Variances:
-##                    Estimate  Std.Err  z-value  P(>|z|)
-##    .y1                0.058    0.047    1.213    0.225
-##    .y2                0.120    0.031    3.825    0.000
-##    .y3                0.149    0.028    5.319    0.000
-##    .fb                0.899    0.118    7.592    0.000
+lavaan 0.6-13.1762 ended normally after 36 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        20
+
+  Number of observations                          2500
+  Number of clusters [cluster]                     200
+
+Model Test User Model:
+                                                      
+  Test statistic                                 8.092
+  Degrees of freedom                                10
+  P-value (Chi-square)                           0.620
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Observed
+  Observed information based on                Hessian
+
+
+Level 1 [within]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  fw =~                                               
+    y1                1.000                           
+    y2                0.774    0.034   22.671    0.000
+    y3                0.734    0.033   22.355    0.000
+
+Regressions:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  fw ~                                                
+    x1                0.510    0.023   22.037    0.000
+    x2                0.407    0.022   18.273    0.000
+    x3                0.205    0.021    9.740    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .y1                0.000                           
+   .y2                0.000                           
+   .y3                0.000                           
+   .fw                0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .y1                0.986    0.046   21.591    0.000
+   .y2                1.066    0.039   27.271    0.000
+   .y3                1.011    0.037   27.662    0.000
+   .fw                0.546    0.040   13.539    0.000
+
+
+Level 2 [cluster]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  fb =~                                               
+    y1                1.000                           
+    y2                0.717    0.052   13.824    0.000
+    y3                0.587    0.048   12.329    0.000
+
+Regressions:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  fb ~                                                
+    w1                0.165    0.079    2.093    0.036
+    w2                0.131    0.076    1.715    0.086
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .y1                0.024    0.075    0.327    0.743
+   .y2               -0.016    0.060   -0.269    0.788
+   .y3               -0.042    0.054   -0.777    0.437
+   .fb                0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .y1                0.058    0.047    1.213    0.225
+   .y2                0.120    0.031    3.825    0.000
+   .y3                0.149    0.028    5.319    0.000
+   .fb                0.899    0.118    7.592    0.000
 \end{verbatim}
 
 After fitting the model, you can inspect the intra-class correlations:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-    \KeywordTok{lavInspect}\NormalTok{(fit, }\StringTok{"icc"}\NormalTok{)}
+\FunctionTok{lavInspect}\NormalTok{(fit, }\StringTok{"icc"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##    y1    y2    y3    x1    x2    x3 
-## 0.331 0.263 0.232 0.000 0.000 0.000
+   y1    y2    y3    x1    x2    x3 
+0.331 0.263 0.232 0.000 0.000 0.000 
 \end{verbatim}
 
 The see the unrestricted (h1) within and between means and covariances,
@@ -143,38 +147,38 @@ you can use
 
 \begin{Shaded}
 \begin{Highlighting}[]
-    \KeywordTok{lavInspect}\NormalTok{(fit, }\StringTok{"h1"}\NormalTok{)}
+\FunctionTok{lavInspect}\NormalTok{(fit, }\StringTok{"h1"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## $within
-## $within$cov
-##    y1     y2     y3     x1     x2     x3    
-## y1  2.000                                   
-## y2  0.789  1.674                            
-## y3  0.749  0.564  1.557                     
-## x1  0.489  0.393  0.376  0.982              
-## x2  0.416  0.322  0.299  0.001  1.011       
-## x3  0.221  0.160  0.155 -0.006  0.008  1.045
-## 
-## $within$mean
-##     y1     y2     y3     x1     x2     x3 
-##  0.001 -0.002 -0.001 -0.007 -0.003  0.020 
-## 
-## 
-## $cluster
-## $cluster$cov
-##    y1     y2     y3     w1     w2    
-## y1  0.992                            
-## y2  0.668  0.598                     
-## y3  0.548  0.391  0.469              
-## w1  0.125  0.119  0.036  0.870       
-## w2  0.086  0.057  0.130 -0.128  0.931
-## 
-## $cluster$mean
-##     y1     y2     y3     w1     w2 
-##  0.019 -0.017 -0.043  0.052 -0.091
+$within
+$within$cov
+       y1     y2     y3     x1     x2     x3
+y1  2.000                                   
+y2  0.789  1.674                            
+y3  0.749  0.564  1.557                     
+x1  0.489  0.393  0.376  0.982              
+x2  0.416  0.322  0.299  0.001  1.011       
+x3  0.221  0.160  0.155 -0.006  0.008  1.045
+
+$within$mean
+    y1     y2     y3     x1     x2     x3 
+ 0.001 -0.002 -0.001 -0.007 -0.003  0.020 
+
+
+$cluster
+$cluster$cov
+       y1     y2     y3     w1     w2
+y1  0.992                            
+y2  0.668  0.598                     
+y3  0.548  0.391  0.469              
+w1  0.125  0.119  0.036  0.870       
+w2  0.086  0.057  0.130 -0.128  0.931
+
+$cluster$mean
+    y1     y2     y3     w1     w2 
+ 0.019 -0.017 -0.043  0.052 -0.091 
 \end{verbatim}
 
 \hypertarget{important-notes}{%
@@ -190,12 +194,12 @@ you can use
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    model <-}\StringTok{ '}
-\StringTok{        level: 1}
-\StringTok{            fw =~ y1 + y2 + y3}
-\StringTok{            fw ~ x1 + x2 + x3}
-\StringTok{        level: 2}
-\StringTok{    '}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{    level: 1}
+\StringTok{        fw =\textasciitilde{} y1 + y2 + y3}
+\StringTok{        fw \textasciitilde{} x1 + x2 + x3}
+\StringTok{    level: 2}
+\StringTok{\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -205,15 +209,15 @@ you can use
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    model <-}\StringTok{ '}
-\StringTok{        level: 1}
-\StringTok{            fw =~ y1 + y2 + y3}
-\StringTok{            fw ~ x1 + x2 + x3}
-\StringTok{        level: 2}
-\StringTok{            y1 ~~ y1 + y2 + y3}
-\StringTok{            y2 ~~ y2 + y3}
-\StringTok{            y3 ~~ y3}
-\StringTok{    '}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{    level: 1}
+\StringTok{        fw =\textasciitilde{} y1 + y2 + y3}
+\StringTok{        fw \textasciitilde{} x1 + x2 + x3}
+\StringTok{    level: 2}
+\StringTok{        y1 \textasciitilde{}\textasciitilde{} y1 + y2 + y3}
+\StringTok{        y2 \textasciitilde{}\textasciitilde{} y2 + y3}
+\StringTok{        y3 \textasciitilde{}\textasciitilde{} y3}
+\StringTok{\textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 \end{itemize}
@@ -240,8 +244,8 @@ to the EM algorithm, you can use:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model, }\DataTypeTok{data =}\NormalTok{ Demo.twolevel, }\DataTypeTok{cluster =} \StringTok{"cluster"}\NormalTok{,}
-               \DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{optim.method =} \StringTok{"em"}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(}\AttributeTok{model =}\NormalTok{ model, }\AttributeTok{data =}\NormalTok{ Demo.twolevel, }\AttributeTok{cluster =} \StringTok{"cluster"}\NormalTok{,}
+           \AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{optim.method =} \StringTok{"em"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -252,9 +256,9 @@ stopping criteria as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{    fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(}\DataTypeTok{model =}\NormalTok{ model, }\DataTypeTok{data =}\NormalTok{ Demo.twolevel, }\DataTypeTok{cluster =} \StringTok{"cluster"}\NormalTok{,}
-               \DataTypeTok{verbose =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{optim.method =} \StringTok{"em"}\NormalTok{, }\DataTypeTok{em.iter.max =} \DecValTok{20000}\NormalTok{,}
-               \DataTypeTok{em.fx.tol =} \FloatTok{1e-08}\NormalTok{, }\DataTypeTok{em.dx.tol =} \FloatTok{1e-04}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(}\AttributeTok{model =}\NormalTok{ model, }\AttributeTok{data =}\NormalTok{ Demo.twolevel, }\AttributeTok{cluster =} \StringTok{"cluster"}\NormalTok{,}
+           \AttributeTok{verbose =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{optim.method =} \StringTok{"em"}\NormalTok{, }\AttributeTok{em.iter.max =} \DecValTok{20000}\NormalTok{,}
+           \AttributeTok{em.fx.tol =} \FloatTok{1e{-}08}\NormalTok{, }\AttributeTok{em.dx.tol =} \FloatTok{1e{-}04}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

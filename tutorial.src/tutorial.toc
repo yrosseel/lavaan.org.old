@@ -1,44 +1,49 @@
-\contentsline {section}{\numberline {1}Before you start}{1}{section.1}% 
-\contentsline {section}{\numberline {2}Installation of the package}{2}{section.2}% 
-\contentsline {section}{\numberline {3}The model syntax}{3}{section.3}% 
-\contentsline {section}{\numberline {4}A first example: confirmatory factor analysis (CFA)}{4}{section.4}% 
-\contentsline {section}{\numberline {5}A second example: a structural equation model (SEM)}{8}{section.5}% 
-\contentsline {section}{\numberline {6}More about the syntax}{12}{section.6}% 
-\contentsline {paragraph}{Fixing parameters}{12}{section*.2}% 
-\contentsline {paragraph}{Starting Values}{13}{section*.3}% 
-\contentsline {paragraph}{Parameter labels}{13}{section*.4}% 
-\contentsline {paragraph}{Modifiers}{14}{section*.5}% 
-\contentsline {paragraph}{Simple equality constraints}{14}{section*.6}% 
-\contentsline {paragraph}{Nonlinear equality and inequality constraints}{14}{section*.7}% 
-\contentsline {section}{\numberline {7}Bringing in the means}{15}{section.7}% 
-\contentsline {section}{\numberline {8}Multiple groups}{17}{section.8}% 
-\contentsline {paragraph}{Fixing parameters in some groups, but not all}{22}{section*.8}% 
-\contentsline {paragraph}{Constraining a single parameter to be equal across groups}{23}{section*.9}% 
-\contentsline {paragraph}{Constraining groups of parameters to be equal across groups}{23}{section*.10}% 
-\contentsline {paragraph}{Measurement Invariance}{26}{section*.11}% 
-\contentsline {section}{\numberline {9}Growth curve models}{26}{section.9}% 
-\contentsline {section}{\numberline {10}Using categorical variables}{29}{section.10}% 
-\contentsline {paragraph}{Exogenous categorical variables}{29}{section*.12}% 
-\contentsline {paragraph}{Endogenous categorical variables}{29}{section*.13}% 
-\contentsline {section}{\numberline {11}Using a covariance matrix as input}{30}{section.11}% 
-\contentsline {section}{\numberline {12}Estimators, standard errors and missing values}{31}{section.12}% 
-\contentsline {paragraph}{Estimators}{31}{section*.14}% 
-\contentsline {paragraph}{ML estimation: Wishart versus Normal}{32}{section*.15}% 
-\contentsline {paragraph}{Missing values}{32}{section*.16}% 
-\contentsline {paragraph}{Standard errors}{32}{section*.17}% 
-\contentsline {paragraph}{Bootstrapping}{32}{section*.18}% 
-\contentsline {section}{\numberline {13}Indirect effects and mediation analysis}{33}{section.13}% 
-\contentsline {section}{\numberline {14}Modification Indices}{34}{section.14}% 
-\contentsline {section}{\numberline {15}Extracting information from a fitted model}{34}{section.15}% 
-\contentsline {paragraph}{parameterEstimates}{34}{section*.19}% 
-\contentsline {paragraph}{standardizedSolution}{35}{section*.20}% 
-\contentsline {paragraph}{fitted.values}{35}{section*.21}% 
-\contentsline {paragraph}{residuals}{35}{section*.22}% 
-\contentsline {paragraph}{vcov}{36}{section*.23}% 
-\contentsline {paragraph}{AIC and BIC}{36}{section*.24}% 
-\contentsline {paragraph}{fitMeasures}{36}{section*.25}% 
-\contentsline {paragraph}{inspect}{37}{section*.26}% 
-\contentsline {section}{\numberline {16}Multilevel SEM}{39}{section.16}% 
-\contentsline {paragraph}{Multilevel SEM model syntax}{39}{section*.27}% 
-\contentsline {paragraph}{Important notes}{41}{section*.28}% 
-\contentsline {paragraph}{Convergence issues and solutions}{42}{section*.29}% 
+\contentsline {section}{\numberline {1}Before you start}{1}{section.1}%
+\contentsline {section}{\numberline {2}Installation of the package}{2}{section.2}%
+\contentsline {section}{\numberline {3}The model syntax}{2}{section.3}%
+\contentsline {section}{\numberline {4}A first example: confirmatory factor analysis (CFA)}{4}{section.4}%
+\contentsline {section}{\numberline {5}A second example: a structural equation model (SEM)}{8}{section.5}%
+\contentsline {section}{\numberline {6}More about the syntax}{12}{section.6}%
+\contentsline {paragraph}{Fixing parameters}{12}{section*.2}%
+\contentsline {paragraph}{Starting Values}{13}{section*.3}%
+\contentsline {paragraph}{Parameter labels}{13}{section*.4}%
+\contentsline {paragraph}{Modifiers}{14}{section*.5}%
+\contentsline {paragraph}{Simple equality constraints}{14}{section*.6}%
+\contentsline {paragraph}{Nonlinear equality and inequality constraints}{14}{section*.7}%
+\contentsline {section}{\numberline {7}Bringing in the means}{15}{section.7}%
+\contentsline {section}{\numberline {8}Multiple groups}{17}{section.8}%
+\contentsline {paragraph}{Fixing parameters in some groups, but not all}{23}{section*.8}%
+\contentsline {paragraph}{Constraining a single parameter to be equal across groups}{23}{section*.9}%
+\contentsline {paragraph}{Constraining groups of parameters to be equal across groups}{23}{section*.10}%
+\contentsline {paragraph}{Measurement invariance testing}{26}{section*.11}%
+\contentsline {section}{\numberline {9}Growth curve models}{27}{section.9}%
+\contentsline {section}{\numberline {10}Using categorical variables}{29}{section.10}%
+\contentsline {paragraph}{Exogenous categorical variables}{29}{section*.12}%
+\contentsline {paragraph}{Endogenous categorical variables}{29}{section*.13}%
+\contentsline {section}{\numberline {11}Using a covariance matrix as input}{30}{section.11}%
+\contentsline {paragraph}{The \texttt {sample.cov.rescale} argument}{31}{section*.14}%
+\contentsline {paragraph}{Multiple groups}{31}{section*.15}%
+\contentsline {section}{\numberline {12}Estimators, standard errors and missing values}{32}{section.12}%
+\contentsline {paragraph}{Estimators}{32}{section*.16}%
+\contentsline {paragraph}{ML estimation: Wishart versus Normal}{32}{section*.17}%
+\contentsline {paragraph}{Missing values}{33}{section*.18}%
+\contentsline {paragraph}{Standard errors}{33}{section*.19}%
+\contentsline {paragraph}{Bootstrapping}{33}{section*.20}%
+\contentsline {section}{\numberline {13}Indirect effects and mediation analysis}{33}{section.13}%
+\contentsline {section}{\numberline {14}Modification Indices}{34}{section.14}%
+\contentsline {section}{\numberline {15}Extracting information from a fitted model}{35}{section.15}%
+\contentsline {paragraph}{parameterEstimates}{35}{section*.21}%
+\contentsline {paragraph}{standardizedSolution}{36}{section*.22}%
+\contentsline {paragraph}{fitted.values}{36}{section*.23}%
+\contentsline {paragraph}{residuals}{36}{section*.24}%
+\contentsline {paragraph}{vcov}{36}{section*.25}%
+\contentsline {paragraph}{AIC and BIC}{36}{section*.26}%
+\contentsline {paragraph}{fitMeasures}{37}{section*.27}%
+\contentsline {paragraph}{lavInspect}{37}{section*.28}%
+\contentsline {section}{\numberline {16}Multilevel SEM}{39}{section.16}%
+\contentsline {paragraph}{Multilevel SEM model syntax}{40}{section*.29}%
+\contentsline {paragraph}{Important notes}{42}{section*.30}%
+\contentsline {paragraph}{Convergence issues and solutions}{42}{section*.31}%
+\contentsline {section}{\numberline {17}ESEM and exploratory factor analysis (EFA)}{43}{section.17}%
+\contentsline {paragraph}{ESEM}{43}{section*.32}%
+\contentsline {paragraph}{Exploratory factor analysis (EFA)}{45}{section*.33}%

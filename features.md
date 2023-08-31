@@ -10,7 +10,7 @@ submenu: lavaan
 - by default, lavaan implements the textbook/paper formulas, so there are no
 surprises
 
-- lavaan can mimic the results of several commercial packages (including Mplus
+- lavaan can mimic many results of several commercial packages (including Mplus
 and Eqs using the `mimic="Mplus"` or `mimic="EQS"`
 arguments)
 
@@ -37,29 +37,29 @@ as follows:
     summary(fit, fit.measures = TRUE)
     ```
 
-- you can choose between a user-friendly interface (in combination with the
-fitting functions `cfa()`, `sem()`, `growth()`) or a low-level interface (using
-the fitting function `lavaan()` where 'defaults' do not get in the way)
+- you can choose between a user-friendly interface in combination with the
+fitting functions `cfa()` and `sem()` or a low-level interface using
+the fitting function `lavaan()` where 'defaults' do not get in the way
 
 - convenient arguments (eg. `group.equal="loadings"`) simplify many common tasks
 (eg. measurement invariance testing)
 
-- lavaan outputs all the information you need: a huge number of fit measures,
-modification indices, R-squared values, standardized solutions, and much much
-more
+- lavaan outputs all the information you need: a large number of fit measures,
+modification indices, standardized solutions, and technical information that
+is stored in a fitted lavaan object
 
 #### lavaan provides many advanced options ####
 
 - full support for meanstructures and multiple groups
 
 - several estimators are available: ML (and robust variants MLM, MLMV, MLR),
-GLS, WLS (and robust variants DWLS, WLSM, WLSMV), ULS (ULSM, ULMV) and
+GLS, WLS (and robust variants DWLS, WLSM, WLSMV), ULS (ULSM, ULMV), DLS, and
   pairwise ML (PML)
 
-- standard errors: standard, robust, huber-white, bootstrap
+- standard errors: standard, robust/huber-white/sandwich, bootstrap
 
 - test statistics: standard, Satorra-Bentler, Yuan-Bentler, Satterthwaite,
-scale-shifted, Bollen-Stine bootstrap
+scaled-shifted, Bollen-Stine bootstrap
 
 - missing data: FIML estimation
 

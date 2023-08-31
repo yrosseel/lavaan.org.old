@@ -7,63 +7,42 @@ submenu: tutorial
 
 Before you start, please read these points carefully:
 
--   First of all, you must have a recent version ($3.0.0$ or higher) of
+-   First of all, you must have a recent version (4.0.0 or higher) of
     R installed. You can download the latest version of R from this
     page: <http://cran.r-project.org/>.
 
--   The lavaan package is not finished yet. But it is already very
-    useful for most users, or so we hope. However, some important
-    features that are currently *NOT* available in lavaan are:
+-   Some important features are NOT available (yet) in lavaan:
 
-    -   full support for hierarchical/multilevel datasets (multilevel cfa,
-        multilevel sem); however version 0.6-1 supports two-level cfa/sem
-        with random intercepts only, for continuous complete data
+    -   multilevel sem with random slopes (this is under developement)
 
-    -   full support for sampling (and other) weights (0.6-1 has sampling 
-        weights, but only for complete continuous and non-clustered data)
+    -   support for variable types other than continuous, binary and ordinal
+        (for example: zero-inflated count data, nominal data, non-Gaussian
+         continuous data); it is unlikely that this will be part of lavaan
+        any time soon, for the simple reason that these variable types need
+        numerical quadrature, and this is too slow to be practical in (pure) R.
 
     -   support for discrete latent variables (mixture models, latent
-        classes)
-
-    -   Bayesian estimation (but see the blavaan package)
+        classes) (although you can use the sampling weights and multiple
+        group features to mimic some mixture models)
 
     We hope to add these features to lavaan in the near future (but please do 
     not ask when).
 
--   We consider the current version as *beta* software. This does NOT
-    mean that you can not trust the results. We believe the results are
-    accurate. It does mean that things may change when new versions come
-    out. For example, we may change the name of the arguments in
-    function calls. And we change the internals of the source code
-    constantly. However, the model syntax is fairly mature and has been
-    stable for a while.
-
--   We do not expect you to be an expert in R. In fact, the lavaan
-    package is designed to be used by users that would normally never
-    use R. Nevertheless, it may help to familiarize yourself a bit with
-    R, just to be comfortable with it. Perhaps the most important skill
-    that you may need to learn is how to import your own datasets
-    (perhaps in an SPSS format) into R. There are many tutorials on the
-    web to teach you just that. Once you have your data in R, you can
-    start specifying your model. We have tried very hard to make it as
-    easy as possible for users to fit their models. Of course, if you
-    have suggestions on how we can improve things, please let us know.
-
--   This document is written for first-time users of
-    the lavaan package. It is not a reference manual, nor does it
-    contain technical material on how things are done in the lavaan
-    package. These documents are currently under preparation.
-
 -   The lavaan package is free open-source software. This means (among
-    other things) that there is no warranty whatsoever.
+    other things) that there is no warranty whatsoever. On the other hand,
+    you can verify the source code yourself:
+    <https://github.com/yrosseel/lavaan/>
 
--   If you need help, you can ask questions in the lavaan discussion group. 
-    Go to <https://groups.google.com/d/forum/lavaan/> and join the group. Once
-    you have joined the group, you can email your questions to
-    <lavaan@googlegroups.com>. If you think you have found a bug, or if
-    you have a suggestion for improvement, you can either email me directly
-    (to alert me), post it to the discussion group (to discuss it), or 
+-   If you need help, you can (only) ask questions in the lavaan 
+    discussion group. Go to <https://groups.google.com/d/forum/lavaan/> and 
+    join the group. Once you have joined the group, you can email your 
+    questions to <lavaan@googlegroups.com>. Please do not email me directly.
+ 
+-   I do not offer statistical advice. For general (non lavaan-specific)
+    questions about SEM, consider posting to the SEMNET discussion group.
+
+-   If you think you have found a bug, or if
+    you have a suggestion for improvement, you can either email me directly, or
     open an issue on github (see <https://github.com/yrosseel/lavaan/issues>).
-    The latter is useful once we have agreed it is a bug, and it should be
-    fixed. If you report a bug, it is always very useful to provide a
+    If you report a bug, always provide a minimal
     reproducible example (a short R script and some data).

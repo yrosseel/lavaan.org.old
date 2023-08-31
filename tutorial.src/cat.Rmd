@@ -22,9 +22,8 @@ like you would do in classical regression.
 #### Endogenous categorical variables ####
 
 The lavaan 0.5 series can deal with binary and ordinal (but not nominal)
-endogenous variables. Only the three-stage WLS approach is currently supported,
-including some 'robust' variants. To use binary/ordinal data, you have two
-choices:
+endogenous variables. There are two ways to communicate to lavaan that
+some of the endogenous variables are to be treated as categorical:
 
 1. declare them as 'ordered' (using the `ordered` function, which is part of
 base R) in your data.frame before you run the analysis; for example, if you
@@ -47,12 +46,19 @@ variables (say, `item1`, `item2`, `item3`, `item4`), you can use:
 
     ```{r eval=FALSE, tidy=FALSE}
     fit <- cfa(myModel, data = myData,
-               ordered=c("item1","item2",
-                         "item3","item4"))
+               ordered = c("item1","item2",
+                           "item3","item4"))
     ```
 
-In both cases, lavaan will automatically switch to the `WLSMV` estimator: it
-will use diagonally weighted least squares (`DWLS`) to estimate the model
-parameters, but it will use the full weight matrix to compute robust standard
-errors, and a mean- and variance-adjusted test stastistic.
+If all the (endogenous) variables are to be treated as categorical, you can
+use `ordered = TRUE` as a shortcut.
+
+When the `ordered=` argument is used, lavaan will automatically switch to the
+`WLSMV` estimator: it will use diagonally weighted least squares (`DWLS`) to
+estimate the model parameters, but it will use the full weight matrix to
+compute robust standard errors, and a mean- and variance-adjusted test
+stastistic. Other options are unweighted least squares (ULSMV), or pairwise
+maximum likelihood (PML). Full information maximum likelihood is currently not
+supported.
+
 

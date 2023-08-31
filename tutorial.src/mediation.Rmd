@@ -42,3 +42,4 @@ mentioned in the model syntax. By default, the standard errors for these
 defined parameters are computed by using the so-called Delta method. As with
 other models, bootstrap standard errors can be requested simply by specifying
 `se = "bootstrap"` in the fitting function.
+

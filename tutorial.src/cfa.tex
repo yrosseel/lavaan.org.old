@@ -9,13 +9,12 @@ dataset by typing
 \end{verbatim}
 
 at the R prompt. This is a `classic' dataset that is used in many papers
-and books on Structural Equation Modeling (SEM), including some manuals
-of commercial SEM software packages. The data consists of mental ability
-test scores of seventh- and eighth-grade children from two different
-schools (Pasteur and Grant-White). In our version of the dataset, only 9
-out of the original 26 tests are included. A CFA model that is often
-proposed for these 9 variables consists of three latent variables (or
-factors), each with three indicators:
+and books on Structural Equation Modeling (SEM). The data consists of
+mental ability test scores of seventh- and eighth-grade children from
+two different schools (Pasteur and Grant-White). In our version of the
+dataset, only 9 out of the original 26 tests are included. A CFA model
+that is often proposed for these 9 variables consists of three latent
+variables (or factors), each with three indicators:
 
 \begin{itemize}
 \tightlist
@@ -50,27 +49,27 @@ latent variable =~ indicator1 + indicator2 + indicator3
 \end{verbatim}
 
 We call these expressions \emph{latent variable definitions} because
-they define how the latent variables are `manifested by' a set of
-observed (or manifest) variables, often called `indicators'. Note that
-the special ``\texttt{=\textasciitilde{}"} operator in the middle
-consists of a sign (''\texttt{=}``) character and a tilde
+they define how the latent variables are `indicated by' a set of
+(typically observed) variables, often called `indicators'. Note that the
+special ``\texttt{=\textasciitilde{}"} operator in the middle consists
+of a sign (''\texttt{=}``) character and a tilde
 (\texttt{"\textasciitilde{}"}) character next to each other. The reason
 why this model syntax is so short, is that behind the scenes, the
-function will take care of several things. First, by default, the factor
-loading of the first indicator of a latent variable is fixed to 1,
-thereby fixing the scale of the latent variable. Second, residual
-variances are added automatically. And third, all exogenous latent
-variables are correlated by default. This way, the model syntax can be
-kept concise. On the other hand, the user remains in control, since all
-this `default' behavior can be overriden and/or switched off.
+\texttt{cfa()} function will take care of several things. First, by
+default, the factor loading of the first indicator of a latent variable
+is fixed to 1, thereby fixing the scale of the latent variable. Second,
+residual variances are added automatically. And third, all exogenous
+latent variables are correlated by default. This way, the model syntax
+can be kept concise. On the other hand, the user remains in control,
+since all this `default' behavior can be overriden and/or switched off.
 
 We can enter the model syntax using the single quotes:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{HS.model <-}\StringTok{ ' visual  =~ x1 + x2 + x3 }
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3 }
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
 \end{Highlighting}
 \end{Shaded}
 
@@ -78,7 +77,7 @@ We can now fit the model as follows:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -90,7 +89,7 @@ the observed variables. Once the model has been fitted, the
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{fit.measures=}\OtherTok{TRUE}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(fit, }\AttributeTok{fit.measures =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -99,22 +98,27 @@ find it confusing or esthetically unpleasing, please let us know, and we
 will try to improve it.
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  35 iterations
-
-  Number of observations                           301
+lavaan 0.6-11 ended normally after 35 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                      85.306
+  Optimization method                           NLMINB
+  Number of model parameters                        21
+                                                      
+  Number of observations                           301
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                                85.306
   Degrees of freedom                                24
   P-value (Chi-square)                           0.000
 
-Model test baseline model:
+Model Test Baseline Model:
 
-  Minimum Function Test Statistic              918.852
+  Test statistic                               918.852
   Degrees of freedom                                36
   P-value                                        0.000
 
-User model versus baseline model:
+User Model versus Baseline Model:
 
   Comparative Fit Index (CFI)                    0.931
   Tucker-Lewis Index (TLI)                       0.896
@@ -123,8 +127,7 @@ Loglikelihood and Information Criteria:
 
   Loglikelihood user model (H0)              -3737.745
   Loglikelihood unrestricted model (H1)      -3695.092
-
-  Number of free parameters                         21
+                                                      
   Akaike (AIC)                                7517.490
   Bayesian (BIC)                              7595.339
   Sample-size adjusted Bayesian (BIC)         7528.739
@@ -132,7 +135,8 @@ Loglikelihood and Information Criteria:
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.092
-  90 Percent Confidence Interval          0.071  0.114
+  90 Percent confidence interval - lower         0.071
+  90 Percent confidence interval - upper         0.114
   P-value RMSEA <= 0.05                          0.001
 
 Standardized Root Mean Square Residual:
@@ -141,9 +145,9 @@ Standardized Root Mean Square Residual:
 
 Parameter Estimates:
 
+  Standard errors                             Standard
   Information                                 Expected
   Information saturated (h1) model          Structured
-  Standard Errors                             Standard
 
 Latent Variables:
                    Estimate  Std.Err  z-value  P(>|z|)
@@ -184,7 +188,7 @@ Variances:
     speed             0.384    0.086    4.451    0.000
 \end{verbatim}
 
-The output consists of three parts. The first six lines are called
+The output consists of three parts. The first nine lines are called
 \emph{the header}. The header contains the following information:
 
 \begin{itemize}
@@ -192,55 +196,73 @@ The output consists of three parts. The first six lines are called
 \item
   the lavaan version number
 \item
-  did lavaan converge normally or not, and how many iterations were
+  did optimization end normally or not, and how many iterations were
   needed
 \item
+  the estimator that was used (here: \texttt{ML}, for maximum
+  likelihood)
+\item
+  the optimizer that was used to find the best fitting parameter values
+  for this estimator (here: \texttt{NLMINB})
+\item
+  the number of model parameters (here: \texttt{21})
+\item
   the number of observations that were effectively used in the analysis
+  (here: \texttt{301})
 \item
-  the estimator that was used to obtain the parameter values (here:
-  \texttt{ML})
-\item
-  the model test statistic, the degrees of freedom, and a corresponding
-  p-value
+  a section called \texttt{Model\ Test\ User\ Model:} which provides a
+  test statistic, degrees of freedom, and a p-value for the model that
+  was specified by the user.
 \end{itemize}
 
 The next section contains additional fit measures, and is only shown
 because we use the optional argument \texttt{fit.measures\ =\ TRUE}. It
-starts with the line \texttt{Model\ test\ baseline\ model} and ends with
-the value for the \texttt{SRMR}. The last section contains the parameter
-estimates. It starts with information about the standard errors (if the
-information matrix is expected or observed, and if the standard errors
-are standard, robust, or based on the bootstrap). Then, it tabulates all
-free (and fixed) parameters that were included in the model. Typically,
-first the latent variables are shown, followed by covariances and
-(residual) variances. The first column (\texttt{Estimate}) contains the
-(estimated or fixed) parameter value for each model parameter; the
-second column (\texttt{Std.err}) contains the standard error for each
-estimated parameter; the third column (\texttt{Z-value}) contains the
-Wald statistic (which is simply obtained by dividing the parameter value
-by its standard error), and the last column
+starts with the line \texttt{Model\ Test\ Baseline\ Model:} and ends
+with the value for the \texttt{SRMR}. The last section contains the
+parameter estimates. It starts with (technical) information about the
+method that was used to compute the standard errors. (Most users can
+safely ignore this information). Then, it tabulates all free (and fixed)
+parameters that were included in the model. Typically, first the latent
+variables are shown, followed by covariances and (residual) variances.
+The first column (\texttt{Estimate}) contains the (estimated or fixed)
+parameter value for each model parameter; the second column
+(\texttt{Std.err}) contains the standard error for each estimated
+parameter; the third column (\texttt{Z-value}) contains the Wald
+statistic (which is simply obtained by dividing the parameter value by
+its standard error), and the last column
 (\texttt{P(\textgreater{}\textbar{}z\textbar{})}) contains the p-value
-for testing the null hypothesis that the parameter equals zero in the
-population.
+for testing the null hypothesis that the parameter value equals zero in
+the population.
+
+Note that in the \texttt{Variances:} section, there is a dot before the
+observed variables names. This is because they are dependent (or
+endogenous) variables (predicted by the latent variables), and
+therefore, the value for the variance that is printed in the output is
+an estimate of the residual variance: the left-over variance that is not
+explained by the predictor(s). By contrast, there is no dot before the
+latent variable names, because they are exogenous variables in this
+model (there are no single-headed arrows pointing to them). The values
+for the variances here are the estimated \emph{total} variances of the
+latent variables.
 
 To wrap up this first example, we summarize the complete code that was
 needed to fit this three-factor model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# load the lavaan package (only needed once per session)}
-\KeywordTok{library}\NormalTok{(lavaan)}
+\CommentTok{\# load the lavaan package (only needed once per session)}
+\FunctionTok{library}\NormalTok{(lavaan)}
 
-\CommentTok{# specify the model}
-\NormalTok{HS.model <-}\StringTok{ ' visual  =~ x1 + x2 + x3      }
-\StringTok{              textual =~ x4 + x5 + x6}
-\StringTok{              speed   =~ x7 + x8 + x9 '}
+\CommentTok{\# specify the model}
+\NormalTok{HS.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} visual  =\textasciitilde{} x1 + x2 + x3      }
+\StringTok{              textual =\textasciitilde{} x4 + x5 + x6}
+\StringTok{              speed   =\textasciitilde{} x7 + x8 + x9 \textquotesingle{}}
 
-\CommentTok{# fit the model}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{cfa}\NormalTok{(HS.model, }\DataTypeTok{data=}\NormalTok{HolzingerSwineford1939)}
+\CommentTok{\# fit the model}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(HS.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
 
-\CommentTok{# display summary output}
-\KeywordTok{summary}\NormalTok{(fit, }\DataTypeTok{fit.measures=}\OtherTok{TRUE}\NormalTok{)}
+\CommentTok{\# display summary output}
+\FunctionTok{summary}\NormalTok{(fit, }\AttributeTok{fit.measures =} \ConstantTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -257,7 +279,7 @@ illustrates the typical workflow in the lavaan package:
   Fit the model. This requires a dataset containing the observed
   variables (or alternatively the sample covariance matrix and the
   number of observations). In this example, we have used the
-  \texttt{cfa()} function. Other funcions in the lavaan package are
+  \texttt{cfa()} function. Other functions in the lavaan package are
   \texttt{sem()} and \texttt{growth()} for fitting full structural
   equation models and growth curve models respectively. All three
   functions are so-called user-friendly functions, in the sense that

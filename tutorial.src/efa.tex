@@ -1,0 +1,411 @@
+If a measurement model contains multiple latent variables (factors), we
+usually know which indicators belong to each factor. We call this the
+factor structure. Confirmatory factor analysis can be used to check if
+this a priori factor structure holds in the data. There are settings,
+however, where the factor structure is unclear, and we wish to rotate
+the solution in order to find a suitable structure in a given model.
+When the model also includes a structural part (i.e., regressions among
+the latent variables), this is referred to as exploratory structural
+equation modeling or ESEM. If there is only a measurement part, this is
+called exploratory factor analysis (EFA). What they have in common is
+that the factor structure (for one or more blocks) is found by means of
+rotation.
+
+\hypertarget{esem}{%
+\paragraph{ESEM}\label{esem}}
+
+To illustrate how ESEM works in lavaan, consider the following syntax:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{    \# efa block 1}
+\StringTok{    efa("efa1")*f1 + }
+\StringTok{    efa("efa1")*f2 =\textasciitilde{} x1 + x2 + x3 + x4 + x5 + x6}
+
+\StringTok{    \# efa block 2}
+\StringTok{    efa("efa2")*f3 + }
+\StringTok{    efa("efa2")*f4 =\textasciitilde{} y1 + y2 + y3 + y4 + y5 + y6}
+
+\StringTok{    \# cfa block}
+\StringTok{    f5 =\textasciitilde{} z7 + z8 + z9}
+\StringTok{    f6 =\textasciitilde{} z10 + z11 + z12}
+
+\StringTok{    \# regressions}
+\StringTok{    f3 \textasciitilde{} f1 + f2}
+\StringTok{    f4 \textasciitilde{} f3}
+\StringTok{\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+This model syntax defines six latent variables (or factors). For f5 and
+f6, the factor structure is known, and they belong to a regular CFA
+block. But for f1 and f2, the factor structure is not known, and we will
+use a rotation method to find an appropiate structure. The f1 and f2
+factors belong together in an EFA block that is (arbitrarily) named
+\texttt{efa1}. The \texttt{efa("efa1")*} modifier just before f1 and f2
+is used to alert lavaan that these two factors belong to the same EFA
+block. The factors f3 and f4 belong to a different EFA block (named
+\texttt{efa2}) and will be rotated independently. The structural part of
+the model is given as usual. To fit this model, we could call the
+\texttt{sem()} function as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(}\AttributeTok{model =}\NormalTok{ model, }\AttributeTok{data =}\NormalTok{ myData, }\AttributeTok{rotation =} \StringTok{"geomin"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Different rotation criteria are available, and many rotation options can
+be provided (see the manual page for the \texttt{efa()} function for an
+overview).
+
+To illustrate ESEM, we will borrow an example from the Mplus User's
+Guide (example 5.25). First we read in the data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ex5\_25 }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"http://statmodel.com/usersguide/chap5/ex5.25.dat"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(ex5\_25) }\OtherTok{=} \FunctionTok{paste0}\NormalTok{(}\StringTok{"y"}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{12}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The model syntax contains a single EFA block (\texttt{efa1} for factors
+f1 and f2) and single CFA block (for f3 and f4):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{    \# efa block }
+\StringTok{    efa("efa1")*f1 + }
+\StringTok{    efa("efa1")*f2 =\textasciitilde{} y1 + y2 + y3 + y4 + y5 + y6}
+
+\StringTok{    \# cfa block}
+\StringTok{    f3 =\textasciitilde{} y7 + y8 + y9}
+\StringTok{    f4 =\textasciitilde{} y10 + y11 + y12}
+
+\StringTok{    \# regressions}
+\StringTok{    f3 \textasciitilde{} f1 + f2}
+\StringTok{    f4 \textasciitilde{} f3}
+\StringTok{\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+The following command illustrates the use of various rotation arguments:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(}\AttributeTok{model =}\NormalTok{ model, }\AttributeTok{data =}\NormalTok{ ex5\_25, }\AttributeTok{rotation =} \StringTok{"geomin"}\NormalTok{,}
+           \CommentTok{\# mimic Mplus}
+           \AttributeTok{information =} \StringTok{"observed"}\NormalTok{,}
+           \AttributeTok{rotation.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{rstarts =} \DecValTok{30}\NormalTok{, }\AttributeTok{row.weights =} \StringTok{"none"}\NormalTok{,}
+                                \AttributeTok{algorithm =} \StringTok{"gpa"}\NormalTok{, }\AttributeTok{std.ov =} \ConstantTok{TRUE}\NormalTok{,}
+                                \AttributeTok{geomin.epsilon =} \FloatTok{0.0001}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan 0.6-13.1762 ended normally after 35 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        32
+
+  Rotation method                       GEOMIN OBLIQUE
+  Geomin epsilon                                 1e-04
+  Rotation algorithm (rstarts)                GPA (30)
+  Standardized metric                             TRUE
+  Row weights                                     None
+
+  Number of observations                           500
+
+Model Test User Model:
+                                                      
+  Test statistic                                51.353
+  Degrees of freedom                                46
+  P-value (Chi-square)                           0.272
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Observed
+  Observed information based on                Hessian
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  f1 =~ efa1                                          
+    y1                0.751    0.048   15.621    0.000
+    y2                0.858    0.042   20.469    0.000
+    y3                0.736    0.045   16.343    0.000
+    y4                0.036    0.051    0.712    0.476
+    y5               -0.028    0.049   -0.564    0.573
+    y6                0.002    0.003    0.694    0.488
+  f2 =~ efa1                                          
+    y1                0.034    0.045    0.758    0.449
+    y2               -0.002    0.015   -0.151    0.880
+    y3               -0.008    0.035   -0.219    0.827
+    y4                0.763    0.050   15.374    0.000
+    y5                0.810    0.048   16.796    0.000
+    y6                0.802    0.041   19.467    0.000
+  f3 =~                                               
+    y7                1.000                           
+    y8                0.894    0.021   41.936    0.000
+    y9                0.902    0.021   42.479    0.000
+  f4 =~                                               
+    y10               1.000                           
+    y11               0.734    0.028   26.424    0.000
+    y12               0.684    0.028   24.405    0.000
+
+Regressions:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  f3 ~                                                
+    f1                0.493    0.058    8.455    0.000
+    f2                0.721    0.057   12.755    0.000
+  f4 ~                                                
+    f3                0.546    0.032   16.975    0.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(>|z|)
+  f1 ~~                                               
+    f2                0.479    0.053    9.072    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)
+   .y1                0.376    0.034   11.064    0.000
+   .y2                0.290    0.035    8.239    0.000
+   .y3                0.406    0.034   11.817    0.000
+   .y4                0.408    0.035   11.742    0.000
+   .y5                0.329    0.033   10.046    0.000
+   .y6                0.393    0.035   11.073    0.000
+   .y7                0.183    0.019    9.796    0.000
+   .y8                0.191    0.017   11.269    0.000
+   .y9                0.181    0.017   10.812    0.000
+   .y10               0.240    0.027    8.746    0.000
+   .y11               0.183    0.017   10.791    0.000
+   .y12               0.213    0.018   11.998    0.000
+    f1                1.000                           
+    f2                1.000                           
+   .f3                0.527    0.049   10.644    0.000
+   .f4                0.565    0.049   11.488    0.000
+\end{verbatim}
+
+\hypertarget{exploratory-factor-analysis-efa}{%
+\paragraph{Exploratory factor analysis
+(EFA)}\label{exploratory-factor-analysis-efa}}
+
+When there is no structural part (i.e., no regressions among the latent
+variables) and there is only a single EFA block, then ESEM reduces to
+exploratory factor analysis (EFA). Using the Holzinger and Swineford
+data, we could specify an EFA with three factors as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{efa.model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}}
+\StringTok{    efa("efa")*f1 + }
+\StringTok{    efa("efa")*f2 + }
+\StringTok{    efa("efa")*f3 =\textasciitilde{} x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9}
+\StringTok{\textquotesingle{}}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{cfa}\NormalTok{(efa.model, }\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939)}
+\FunctionTok{summary}\NormalTok{(fit, }\AttributeTok{standardized =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+lavaan 0.6-13.1762 ended normally after 1 iteration
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        33
+
+  Rotation method                       GEOMIN OBLIQUE
+  Geomin epsilon                                 0.001
+  Rotation algorithm (rstarts)                GPA (30)
+  Standardized metric                             TRUE
+  Row weights                                     None
+
+  Number of observations                           301
+
+Model Test User Model:
+                                                      
+  Test statistic                                22.897
+  Degrees of freedom                                12
+  P-value (Chi-square)                           0.029
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  f1 =~ efa                                                             
+    x1                0.712    0.092    7.771    0.000    0.712    0.611
+    x2                0.628    0.104    6.063    0.000    0.628    0.534
+    x3                0.796    0.096    8.255    0.000    0.796    0.705
+    x4                0.011    0.011    0.944    0.345    0.011    0.009
+    x5               -0.107    0.089   -1.203    0.229   -0.107   -0.083
+    x6                0.076    0.073    1.028    0.304    0.076    0.069
+    x7               -0.278    0.109   -2.538    0.011   -0.278   -0.255
+    x8                0.012    0.008    1.371    0.170    0.012    0.011
+    x9                0.314    0.076    4.142    0.000    0.314    0.312
+  f2 =~ efa                                                             
+    x1                0.198    0.103    1.917    0.055    0.198    0.170
+    x2                0.039    0.092    0.424    0.672    0.039    0.033
+    x3               -0.106    0.111   -0.963    0.335   -0.106   -0.094
+    x4                0.981    0.058   16.850    0.000    0.981    0.844
+    x5                1.153    0.074   15.545    0.000    1.153    0.895
+    x6                0.886    0.062   14.338    0.000    0.886    0.810
+    x7                0.011    0.012    0.923    0.356    0.011    0.010
+    x8               -0.075    0.066   -1.135    0.256   -0.075   -0.074
+    x9               -0.002    0.007   -0.315    0.753   -0.002   -0.002
+  f3 =~ efa                                                             
+    x1                0.015    0.048    0.302    0.762    0.015    0.012
+    x2               -0.166    0.092   -1.813    0.070   -0.166   -0.141
+    x3                0.002    0.048    0.036    0.971    0.002    0.002
+    x4                0.004    0.047    0.091    0.927    0.004    0.004
+    x5                0.012    0.036    0.322    0.747    0.012    0.009
+    x6               -0.017    0.041   -0.409    0.683   -0.017   -0.015
+    x7                0.843    0.105    7.999    0.000    0.843    0.775
+    x8                0.752    0.076    9.893    0.000    0.752    0.744
+    x9                0.484    0.070    6.954    0.000    0.484    0.481
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+  f1 ~~                                                                 
+    f2                0.373    0.118    3.173    0.002    0.373    0.373
+    f3                0.432    0.097    4.465    0.000    0.432    0.432
+  f2 ~~                                                                 
+    f3                0.306    0.081    3.775    0.000    0.306    0.306
+
+Variances:
+                   Estimate  Std.Err  z-value  P(>|z|)   Std.lv  Std.all
+   .x1                0.696    0.087    8.038    0.000    0.696    0.513
+   .x2                1.035    0.102   10.151    0.000    1.035    0.749
+   .x3                0.692    0.097    7.134    0.000    0.692    0.543
+   .x4                0.377    0.048    7.902    0.000    0.377    0.279
+   .x5                0.403    0.061    6.590    0.000    0.403    0.243
+   .x6                0.365    0.042    8.613    0.000    0.365    0.305
+   .x7                0.594    0.106    5.624    0.000    0.594    0.502
+   .x8                0.479    0.080    5.958    0.000    0.479    0.469
+   .x9                0.551    0.060    9.132    0.000    0.551    0.543
+    f1                1.000                               1.000    1.000
+    f2                1.000                               1.000    1.000
+    f3                1.000                               1.000    1.000
+\end{verbatim}
+
+In version 0.6-13, we added added the \texttt{efa()} function to
+simplify the input, and to produce output that is more in line with
+traditional EFA software in R. There is no need to create a model
+syntax. You only need to provide the data, and the number of factors.
+Instead of a single number, you can also specify a range of numbers. For
+example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var.names }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{9}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{efa}\NormalTok{(}\AttributeTok{data =}\NormalTok{ HolzingerSwineford1939[,var.names], }\AttributeTok{nfactors =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+This is lavaan 0.6-13.1762 -- running exploratory factor analysis
+
+  Estimator                                         ML
+  Rotation method                       GEOMIN OBLIQUE
+  Geomin epsilon                                 0.001
+  Rotation algorithm (rstarts)                GPA (30)
+  Standardized metric                             TRUE
+  Row weights                                     None
+
+  Number of observations                           301
+
+Overview models:
+                 chisq df pvalue rmsea
+  nfactors = 1 312.264 27  0.000 0.187
+  nfactors = 2 130.306 19  0.000 0.140
+  nfactors = 3  22.897 12  0.029 0.055
+
+Eigenvalues correlation matrix:
+
+    ev1     ev2     ev3     ev4     ev5     ev6     ev7     ev8     ev9 
+  3.216   1.639   1.365   0.699   0.584   0.500   0.473   0.286   0.238 
+
+Number of factors:  1 
+
+Standardized loadings: (* = significant at 1% level)
+
+       f1       unique.var   communalities
+x1  0.438*           0.808           0.192
+x2      .*           0.951           0.049
+x3      .*           0.950           0.050
+x4  0.848*           0.281           0.719
+x5  0.841*           0.293           0.707
+x6  0.838*           0.298           0.702
+x7      .*           0.967           0.033
+x8      .*           0.960           0.040
+x9  0.307*           0.906           0.094
+
+                           f1
+Sum of squared loadings 2.586
+Proportion var          0.287
+Cumulative var          0.287
+Proportion of total     1.000
+
+Number of factors:  2 
+
+Standardized loadings: (* = significant at 1% level)
+
+       f1      f2       unique.var   communalities
+x1      .*  0.430*           0.673           0.327
+x2      .       .*           0.906           0.094
+x3          0.456*           0.783           0.217
+x4  0.851*                   0.274           0.726
+x5  0.868*                   0.264           0.736
+x6  0.825*                   0.302           0.698
+x7          0.448*           0.802           0.198
+x8          0.627*           0.630           0.370
+x9          0.734*           0.458           0.542
+
+                              f1    f2 total
+Sum of sq (obliq) loadings 2.280 1.629 3.909
+Proportion var             0.253 0.181 0.434
+Cumulative var             0.253 0.434 0.434
+Proportion of total        0.583 0.417 1.000
+
+Factor correlations:
+
+      f1    f2
+f1 1.000      
+f2 0.339 1.000
+
+Number of factors:  3 
+
+Standardized loadings: (* = significant at 1% level)
+
+       f1      f2      f3       unique.var   communalities
+x1  0.611*      .                    0.513           0.487
+x2  0.534*              .            0.749           0.251
+x3  0.705*                           0.543           0.457
+x4          0.844*                   0.279           0.721
+x5          0.895*                   0.243           0.757
+x6          0.810*                   0.305           0.695
+x7      .*          0.775*           0.502           0.498
+x8                  0.744*           0.469           0.531
+x9  0.312*          0.481*           0.543           0.457
+
+                              f2    f3    f1 total
+Sum of sq (obliq) loadings 2.215 1.343 1.297 4.855
+Proportion var             0.246 0.149 0.144 0.539
+Cumulative var             0.246 0.395 0.539 0.539
+Proportion of total        0.456 0.277 0.267 1.000
+
+Factor correlations:
+
+      f1    f2    f3
+f1 1.000            
+f2 0.373 1.000      
+f3 0.432 0.306 1.000
+\end{verbatim}

@@ -6,41 +6,45 @@ and the indirect effect of X on Y via M.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
-\NormalTok{X <-}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{M <-}\StringTok{ }\FloatTok{0.5}\OperatorTok{*}\NormalTok{X }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{Y <-}\StringTok{ }\FloatTok{0.7}\OperatorTok{*}\NormalTok{M }\OperatorTok{+}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
-\NormalTok{Data <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{X =}\NormalTok{ X, }\DataTypeTok{Y =}\NormalTok{ Y, }\DataTypeTok{M =}\NormalTok{ M)}
-\NormalTok{model <-}\StringTok{ ' # direct effect}
-\StringTok{             Y ~ c*X}
-\StringTok{           # mediator}
-\StringTok{             M ~ a*X}
-\StringTok{             Y ~ b*M}
-\StringTok{           # indirect effect (a*b)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{M }\OtherTok{\textless{}{-}} \FloatTok{0.5}\SpecialCharTok{*}\NormalTok{X }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{Y }\OtherTok{\textless{}{-}} \FloatTok{0.7}\SpecialCharTok{*}\NormalTok{M }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{Data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{X =}\NormalTok{ X, }\AttributeTok{Y =}\NormalTok{ Y, }\AttributeTok{M =}\NormalTok{ M)}
+\NormalTok{model }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{} \# direct effect}
+\StringTok{             Y \textasciitilde{} c*X}
+\StringTok{           \# mediator}
+\StringTok{             M \textasciitilde{} a*X}
+\StringTok{             Y \textasciitilde{} b*M}
+\StringTok{           \# indirect effect (a*b)}
 \StringTok{             ab := a*b}
-\StringTok{           # total effect}
+\StringTok{           \# total effect}
 \StringTok{             total := c + (a*b)}
-\StringTok{         '}
-\NormalTok{fit <-}\StringTok{ }\KeywordTok{sem}\NormalTok{(model, }\DataTypeTok{data =}\NormalTok{ Data)}
-\KeywordTok{summary}\NormalTok{(fit)}
+\StringTok{         \textquotesingle{}}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{sem}\NormalTok{(model, }\AttributeTok{data =}\NormalTok{ Data)}
+\FunctionTok{summary}\NormalTok{(fit)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-lavaan (0.6-1) converged normally after  12 iterations
-
-  Number of observations                           100
+lavaan 0.6-11 ended normally after 1 iterations
 
   Estimator                                         ML
-  Model Fit Test Statistic                       0.000
+  Optimization method                           NLMINB
+  Number of model parameters                         5
+                                                      
+  Number of observations                           100
+                                                      
+Model Test User Model:
+                                                      
+  Test statistic                                 0.000
   Degrees of freedom                                 0
-  Minimum Function Value               0.0000000000000
 
 Parameter Estimates:
 
+  Standard errors                             Standard
   Information                                 Expected
   Information saturated (h1) model          Structured
-  Standard Errors                             Standard
 
 Regressions:
                    Estimate  Std.Err  z-value  P(>|z|)

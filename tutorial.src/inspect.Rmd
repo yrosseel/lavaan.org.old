@@ -19,21 +19,25 @@ Other extractor functions are discussed below.
 
 #### parameterEstimates ####
 
-The `parameterEstimates` function extracts not only the values of the estimated
-parameters, but also the standard errors, the z-values, the standardized
-parameter values, and returns everything conveniently as a data frame. For
-example:
+The `parameterEstimates()` function returns a data.frame containing
+all the model parameters in the rows:
 
 ```{r comment=""}
 fit <- cfa(HS.model, data=HolzingerSwineford1939)
 parameterEstimates(fit)
 ```
 
+The `lhs` (left-hand side), `op` (operator) and `rhs` (right-hand side) columns
+define the parameter. The `est`, `se`, `z` and `pvalue` columns provide the
+point estimate, the standard error, the z-value and the p-value for this
+parameter. The last two columns are the lower and upper bounds of a 95%
+confidence interval around the point estimate.
+
 #### standardizedSolution ####
 
 The `standardizedSolution()` function is similar to the `parameterEstimates()`
-function, but only shows the unstandardized and standardized parameter
-estimates.
+function, but only shows the standardized parameter estimates and corresponding
+standard errors, z-values, p-values and confidence intervals.
 
 #### fitted.values ####
 
@@ -41,7 +45,7 @@ The `fitted()` and `fitted.values()` functions return the
 model-implied (fitted) covariance matrix (and mean vector) of a fitted model:
 
 ```{r comment=""}
-fit <- cfa(HS.model, data=HolzingerSwineford1939)
+fit <- cfa(HS.model, data = HolzingerSwineford1939)
 fitted(fit)
 ```
 
@@ -49,15 +53,16 @@ fitted(fit)
 
 The `resid()` or `residuals()` functions return (unstandardized) residuals of a
 fitted model.  This is simply the difference between the observed and implied
-covariance matrix and mean vector. If the estimator is maximum likelihood, it
-is also possible to obtain the normalized and the standardized 
-residuals (note: you may observe several `NA` values, but they can be 
-safely ignored)
+covariance matrix and mean vector. 
 
 ```{r comment=""}
-fit <- cfa(HS.model, data=HolzingerSwineford1939)
-resid(fit, type="standardized")
+fit <- cfa(HS.model, data = HolzingerSwineford1939)
+resid(fit)
 ```
+
+The `lavResiduals()` gives more extensive information about the residuals.
+Per default, it will print both raw and standardized residuals, as well
+as several summary statistics (including the SRMR and the unbiased SRMR).
 
 #### vcov ####
 
@@ -93,36 +98,35 @@ Or you can provide a vector of fit measures, as in
 fitMeasures(fit, c("cfi","rmsea","srmr"))
 ```
 
-#### inspect ####
+#### lavInspect ####
 
 If you want to peek inside a fitted lavaan object (the object that is returned
-by a call to `cfa()`, `sem()`or `growth()`), you can use the `inspect()`
-function, with a variety of options. By default, calling `inspect()` on a
+by a call to `cfa()`, `sem()`or `growth()`), you can use the `lavInspect()`
+function, with a variety of options. By default, calling `lavInspect()` on a
 fitted lavaan object returns a list of the model matrices that are used
 internally to represent the model.  The free parameters are nonzero integers.
 
 ```{r comment=""}
 fit <- cfa(HS.model, data=HolzingerSwineford1939)
-inspect(fit)
+lavInspect(fit)
 ```
 
 To see the starting values of parameters in each model matrix, type
 
 ```{r comment=""}
-inspect(fit, what="start")
+lavInspect(fit, what = "start")
 ```
 To see how lavaan internally represents a model, you can type
 
 ```{r comment=""}
-inspect(fit, what="list")
+lavInspect(fit, what = "list")
 ```
 
 This is equivalent to the `parTable(fit)` function. The table that
 is returned here is called the 'parameter table'.
 
-For more inspect options, see the help page for the lavaan class which
-you can find by typing the following:
+For more lavInspect options, see the help page:
 
 ```{r eval=FALSE, tidy=FALSE}
-class?lavaan
+?lavInspect
 ```
